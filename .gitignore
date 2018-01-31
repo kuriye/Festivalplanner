@@ -30,3 +30,4 @@ out/
 
 # JavaDoc
 doc/
+\.DS_Store
