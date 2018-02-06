@@ -98,4 +98,16 @@ public class Act {
     public void setPopularity(int popularity) {
         this.popularity = popularity;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Act{" +
+                "artist=" + artist +
+                ", podium=" + podium +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", popularity=" + popularity +
+                '}';
+    }
 }

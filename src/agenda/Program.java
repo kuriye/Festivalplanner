@@ -14,9 +14,9 @@ public class Program
      *  In deze methode kan een Act object toegevoegd worden aan de AllActs ArrayList.
      *  @param
      */
-    public void addAct(Artist artist, Podium podium, int startTime, int eindTime, int popularity)
+    public void addAct(Artist artist, Podium podium, int startTime, int endTime, int popularity)
     {
-        AllActs.add(new Act(artist, podium, startTime, eindTime, popularity));
+        AllActs.add(new Act(artist, podium, startTime, endTime, popularity));
     }
 
     /**
@@ -71,4 +71,11 @@ public class Program
         //return Act file
     }
 
+    @Override
+    public String toString()
+    {
+        return "Program{" +
+                "AllActs=" + AllActs +
+                '}';
+    }
 }

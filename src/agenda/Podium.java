@@ -31,6 +31,7 @@ public class Podium {
      * @param length is the length of the podium.
      * @param width is the width of the podium.
      */
+
     public Podium(String name, int capacity, int length, int width) {
         this.name = name;
         this.capacity = capacity;
@@ -100,6 +101,17 @@ public class Podium {
      */
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Podium{" +
+                "name='" + name + '\'' +
+                ", capacity=" + capacity +
+                ", length=" + length +
+                ", width=" + width +
+                '}';
     }
 }
 
