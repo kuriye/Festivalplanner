@@ -63,4 +63,14 @@ Genre is the kind of music
 
         this.genre = genre;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Artist{" +
+                "name='" + name + '\'' +
+                ", popularity=" + popularity +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
 }
