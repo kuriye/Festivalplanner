@@ -14,10 +14,9 @@ public class Program
      *  In deze methode kan een Act object toegevoegd worden aan de AllActs ArrayList.
      *  @param
      */
-    public void addAct()
+    public void addAct(Artist artist, Podium podium, int startTime, int eindTime, int popularity)
     {
-        // !! Parameters van classe Act moet nog toegevoegd worden.
-        AllActs.add(new Act());
+        AllActs.add(new Act(artist, podium, startTime, eindTime, popularity));
     }
 
     /**
