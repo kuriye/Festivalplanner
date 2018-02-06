@@ -31,3 +31,7 @@ out/
 # JavaDoc
 doc/
 \.DS_Store
+
+\.idea/misc\.xml
+
+\.idea/
