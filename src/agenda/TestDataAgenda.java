@@ -9,7 +9,7 @@ public class TestDataAgenda
         Artist artist2 = new Artist("Guus Meeuws", 70, "Nederlands");
         Podium podium = new Podium("P1", 1000, 50, 50);
         program.addAct(artist1, podium, 2000, 2100,50);
-        program.toString();
+        System.out.println(program.toString());
     }
 
     public static void main(String[] args)
