@@ -9,6 +9,8 @@
 .idea/**/tasks.xml
 .idea/dictionaries
 
+# Sensitive or high-churn files:
+.idea/**/uiDesigner.xml
 
 # IntelliJ
 out/
