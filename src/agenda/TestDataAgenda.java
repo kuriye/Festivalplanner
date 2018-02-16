@@ -7,8 +7,8 @@ public class TestDataAgenda
         Program program = new Program();
         Artist artist1 = new Artist("ALIB", 30, "Rap");
         Artist artist2 = new Artist("Guus Meeuws", 70, "Nederlands");
-        Podium podium = new Podium("P1", 1000, 50, 50);
-        program.addAct(artist1, podium, 2000, 2100,50);
+        Stage stage = new Stage("P1", 1000, 50, 50);
+        program.addAct(artist1, stage, 2000, 2100,50);
         System.out.println(program.toString());
     }
 
