@@ -3,7 +3,7 @@ package agenda;
 /**
  * The podium class represents one podium in the simulation.
  */
-public class Podium {
+public class Stage {
     /**
      * The name atribute is the name of the podium.
      */
@@ -32,7 +32,7 @@ public class Podium {
      * @param width is the width of the podium.
      */
 
-    public Podium(String name, int capacity, int length, int width) {
+    public Stage(String name, int capacity, int length, int width) {
         this.name = name;
         this.capacity = capacity;
         this.length = length;
@@ -106,7 +106,7 @@ public class Podium {
     @Override
     public String toString()
     {
-        return "Podium{" +
+        return "Stage{" +
                 "name='" + name + '\'' +
                 ", capacity=" + capacity +
                 ", length=" + length +

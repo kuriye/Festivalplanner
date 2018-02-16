@@ -1,19 +1,19 @@
 package agenda;
 
 /**
- * Class takes the artist and podium and puts them together to an Act. Requires startTime, endTime and popularity input.
+ * Class takes the artist and stage and puts them together to an Act. Requires startTime, endTime and popularity input.
  */
 public class Act {
 
     private Artist artist;
-    private Podium podium;
+    private Stage stage;
     private int startTime;
     private int endTime;
     private int popularity;
 
-    public Act(Artist artist, Podium podium, int startTime, int endTime, int popularity) {
+    public Act(Artist artist, Stage stage, int startTime, int endTime, int popularity) {
         this.artist = artist;
-        this.podium = podium;
+        this.stage = stage;
         this.startTime = startTime;
         this.endTime = endTime;
         this.popularity = popularity;
@@ -28,11 +28,11 @@ public class Act {
     }
 
     /**
-     * Returns the Podium where the current act takes place.
-     * @return podium
+     * Returns the Stage where the current act takes place.
+     * @return stage
      */
-    public Podium getPodium() {
-        return podium;
+    public Stage getStage() {
+        return stage;
     }
 
     /**
@@ -68,11 +68,11 @@ public class Act {
     }
 
     /**
-     * Sets the Podium of the current act.
-     * @param podium defines the podium.
+     * Sets the Stage of the current act.
+     * @param stage defines the stage.
      */
-    public void setPodium(Podium podium) {
-        this.podium = podium;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     /**
@@ -104,7 +104,7 @@ public class Act {
     {
         return "Act{" +
                 "artist=" + artist +
-                ", podium=" + podium +
+                ", stage=" + stage +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", popularity=" + popularity +

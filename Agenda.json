@@ -1,34 +1,39 @@
 {
-  "podia": [
+  "Acts": [
     {
       "Artist" : null,
       "startTime": null,
       "endTIme": null,
-      "popularity": null
+      "popularity": null,
+      "stage": null
     },
     {
       "Artist" : null,
       "startTime": null,
       "endTIme": null,
-      "popularity": null
+      "popularity": null,
+      "stage": null
     },
     {
       "Artist" : null,
       "startTime": null,
       "endTIme": null,
-      "popularity": null
+      "popularity": null,
+      "stage": null
     },
     {
       "Artist" : null,
       "startTime": null,
       "endTIme": null,
-      "popularity": null
+      "popularity": null,
+      "stage": null
     },
     {
       "Artist" : null,
       "startTime": null,
       "endTIme": null,
-      "popularity": null
+      "popularity": null,
+      "stage": null
     }
 ]
 }
