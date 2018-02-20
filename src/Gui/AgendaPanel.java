@@ -13,7 +13,7 @@ public class AgendaPanel extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Graphical Agenda", new GraphicPanel());
         tabbedPane.addTab("Table Agenda", new TablePanel());
-        tabbedPane.setPreferredSize(new Dimension(1750,900));
+        tabbedPane.setPreferredSize(new Dimension(1900,900));
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         add(tabbedPane);
     }
