@@ -80,6 +80,11 @@ public class Program
         return program;
     }
 
+    public int getSize()
+    {
+        return AllActs.size();
+    }
+
     @Override
     public String toString()
     {
