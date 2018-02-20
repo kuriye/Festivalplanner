@@ -1,4 +1,6 @@
 package Gui;
 
-public class TablePanel {
+import javax.swing.*;
+
+public class TablePanel extends JPanel {
 }

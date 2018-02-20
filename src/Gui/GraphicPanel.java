@@ -1,4 +1,8 @@
 package Gui;
 
-public class GraphicPanel {
+import javax.swing.*;
+
+public class GraphicPanel extends JPanel{
+    public GraphicPanel(){
+    }
 }
