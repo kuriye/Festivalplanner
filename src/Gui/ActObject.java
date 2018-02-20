@@ -33,7 +33,7 @@ public class ActObject {
 
     public void draw(Graphics g) {
         g.setColor(this.color);
-        g.fillRoundRect(this.getX(), this.getHeight() ,  this.getWidth(), this.getHeight() , 10 , 10);
+        g.fillRoundRect(this.getX(), this.getY() ,  this.getWidth(), this.getHeight() , 10 , 10);
         g.setColor(new Color(51, 51, 51));
     }
 }
