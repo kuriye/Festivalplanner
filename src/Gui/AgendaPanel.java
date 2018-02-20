@@ -16,5 +16,7 @@ public class AgendaPanel extends JPanel {
         tabbedPane.setPreferredSize(new Dimension(1900,900));
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         add(tabbedPane);
+
+        //tabbedPane.setVisible(true);
     }
 }

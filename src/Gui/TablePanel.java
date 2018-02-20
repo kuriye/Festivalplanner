@@ -21,17 +21,13 @@ import javax.swing.table.TableModel;
 // Voor uitleg over TableColumModel bekijk:
 //http://www.java2s.com/Code/Java/Swing-JFC/TableColumnModelandTableColumnModelListener.htm
 
-public class TablePanel extends JFrame{
+public class TablePanel extends JPanel{
 
     private Program program = new Program();
 
     public TablePanel()
     {
-
-        super("Table");
         setSize(800,800);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         try
         {
             program = program.load();
@@ -89,13 +85,9 @@ public class TablePanel extends JFrame{
 
         TableColumnModel rowHeaderModel = new DefaultTableColumnModel()
         {
-          boolean first = true;
-
           public void addColumn(TableColumn tc)
           {
-
                   super.addColumn(tc);
-
           }
         };
 
@@ -117,14 +109,20 @@ public class TablePanel extends JFrame{
         jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 
+
         JScrollPane jsp = new JScrollPane(jt);
+        JPanel panel = new JPanel(new BorderLayout());
         jsp.setRowHeader(jv);
-        jsp.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerColumn
-                .getTableHeader());
-        getContentPane().add(jsp, BorderLayout.CENTER);
+        jsp.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerColumn.getTableHeader());
+
+        //Als ik er een frame van maak en de volgende methode uncommend werkt het dus wel:
+       //getContentPane().add(jsp, BorderLayout.CENTER);
+
+        panel.add(jsp, BorderLayout.CENTER);
+        panel.setVisible(true);
 
     }
-
+    // werkt ook alleen als classe extends JFrame
     public static void main(String args[])
     {
         TablePanel tp = new TablePanel();
