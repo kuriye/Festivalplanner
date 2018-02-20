@@ -11,7 +11,7 @@ public class GraphicalStages extends JPanel {
 
     private ArrayList<Stage> allStages = new ArrayList<>();
     public GraphicalStages(){
-        setBorder(BorderFactory.createLineBorder(Color.black,3));
+        setPreferredSize(new Dimension(800,100));
         allStages.add(new Stage("jordy", 5 ,5, 5));
         allStages.add(new Stage("jordyf", 5 ,5, 5));
         allStages.add(new Stage("jordyr", 5, 5 ,5));

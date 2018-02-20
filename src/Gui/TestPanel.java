@@ -16,7 +16,7 @@ public class TestPanel extends JFrame {
 
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setContentPane(new GraphicalStages());
+        setContentPane(new GraphicPanel());
         setVisible(true);
 
     }
