@@ -91,6 +91,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
     protected void ifScrolled(Graphics2D g2d){
         if (scrolled){
             scrolled = false;
+            System.out.println(yPositionScroll);
             if (amountOfScrolled < 0){
                 if (yPositionScroll >= 0){
 
@@ -101,7 +102,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
                 }
             }
             else if(amountOfScrolled > 0){
-                if(yPositionScroll <= -1500){
+                if(yPositionScroll < -1450){
 
                 }
                 else{
