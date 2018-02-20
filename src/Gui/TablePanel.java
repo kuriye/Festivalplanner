@@ -1,95 +1,134 @@
 package Gui;
 
-import javax.swing.*;
 import agenda.Program;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
-public class TablePanel extends JPanel {
+
+// Voor uitleg over TableColumModel bekijk:
+//http://www.java2s.com/Code/Java/Swing-JFC/TableColumnModelandTableColumnModelListener.htm
+
+public class TablePanel extends JFrame{
 
     private Program program = new Program();
 
-    public TablePanel() {
-        JFrame frame = new JFrame("test");
-        JPanel panel = new JPanel();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    public TablePanel()
+    {
 
-        try {
+        super("Table");
+        setSize(800,800);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        try
+        {
             program = program.load();
-
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
 
-        JTable tablePanel = new JTable(new Table());
-        panel.add(tablePanel);
-        tablePanel.setRowHeight(50);
-        tablePanel.setPreferredSize(new Dimension(750, 750));
 
-        DefaultTableModel model = new DefaultTableModel();
-        
-
-
-        frame.setSize(800, 800);
-        frame.setContentPane(panel);
-        frame.setVisible(true);
-    }
-
-
-
-    public static void main(String[] args) {
-        TablePanel tablePanel = new TablePanel();
-    }
-
-    private class Table extends AbstractTableModel {
-        public int getRowCount()
+        TableModel tm = new AbstractTableModel()
         {
-            return 2;
-        }
+            String headers[] = {"Podium", "Artiest", "Genre", "Begintijd", "Eindtijd", "Populariteit"};
 
-        public int getColumnCount()
-        {
-            return 6;
-        }
-
-        public Object getValueAt(int rowIndex, int columnIndex) {
-
-
-            switch (columnIndex)
+            @Override
+            public int getRowCount()
             {
-                case 0: return program.getActs(rowIndex).getStage().getName();
-                case 1: return program.getActs(rowIndex).getArtist().getName();
-                case 2: return program.getActs(rowIndex).getArtist().getGenre();
-                case 3: return program.getActs(rowIndex).getStartTime();
-                case 4: return program.getActs(rowIndex).getEndTime();
-                case 5: return program.getActs(rowIndex).getPopularity();
+                return program.getSize();
             }
 
-            return "";
-        }
-
-        @Override
-        public String getColumnName(int column) {
-
-            switch (column)
+            @Override
+            public int getColumnCount()
             {
-                case 0: return "Podium";
-                case 1: return "Artiest";
-                case 2: return "Genre";
-                case 3: return "Begintijd";
-                case 4: return "Eindtijd";
-                case 5: return "Populariteit Act";
+                return 6;
             }
 
-            return ""  ;
-        }
+            public String getColumnName(int col)
+            {
+                return headers[col];
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex)
+            {
+                switch (columnIndex)
+                {
+                    case 0: return program.getActs(rowIndex).getStage().getName();
+                    case 1: return program.getActs(rowIndex).getArtist().getName();
+                    case 2: return program.getActs(rowIndex).getArtist().getGenre();
+                    case 3: return program.getActs(rowIndex).getStartTime();
+                    case 4: return program.getActs(rowIndex).getEndTime();
+                    case 5: return program.getActs(rowIndex).getPopularity();
+                }
+                return "";
+            }
+        };
+
+        TableColumnModel cm = new DefaultTableColumnModel()
+        {
+
+            public void addColumn(TableColumnModel tc)
+            {
+                super.addColumn((TableColumn) tc);
+            }
+        };
+
+        TableColumnModel rowHeaderModel = new DefaultTableColumnModel()
+        {
+          boolean first = true;
+
+          public void addColumn(TableColumn tc)
+          {
+
+                  super.addColumn(tc);
+
+          }
+        };
+
+        JTable jt = new JTable(tm, cm);
+
+        JTable headerColumn = new JTable(tm, rowHeaderModel);
+        jt.createDefaultColumnsFromModel();
+        headerColumn.createDefaultColumnsFromModel();
+
+
+        jt.setSelectionModel(headerColumn.getSelectionModel());
+
+
+        JViewport jv = new JViewport();
+        jv.setView(headerColumn);
+        jv.setPreferredSize(headerColumn.getMaximumSize());
+
+
+        jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+
+        JScrollPane jsp = new JScrollPane(jt);
+        jsp.setRowHeader(jv);
+        jsp.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerColumn
+                .getTableHeader());
+        getContentPane().add(jsp, BorderLayout.CENTER);
+
     }
+
+    public static void main(String args[])
+    {
+        TablePanel tp = new TablePanel();
+        tp.setVisible(true);
+    }
+
 }
-
-
-

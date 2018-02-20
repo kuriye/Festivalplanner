@@ -25,9 +25,12 @@ public class TestDataAgenda
         Stage stage1 = new Stage("P2", 1000,50,50);
         program.addAct(artist2, stage, 2000, 2100,50);
         program.addAct(artist1,stage1,2200,2300,100);
+        program.addAct(artist1,stage,1000,1100,20);
+        //program.addAct(artist2,stage1,1200,1300,30);
+        //program.addAct(artist2,stage,2222,2444,30);
 
-      program.save(program);
+        program.save(program);
 
-       System.out.println(program.load());
+       //System.out.println(program.load());
     }
 }
