@@ -17,12 +17,11 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
     private int yPositionScroll = 0;
 
     public GraphicPanel(){
-        allStages.add(new Stage("jordy", 5 ,5, 5));
-        allStages.add(new Stage("jordyf", 5 ,5, 5));
-        allStages.add(new Stage("jordyr", 5, 5 ,5));
-        allStages.add(new Stage("jordyj", 5 ,5, 5));
-        allStages.add(new Stage("jordyjyyy", 5 ,5, 5));
-        allStages.add(new Stage("jordyjfff", 5 ,5, 5));
+        allStages.add(new Stage("Groot podium", 5 ,5, 5));
+        allStages.add(new Stage("Klein podium", 5 ,5, 5));
+        allStages.add(new Stage("rechtse podium", 5, 5 ,5));
+        allStages.add(new Stage("linkse podium", 5 ,5, 5));
+        allStages.add(new Stage("special podium", 5 ,5, 5));
 
     }
 
@@ -60,7 +59,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         int increment = getWidth()/6;
         g2d.setStroke(new BasicStroke(5));
         for (Stage stage : allStages){
-            g2d.drawString(stage.getName(),(increment* index) + increment/2, getHeight()/18);
+            g2d.drawString(stage.getName(),(increment* index) + increment/2 - stage.getName().length() * 4, getHeight()/18);
             g2d.draw(new Line2D.Double(increment + increment* index, 0, increment + increment * index, getHeight()/10));
             index++;
         }
@@ -94,19 +93,19 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
             System.out.println(yPositionScroll);
             if (amountOfScrolled < 0){
                 if (yPositionScroll >= 0){
-
+                    g2d.translate(0,0);
                 }
                 else{
-                    yPositionScroll += 50;
+                    yPositionScroll += 25;
                     g2d.translate(0,yPositionScroll);
                 }
             }
             else if(amountOfScrolled > 0){
-                if(yPositionScroll < -1450){
-
+                if(yPositionScroll < -1350){
+                    g2d.translate(0,-1400);
                 }
                 else{
-                    yPositionScroll -= 50;
+                    yPositionScroll -= 25;
                     g2d.translate(0,yPositionScroll);
                 }
             }
