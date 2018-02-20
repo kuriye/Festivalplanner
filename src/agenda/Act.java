@@ -11,6 +11,8 @@ public class Act {
     private int endTime;
     private int popularity;
 
+    public Act() {}
+
     public Act(Artist artist, Stage stage, int startTime, int endTime, int popularity) {
         this.artist = artist;
         this.stage = stage;

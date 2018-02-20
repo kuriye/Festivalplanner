@@ -2,15 +2,13 @@ package agenda;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Program
 {
-    ArrayList <Act> AllActs = new ArrayList<>();
-    ObjectMapper objectMapper = new ObjectMapper();
+    private ArrayList <Act> AllActs = new ArrayList<>();
+
 
 
     public Program()
@@ -75,9 +73,11 @@ public class Program
     /**
      * De methode retuned een ArrayList AllActs uit het file bestand.
      */
-    public void load()
+    public Program load() throws IOException
     {
-        //return Act file
+        ObjectMapper objectMapper = new ObjectMapper();
+        Program program = objectMapper.readValue(new File("Agenda.json"), Program.class);
+        return program;
     }
 
     @Override

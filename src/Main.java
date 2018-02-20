@@ -1,6 +1,8 @@
+import agenda.Program;
+
 public class Main {
 
-    public Main(){
-        //Is This The Real Life
+    public static void main(String[] args){
+        Program program = new Program();
     }
 }
