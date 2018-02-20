@@ -11,8 +11,6 @@ public class Mainframe extends JFrame {
 
     public Mainframe(){
         super("Simulatie");
-
-
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         addAgendaPanel();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
