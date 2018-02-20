@@ -1,10 +1,17 @@
 package agenda;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Program
 {
     ArrayList <Act> AllActs = new ArrayList<>();
+    ObjectMapper objectMapper = new ObjectMapper();
+
 
     public Program()
     {
@@ -58,9 +65,11 @@ public class Program
     /**
      * De methode slaat de ArrayList AllActs op in een file bestand
      */
-    public void save()
+    public void save(Program program) throws IOException
     {
-        //Acts worden omgezet naar bijvoorbeeld json file
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(new FileOutputStream("Agenda.json"), program);
+
     }
 
     /**
