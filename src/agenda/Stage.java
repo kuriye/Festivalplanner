@@ -24,6 +24,8 @@ public class Stage {
      */
     private int width;
 
+    public Stage() {}
+
     /**
      *
      * @param name is the name of the podium.

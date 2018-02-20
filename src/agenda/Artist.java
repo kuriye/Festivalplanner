@@ -9,6 +9,8 @@ Genre is the kind of music
     private int popularity;
     private String genre;
 
+    public Artist() {}
+
     public Artist(String name, int popularity, String genre) {
 
         this.name = name;

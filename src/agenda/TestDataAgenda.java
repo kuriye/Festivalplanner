@@ -1,6 +1,7 @@
 package agenda;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,6 +24,8 @@ public class TestDataAgenda
         Stage stage = new Stage("P1", 1000, 50, 50);
         program.addAct(artist2, stage, 2000, 2100,50);
 
-        program.save(program);
+       // program.save(program);
+
+        System.out.println(program.load());
     }
 }
