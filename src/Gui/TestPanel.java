@@ -13,11 +13,11 @@ public class TestPanel extends JFrame {
     public TestPanel(){
         super("Simulatie");
 
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        setPreferredSize(new Dimension(800,800));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //JScrollPane scrollPane = new JScrollPane(new GraphicPanel(), JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         setMinimumSize(new Dimension(800, 600));
-        setContentPane(new GraphicPanel());
+        masterPanel.add(new TablePanel(), BorderLayout.NORTH);
+        setContentPane(masterPanel);
         setVisible(true);
 
     }

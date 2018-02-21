@@ -1,6 +1,5 @@
 package Gui;
 import agenda.Stage;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseWheelEvent;
@@ -9,13 +8,35 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+
+/**
+ * The GraphicPanel class extends JPanel and implements a MouseWheelListener. The GraphicPanel regulates the schedule of the festival.
+ */
 public class GraphicPanel extends JPanel implements MouseWheelListener{
+
+    /**
+     * The allStages atribute is a collection of all stagess in the agenda.
+     */
     private ArrayList<Stage> allStages = new ArrayList<>();
 
+    /**
+     * The scrolled artibute will be set to true if the mousewheel is scrolled.
+     */
     private boolean scrolled = false;
+
+    /**
+     * The amountOfScrolled artibute regulates the amount scrolled.
+     */
     private int amountOfScrolled = 0;
+
+    /**
+     * The yPositionScroll is the y-position wich the world will be translated at.
+     */
     private int yPositionScroll = 0;
 
+    /**
+     * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
+     */
     public GraphicPanel(){
         allStages.add(new Stage("Groot podium", 5 ,5, 5));
         allStages.add(new Stage("Klein podium", 5 ,5, 5));
@@ -39,6 +60,10 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
 
     }
 
+    /**
+     * The paintTimer method paints all the times when a artist can preform an act. It also paints the rectangle around the times.
+     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     */
     protected void paintTimer(Graphics2D g2d){
         for (int time = 0; time < 25; time++){
             if (time < 10){
@@ -54,6 +79,10 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         g2d.draw(rectangle2D);
     }
 
+    /**
+     * The paintStages method paints all stage names and paints a rectangle around those names.
+     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     */
     protected void paintStages(Graphics2D g2d){
         int index = 1;
         int increment = getWidth()/6;
@@ -67,6 +96,10 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         g2d.draw(rectangle2D);
     }
 
+    /**
+     * The paintLines method paints all lines that is needed for the graphicPanel.
+     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     */
     protected void paintLines(Graphics2D g2d){
         int increment = getWidth()/6;
         for (int i = 0; i < 5; i++){
@@ -87,10 +120,14 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         g2d.draw(new Line2D.Double(increment,getHeight() + 1340, getWidth(), getHeight() + 1340));
     }
 
+
+    /**
+     * The ifScrolled method controls if the mousewheel is scrolled and regulates the scrolling in the panel.
+     * @param g2d g2d is gotten from the paintComponent wich paints on the panel.
+     */
     protected void ifScrolled(Graphics2D g2d){
         if (scrolled){
             scrolled = false;
-            System.out.println(yPositionScroll);
             if (amountOfScrolled < 0){
                 if (yPositionScroll >= 0){
                     g2d.translate(0,0);

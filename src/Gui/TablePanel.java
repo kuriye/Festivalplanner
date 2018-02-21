@@ -6,7 +6,6 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.io.IOException;
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
@@ -27,7 +26,7 @@ public class TablePanel extends JPanel{
 
     public TablePanel()
     {
-        setSize(800,800);
+        setPreferredSize(new Dimension(1200,1200));
         try
         {
             program = program.load();
@@ -110,16 +109,8 @@ public class TablePanel extends JPanel{
 
 
 
-        JScrollPane jsp = new JScrollPane(jt);
-        JPanel panel = new JPanel(new BorderLayout());
-        jsp.setRowHeader(jv);
-        jsp.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, headerColumn.getTableHeader());
-
-        //Als ik er een frame van maak en de volgende methode uncommend werkt het dus wel:
-       //getContentPane().add(jsp, BorderLayout.CENTER);
-
-        panel.add(jsp, BorderLayout.CENTER);
-        panel.setVisible(true);
+        //Als ik er een frame van maak en de volgende methode uncommend werkt het dus wel
+        this.add(jt);
 
     }
     // werkt ook alleen als classe extends JFrame
