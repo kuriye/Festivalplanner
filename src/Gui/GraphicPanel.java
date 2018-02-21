@@ -40,20 +40,33 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
     private int yPositionScroll = 0;
 
     /**
-     * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
+     * The heightOfBox1 atribute is one of the two calculated values for the distance between the lines.
      */
-
     private int heightOfBox1;
+
+    /**
+     * The heightOfBox2 atribute is one of the two calculated values for the distance between the lines.
+     */
     private int heightOfBox2;
+
+    /**
+     * The increment is the distance between de lines from above the below.
+     */
     private int increment;
+
+    /**
+     * The heightOfString atribute is the height where the stage names gets placed at.
+     */
     private int heightOfString;
 
 
-
+    /**
+     * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
+     */
     public GraphicPanel(){
-        allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),900,1500,75));
-        //allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1000,1200,75));
-        //allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1000,1200,75));
+        allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
+        allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1925,75));
+        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),915,1445,75));
 
         for (Act act : allActs){
             allStages.add(act.getStage());
@@ -164,17 +177,68 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         }
     }
 
+
+    /**
+     *
+     * @param g2d
+     */
     protected void paintActs(Graphics2D g2d){
         for (Act act : allActs){
             int startTime = act.getStartTime(); //1000
             int endTime = act.getEndTime(); //1200
-            System.out.println(endTime);
-            int beginX = increment + increment* 0;
-            int beginY = 2 * (heightOfBox2 + heightOfBox1 * (startTime/100 - 1));
 
-            int height = (((endTime - startTime)/100)) * ((heightOfBox2 + heightOfBox1)/3) * 2;
-            g2d.setColor(Color.GREEN);
-            g2d.fill(new RoundRectangle2D.Double(beginX + 10, beginY,increment - 20, height,10,10));
+            double fullStartTime = startTime;
+            double fullEndTime = endTime;
+            double partStartTime = 0;
+            double partEndTime = 0;
+
+
+            //calculates the minutes if the start time got parts of hours.
+            if(startTime % 100 != 0){
+                partStartTime = startTime;
+                for(int i = 100; i < 2500; i+= 100){
+                    if (partStartTime - i <= 60){
+                        fullStartTime = i;
+                        partStartTime = partStartTime - i;
+                        break;
+                    }
+                }
+            }
+
+            //calculates the minutes if the end time got parts of hours.
+            if(endTime % 100 != 0){
+                partEndTime = endTime;
+                for(int i = 100; i < 2500; i+= 100){
+                    if (partEndTime - i <= 60){
+                        fullEndTime = i;
+                        partEndTime = partEndTime - i;
+                        break;
+                    }
+                }
+            }
+
+            //checks wich stage the act must be placed
+            int index = 0;
+            for (Stage stage : allStages){
+                if (act.getStage().equals(stage)){
+                    break;
+                }
+                index++;
+            }
+
+
+
+            int beginX = increment + increment * index;
+
+            double amountForBeginY = 2*((fullStartTime/100) + (partStartTime/60));
+            double amountOfBoxesForHeight = (fullEndTime- fullStartTime - 100)/100 + (partEndTime - partStartTime)/60;
+
+            double beginY = heightOfBox2 + heightOfBox1 * amountForBeginY;
+            double height = heightOfBox2 + heightOfBox1 * 2 * amountOfBoxesForHeight;
+
+            ActObject actObject = new ActObject(beginX, (int)beginY, (int)increment, (int)height,
+                    act.getArtist().getName(),act.getStartTime(),act.getEndTime());
+            actObject.draw(g2d);
         }
     }
 
