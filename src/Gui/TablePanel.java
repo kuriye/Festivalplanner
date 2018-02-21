@@ -45,7 +45,7 @@ public class TablePanel extends JTable{
 
         panel.add(new JScrollPane(new JTable(new TableModel())), BorderLayout.CENTER);
         panel.add(buttonPannel, BorderLayout.SOUTH);
-        panel.setSize(1900,860);
+        panel.setSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),860));
         this.add(panel);
 
         toevoegen.addActionListener(new ActionListener()
