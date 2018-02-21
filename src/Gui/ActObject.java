@@ -1,15 +1,13 @@
 package Gui;
 
-import agenda.Artist;
-import javafx.scene.shape.Shape;
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
 public class ActObject {
     private RoundRectangle2D.Double rectangle;
     private Color color;
-    private String actor;
+    private String artistName;
     private int startTime;
     private int endTime;
 
@@ -17,10 +15,10 @@ public class ActObject {
     /*
     Creates a rectangle that with the right color.
      */
-    public ActObject(int x, int y, int width, int height, String actor, int beginTime, int  endTime){
-        this.rectangle = new RoundRectangle2D.Double(x, y ,  width, height , 10 , 10);
+    public ActObject(int x, int y, int width, int height, String artistName, int beginTime, int  endTime){
+        this.rectangle = new RoundRectangle2D.Double(x + width/10/2, y ,  width - width/10, height , 10 , 10);
         this.color = new Color(153, 204 ,255);
-        this.actor = actor;
+        this.artistName = artistName;
         this.startTime = beginTime;
         this.endTime = endTime;
     }
@@ -49,13 +47,15 @@ public class ActObject {
 
         g2d.setStroke(new BasicStroke(5));
         g2d.setColor(new Color(100, 205 ,255));
-        g2d.drawRoundRect(this.getX(), this.getY() ,  this.getWidth(), this.getHeight() , 50 , 50);
+        g2d.drawRoundRect(this.getX(), this.getY() , this.getWidth(), this.getHeight() , 50 , 50);
 
 
         g2d.setColor(new Color(51, 51, 51));
-        g2d.drawString("" + actor,this.getX() + 50, this.getY() + 50);
-        g2d.drawString("" + startTime, (this.getX() + this.getWidth())/2, (this.getY() + this.getHeight())-10);
-        g2d.drawString("" + endTime, (this.getX() + this.getWidth())/2, (this.getY() + this.getHeight())-15);
+        g2d.setFont(new JLabel().getFont().deriveFont(20f));
+
+        g2d.drawString("Artist: " + artistName,this.getX() + getWidth()/10, this.getY() + getHeight()/10);
+        g2d.drawString("Start Time: " + startTime,this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+        g2d.drawString("End Time: " + endTime, this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
     }
 
 
