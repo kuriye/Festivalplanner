@@ -1,4 +1,6 @@
 package Gui;
+import agenda.Act;
+import agenda.Artist;
 import agenda.Stage;
 import javax.swing.*;
 import java.awt.*;
@@ -6,6 +8,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
 
@@ -14,6 +17,8 @@ import java.util.ArrayList;
  */
 public class GraphicPanel extends JPanel implements MouseWheelListener{
 
+
+    private ArrayList<Act> allActs = new ArrayList<>();
     /**
      * The allStages atribute is a collection of all stagess in the agenda.
      */
@@ -37,13 +42,22 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
     /**
      * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
      */
-    public GraphicPanel(){
-        allStages.add(new Stage("Groot podium", 5 ,5, 5));
-        allStages.add(new Stage("Klein podium", 5 ,5, 5));
-        allStages.add(new Stage("rechtse podium", 5, 5 ,5));
-        allStages.add(new Stage("linkse podium", 5 ,5, 5));
-        allStages.add(new Stage("special podium", 5 ,5, 5));
 
+    private int heightOfBox1;
+    private int heightOfBox2;
+    private int increment;
+    private int heightOfString;
+
+
+
+    public GraphicPanel(){
+        allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),900,1500,75));
+        //allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1000,1200,75));
+        //allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1000,1200,75));
+
+        for (Act act : allActs){
+            allStages.add(act.getStage());
+        }
     }
 
 
@@ -53,10 +67,12 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         this.addMouseWheelListener(this);
         Graphics2D g2d = (Graphics2D)g;
 
+        calculateAllValues();
         ifScrolled(g2d);
         paintTimer(g2d);
         paintStages(g2d);
         paintLines(g2d);
+        paintActs(g2d);
 
     }
 
@@ -84,15 +100,15 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
      * @param g2d is gotten from the paintComponent wich paints on the panel.
      */
     protected void paintStages(Graphics2D g2d){
-        int index = 1;
-        int increment = getWidth()/6;
         g2d.setStroke(new BasicStroke(5));
-        for (Stage stage : allStages){
-            g2d.drawString(stage.getName(),(increment* index) + increment/2 - stage.getName().length() * 4, getHeight()/18);
-            g2d.draw(new Line2D.Double(increment + increment* index, 0, increment + increment * index, getHeight()/10));
-            index++;
+        for (int index = 1; index < 6; index ++){
+            if (index <= allStages.size()){
+                Stage stage = allStages.get(index -1);
+                g2d.drawString(stage.getName(),(increment* index) + increment/2 - stage.getName().length() * 4, heightOfString);
+            }
+            g2d.draw(new Line2D.Double(increment + increment* index, 0, increment + increment * index, heightOfBox2));
         }
-        Rectangle2D rectangle2D = new Rectangle2D.Double(increment,0,getWidth(),getHeight()/10);
+        Rectangle2D rectangle2D = new Rectangle2D.Double(increment,0,getWidth(),heightOfBox2);
         g2d.draw(rectangle2D);
     }
 
@@ -101,19 +117,18 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
      * @param g2d is gotten from the paintComponent wich paints on the panel.
      */
     protected void paintLines(Graphics2D g2d){
-        int increment = getWidth()/6;
         for (int i = 0; i < 5; i++){
-            g2d.draw(new Line2D.Double(increment + increment* (i + 1), getHeight()/10, increment + increment * (i + 1), getHeight() + 1340));
+            g2d.draw(new Line2D.Double(increment + increment* (i + 1), heightOfBox2, increment + increment * (i + 1), getHeight() + 1340));
         }
         g2d.setStroke(new BasicStroke(1));
         for (int i = 0; i < 49; i++){
             if (i % 2 == 0){
                 g2d.setStroke(new BasicStroke(5));
-                g2d.draw(new Line2D.Double(0,getHeight()/10 + getHeight()/20 * i,getWidth(),getHeight()/10 + getHeight()/20 * i));
+                g2d.draw(new Line2D.Double(0,heightOfBox2 + heightOfBox1 * i,getWidth(),heightOfBox2 + heightOfBox1 * i));
                 g2d.setStroke(new BasicStroke(1));
             }
             else{
-                g2d.draw(new Line2D.Double(0,getHeight()/10 + getHeight()/20 * i,getWidth(),getHeight()/10 + getHeight()/20 * i ));
+                g2d.draw(new Line2D.Double(0,heightOfBox2 + heightOfBox1 * i,getWidth(),heightOfBox2 + heightOfBox1 * i));
             }
         }
         g2d.setStroke(new BasicStroke(5));
@@ -148,6 +163,28 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
             }
         }
     }
+
+    protected void paintActs(Graphics2D g2d){
+        for (Act act : allActs){
+            int startTime = act.getStartTime(); //1000
+            int endTime = act.getEndTime(); //1200
+            System.out.println(endTime);
+            int beginX = increment + increment* 0;
+            int beginY = 2 * (heightOfBox2 + heightOfBox1 * (startTime/100 - 1));
+
+            int height = (((endTime - startTime)/100)) * ((heightOfBox2 + heightOfBox1)/3) * 2;
+            g2d.setColor(Color.GREEN);
+            g2d.fill(new RoundRectangle2D.Double(beginX + 10, beginY,increment - 20, height,10,10));
+        }
+    }
+
+    public void calculateAllValues(){
+        heightOfBox1 = getHeight()/20;
+        heightOfBox2 = getHeight()/10;
+        increment = getWidth()/6;
+        heightOfString = getHeight()/18;
+    }
+
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
