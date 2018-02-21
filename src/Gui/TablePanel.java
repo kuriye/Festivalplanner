@@ -3,30 +3,25 @@ package Gui;
 import agenda.Program;
 
 import javax.swing.*;
-import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+
 
 
 // Voor uitleg over TableColumModel bekijk:
 //http://www.java2s.com/Code/Java/Swing-JFC/TableColumnModelandTableColumnModelListener.htm
 
-public class TablePanel extends JPanel{
+public class TablePanel extends JTable{
 
     private Program program = new Program();
 
     public TablePanel()
     {
-        setPreferredSize(new Dimension(1200,1200));
         try
         {
             program = program.load();
@@ -35,89 +30,114 @@ public class TablePanel extends JPanel{
             e.printStackTrace();
         }
 
+        JPanel panel = new JPanel(new BorderLayout());
+        JPanel buttonPannel = new JPanel(new FlowLayout());
+        JButton toevoegen = new JButton("Toevoegen");
+        JButton verwijderen = new JButton("Verwijderen");
+        JButton save = new JButton("Save");
+        JButton load = new JButton("Load");
 
-        TableModel tm = new AbstractTableModel()
+        buttonPannel.add(toevoegen);
+        buttonPannel.add(verwijderen);
+        buttonPannel.add(load);
+        buttonPannel.add(save);
+
+        panel.add(new JScrollPane(new JTable(new TableModel())), BorderLayout.CENTER);
+        panel.add(buttonPannel, BorderLayout.SOUTH);
+        panel.setSize(1900,860);
+        this.add(panel);
+
+        toevoegen.addActionListener(new ActionListener()
         {
-            String headers[] = {"Podium", "Artiest", "Genre", "Begintijd", "Eindtijd", "Populariteit"};
-
             @Override
-            public int getRowCount()
+            public void actionPerformed(ActionEvent e)
             {
-                return program.getSize();
+                PopUpWindow popUpWindow = new PopUpWindow();
+
             }
-
-            @Override
-            public int getColumnCount()
-            {
-                return 6;
-            }
-
-            public String getColumnName(int col)
-            {
-                return headers[col];
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex)
-            {
-                switch (columnIndex)
-                {
-                    case 0: return program.getActs(rowIndex).getStage().getName();
-                    case 1: return program.getActs(rowIndex).getArtist().getName();
-                    case 2: return program.getActs(rowIndex).getArtist().getGenre();
-                    case 3: return program.getActs(rowIndex).getStartTime();
-                    case 4: return program.getActs(rowIndex).getEndTime();
-                    case 5: return program.getActs(rowIndex).getPopularity();
-                }
-                return "";
-            }
-        };
-
-        TableColumnModel cm = new DefaultTableColumnModel()
-        {
-
-            public void addColumn(TableColumnModel tc)
-            {
-                super.addColumn((TableColumn) tc);
-            }
-        };
-
-        TableColumnModel rowHeaderModel = new DefaultTableColumnModel()
-        {
-          public void addColumn(TableColumn tc)
-          {
-                  super.addColumn(tc);
-          }
-        };
-
-        JTable jt = new JTable(tm, cm);
-
-        JTable headerColumn = new JTable(tm, rowHeaderModel);
-        jt.createDefaultColumnsFromModel();
-        headerColumn.createDefaultColumnsFromModel();
-
-
-        jt.setSelectionModel(headerColumn.getSelectionModel());
-
-
-        JViewport jv = new JViewport();
-        jv.setView(headerColumn);
-        jv.setPreferredSize(headerColumn.getMaximumSize());
-
-
-        jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-
-
-        //Als ik er een frame van maak en de volgende methode uncommend werkt het dus wel
-        this.add(jt);
-
+        });
     }
-    // werkt ook alleen als classe extends JFrame
-    public static void main(String args[])
+
+    class PopUpWindow extends JFrame
     {
-        TablePanel tp = new TablePanel();
-        tp.setVisible(true);
+
+        public PopUpWindow()
+        {
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JPanel content = new JPanel(null);
+            setContentPane(content);
+
+            JLabel lblNaam = new JLabel("Artiest: ");
+            content.add(lblNaam);
+            JTextField naam = new JTextField(20);
+            content.add(naam);
+
+            JLabel lblEmail = new JLabel("Podium: ");
+            content.add(lblEmail);
+            JTextField email = new JTextField(20);
+            content.add(email);
+
+            JLabel lblTelefoonnummer = new JLabel("Genre: ");
+            content.add(lblTelefoonnummer);
+            JTextField telefoonnummer = new JTextField(20);
+            content.add(telefoonnummer);
+
+            JButton opslaan = new JButton("Opslaan");
+            content.add(opslaan);
+
+
+            lblNaam.setBounds(20, 0 , 150 , 30);
+            naam.setBounds(200, 0,300,30);
+            lblEmail.setBounds(20,25,150,30);
+            email.setBounds(200, 25, 300,30);
+            lblTelefoonnummer.setBounds(20, 50,150,30);
+            telefoonnummer.setBounds(200,50,300,30);
+            opslaan.setBounds(220,100,100,30);
+
+            setVisible(true);
+            setSize(600,600);
+
+
+        }
     }
 
+
+    class TableModel extends AbstractTableModel
+    {
+        String headers[] = {"Podium", "Artiest", "Genre", "Begintijd", "Eindtijd", "Populariteit"};
+
+        @Override
+        public int getRowCount()
+        {
+            return program.getSize();
+        }
+
+        @Override
+        public int getColumnCount()
+        {
+            return 6;
+        }
+
+        public String getColumnName(int col)
+        {
+            return headers[col];
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex)
+        {
+            switch (columnIndex)
+            {
+                case 0: return program.getActs(rowIndex).getStage().getName();
+                case 1: return program.getActs(rowIndex).getArtist().getName();
+                case 2: return program.getActs(rowIndex).getArtist().getGenre();
+                case 3: return program.getActs(rowIndex).getStartTime();
+                case 4: return program.getActs(rowIndex).getEndTime();
+                case 5: return program.getActs(rowIndex).getPopularity();
+            }
+            return "";
+        }
+    }
 }
