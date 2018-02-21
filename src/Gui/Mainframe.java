@@ -20,7 +20,6 @@ public class Mainframe extends JFrame {
 
     public void addAgendaPanel(){
         masterPanel.add(new AgendaPanel());
-
     }
 
 

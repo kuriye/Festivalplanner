@@ -42,12 +42,20 @@ public class ActObject {
     }
 
     public void draw(Graphics g) {
-        g.setColor(this.color);
-        g.fillRoundRect(this.getX(), this.getY() ,  this.getWidth(), this.getHeight() , 10 , 10);
-        g.setColor(new Color(51, 51, 51));
-        g.drawString("" + actor, (this.getX() + this.getWidth())/2, (this.getY() + this.getHeight())-5);
-        g.drawString("" + startTime, (this.getX() + this.getWidth())/2, (this.getY() + this.getHeight())-10);
-        g.drawString("" + endTime, (this.getX() + this.getWidth())/2, (this.getY() + this.getHeight())-15);
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setColor(this.color);
+        g2d.fillRoundRect(this.getX(), this.getY() ,  this.getWidth(), this.getHeight() , 50 , 50);
+
+
+        g2d.setStroke(new BasicStroke(5));
+        g2d.setColor(new Color(100, 205 ,255));
+        g2d.drawRoundRect(this.getX(), this.getY() ,  this.getWidth(), this.getHeight() , 50 , 50);
+
+
+        g2d.setColor(new Color(51, 51, 51));
+        g2d.drawString("" + actor,this.getX() + 50, this.getY() + 50);
+        g2d.drawString("" + startTime, (this.getX() + this.getWidth())/2, (this.getY() + this.getHeight())-10);
+        g2d.drawString("" + endTime, (this.getX() + this.getWidth())/2, (this.getY() + this.getHeight())-15);
     }
 
 
