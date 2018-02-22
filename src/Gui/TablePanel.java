@@ -25,6 +25,9 @@ public class TablePanel extends JTable{
     JTable jTable;
 
 
+    /**
+     * Load Json file with Program object and make TablePanel
+     */
     public TablePanel()
     {
         try
@@ -41,6 +44,9 @@ public class TablePanel extends JTable{
         verwijderen.addActionListener(e -> verwijderenButton());
     }
 
+    /**
+     * The method paints the JTable with 2 buttons
+     */
     public void makeTablePanel()
     {
         panel = new JPanel(new BorderLayout());
@@ -58,15 +64,21 @@ public class TablePanel extends JTable{
         this.add(panel);
     }
 
+    /**
+     * This method will show a Pop Up window when "toevoegen" button is pressed.
+     */
+
     public void toevoegenButton()
     {
         PopUpWindow popUpWindow = new PopUpWindow();
     }
 
+    /**
+     * This method removes a selected row in the JTable and in the Json file.
+     */
+
     public void verwijderenButton()
     {
-
-        //System.out.println(jTable.getSelectedRow());
         program.removeAct(jTable.getSelectedRow());
 
         try
@@ -80,7 +92,9 @@ public class TablePanel extends JTable{
         model.fireTableDataChanged();
     }
 
-
+    /**
+     * This class makes the PopUp window where you can add a Program object.
+     */
     class PopUpWindow extends JFrame
     {
 
@@ -107,37 +121,37 @@ public class TablePanel extends JTable{
             JTextField genreField = new JTextField(20);
             content.add(genreField);
 
-            JLabel podium = new JLabel("Podium");
+            JLabel podium = new JLabel("Podium: ");
             content.add(podium);
             JTextField podiumField = new JTextField(20);
             content.add(podiumField);
 
-            JLabel capaciteit = new JLabel("Capaciteit");
+            JLabel capaciteit = new JLabel("Capaciteit: ");
             content.add(capaciteit);
             JTextField capaciteitField = new JTextField(20);
             content.add(capaciteitField);
 
-            JLabel lengte = new JLabel("lengte");
+            JLabel lengte = new JLabel("Lengte Podium: ");
             content.add(lengte);
             JTextField lengteField = new JTextField(20);
             content.add(lengteField);
 
-            JLabel breedte = new JLabel("breedte");
+            JLabel breedte = new JLabel("Breedte Podium: ");
             content.add(breedte);
             JTextField breedteField = new JTextField(20);
             content.add(breedteField);
 
-            JLabel startTime = new JLabel("Start Tijd");
+            JLabel startTime = new JLabel("Start (militaire) Tijd: ");
             content.add(startTime);
             JTextField startTimeField = new JTextField(20);
             content.add(startTimeField);
 
-            JLabel endTime = new JLabel("Eind Tijd");
+            JLabel endTime = new JLabel("Eind (militaire) Tijd: ");
             content.add(endTime);
             JTextField endTimeField = new JTextField(20);
             content.add(endTimeField);
 
-            JLabel populariteitPodium = new JLabel("Populariteit podium");
+            JLabel populariteitPodium = new JLabel("Populariteit podium: ");
             content.add(populariteitPodium);
             JTextField populariteitPodiumField = new JTextField(20);
             content.add(populariteitPodiumField);
@@ -206,9 +220,9 @@ public class TablePanel extends JTable{
                     model.fireTableDataChanged();
                 }
             });
-
             setVisible(true);
-            setSize(600,600);
+            setSize(550,400);
+            setLocationRelativeTo(null);
 
         }
     }
