@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListDataListener;
@@ -189,17 +190,51 @@ public class TablePanel extends JTable{
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    int populariteitInt = Integer.parseInt(populariteitField.getText());
-                    int capaciteitInt = Integer.parseInt(capaciteitField.getText());
-                    int lengteInt = Integer.parseInt(lengteField.getText());
-                    int breedteInt = Integer.parseInt(breedteField.getText());
-                    int startTimeInt = Integer.parseInt(startTimeField.getText());
-                    int endTimeInt = Integer.parseInt(endTimeField.getText());
-                    int populariteitPodiumInt = Integer.parseInt(populariteitPodiumField.getText());
+                    boolean exists = false;
 
-                    Artist artist2 = new Artist(artiestField.getText(), populariteitInt, genreField.getText());
-                    Stage stage = new Stage(podiumField.getText(), capaciteitInt,lengteInt, breedteInt);
-                    program.addAct(artist2, stage, startTimeInt,endTimeInt, populariteitPodiumInt);
+                    try {
+                        int populariteitInt = Integer.parseInt(populariteitField.getText());
+                        int capaciteitInt = Integer.parseInt(capaciteitField.getText());
+                        int lengteInt = Integer.parseInt(lengteField.getText());
+                        int breedteInt = Integer.parseInt(breedteField.getText());
+                        int startTimeInt = Integer.parseInt(startTimeField.getText());
+                        int endTimeInt = Integer.parseInt(endTimeField.getText());
+                        int populariteitPodiumInt = Integer.parseInt(populariteitPodiumField.getText());
+
+                        for (int i = 0; i < program.takeGrootte(); i++)
+                        {
+                            if (program.getActs(i).getStage().getName().equals(podiumField.getText()) &&  program.getActs(i).getStartTime() == startTimeInt )
+                            {
+                                exists = true;
+                                JOptionPane.showMessageDialog(null, "Verander de starttijd of het podium. Een podium kan niet op hetzelfde moment meerdere keren gebruikt worden");
+                                break;
+                            }
+                        }
+                        if(exists == false)
+                        {
+                            Artist artist2 = new Artist(artiestField.getText(), populariteitInt, genreField.getText());
+                            Stage stage = new Stage(podiumField.getText(), capaciteitInt, lengteInt, breedteInt);
+                            program.addAct(artist2, stage, startTimeInt, endTimeInt, populariteitPodiumInt);
+                            artiestField.setText("");
+                            populariteitField.setText("");
+                            genreField.setText("");
+                            podiumField.setText("");
+                            capaciteitField.setText("");
+                            lengteField.setText("");
+                            breedteField.setText("");
+                            startTimeField.setText("");
+                            endTimeField.setText("");
+                            populariteitPodiumField.setText("");
+
+                        }
+                    }
+                    catch(NumberFormatException exc) {
+                        exc.printStackTrace();
+                        JLabel errorLabel = new JLabel("Error: Invalid input given, please enter valid input.");
+                        content.add(errorLabel);
+                        errorLabel.setBounds(20, 250, 400 , 30);
+                        errorLabel.setForeground(Color.RED);
+                    }
 
                     try
                     {
