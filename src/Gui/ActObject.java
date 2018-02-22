@@ -51,16 +51,30 @@ public class ActObject {
 
 
         g2d.setColor(new Color(51, 51, 51));
-        g2d.setFont(new JLabel().getFont().deriveFont(18f));
-
-        g2d.drawString("Artist: " + artistName,this.getX() + getWidth()/10, this.getY() + getHeight()/10);
-        paintTime(g2d);
 
 
+        int spaceBetweenString = 0;
+        if (endTime - startTime <= 75 && endTime - startTime >= 30){
+            g2d.setFont(new JLabel().getFont().deriveFont(12f));
+            spaceBetweenString = getHeight()/4;
+            g2d.drawString("Artist: " + artistName,this.getX() + getWidth()/10, this.getY() + spaceBetweenString);
+            paintTime(g2d, spaceBetweenString);
+        }
+        else if(endTime - startTime < 30){
+            g2d.setFont(new JLabel().getFont().deriveFont(11f));
+            String information = "Click for more Information";
+            g2d.drawString(information, this.getX() + getWidth()/2 - information.length()*3 , this.getY() + getHeight()/2);
+        }
+        else{
+            g2d.setFont(new JLabel().getFont().deriveFont(18f));
+            spaceBetweenString = getHeight()/10;
+            g2d.drawString("Artist: " + artistName,this.getX() + getWidth()/10, this.getY() + spaceBetweenString);
+            paintTime(g2d, spaceBetweenString);
+        }
     }
 
 
-    private void paintTime(Graphics2D g2d){
+    private void paintTime(Graphics2D g2d, int spaceBetweenString ){
         //draws the start time of the act
         int partStartTime = 0;
         int fullStartTime = startTime;
@@ -74,10 +88,10 @@ public class ActObject {
                         break;
                     }
                 }
-                g2d.drawString("Start Time: 0" + fullStartTime/100 + ":" + partStartTime,this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+                g2d.drawString("Start Time: 0" + fullStartTime/100 + ":" + partStartTime,this.getX() + getWidth()/10, this.getY() + 2 *  spaceBetweenString);
             }
             else{
-                g2d.drawString("Start Time: 0" + fullStartTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+                g2d.drawString("Start Time: 0" + fullStartTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 2 *  spaceBetweenString);
             }
         }
         else{
@@ -90,10 +104,10 @@ public class ActObject {
                         break;
                     }
                 }
-                g2d.drawString("Start Time: " + fullStartTime/100 + ":" + partStartTime,this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+                g2d.drawString("Start Time: " + fullStartTime/100 + ":" + partStartTime,this.getX() + getWidth()/10, this.getY() + 2 *  spaceBetweenString);
             }
             else{
-                g2d.drawString("Start Time: " + fullStartTime/100 + ":" + partStartTime + "0",this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+                g2d.drawString("Start Time: " + fullStartTime/100 + ":" + partStartTime + "0",this.getX() + getWidth()/10, this.getY() + 2 *  spaceBetweenString);
             }
         }
 
@@ -110,11 +124,10 @@ public class ActObject {
                         break;
                     }
                 }
-                g2d.drawString("End Time: 0" + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+                g2d.drawString("End Time: 0" + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 *  spaceBetweenString);
             }
             else{
-                System.out.println(partEndTime);
-                g2d.drawString("End Time: 0" + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+                g2d.drawString("End Time: 0" + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  spaceBetweenString);
             }
         }
         else{
@@ -127,10 +140,10 @@ public class ActObject {
                         break;
                     }
                 }
-                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 * spaceBetweenString);
             }
             else{
-                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  spaceBetweenString);
             }
         }
     }

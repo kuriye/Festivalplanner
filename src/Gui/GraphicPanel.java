@@ -63,7 +63,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
      */
     public GraphicPanel(){
         allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
-        allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1540,75));
+        allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1515,75));
         allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1015,1445,75));
         allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),115,500,75));
 
