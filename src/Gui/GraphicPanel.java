@@ -1,6 +1,7 @@
 package Gui;
 import agenda.Act;
 import agenda.Artist;
+import agenda.Program;
 import agenda.Stage;
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +17,7 @@ import java.util.ArrayList;
  */
 public class GraphicPanel extends JPanel implements MouseWheelListener{
 
+    private Program program = new Program();
 
     private ArrayList<Act> allActs = new ArrayList<>();
     /**
@@ -62,10 +65,26 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
      * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
      */
     public GraphicPanel(){
-        allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
-        allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1515,75));
-        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1015,1445,75));
-        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),115,500,75));
+
+        try
+        {
+            program = program.load();
+        } catch (IOException e1)
+        {
+            e1.printStackTrace();
+        }
+
+        for (int i = 0; i < program.takeGrootte(); i++)
+        {
+            Artist artist = new Artist(program.getActs(i).getArtist().getName(), program.getActs(i).getArtist().getPopularity() , program.getActs(i).getArtist().getGenre());
+            Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());
+            allActs.add(new Act(artist, stage, program.getActs(i).getStartTime(), program.getActs(i).getEndTime(), program.getActs(i).getPopularity()));
+        }
+
+       // allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
+       // allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1515,75));
+       // allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1015,1445,75));
+       // allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),115,500,75));
 
 
         for (Act act : allActs){
