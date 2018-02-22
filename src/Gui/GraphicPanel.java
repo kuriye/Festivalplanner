@@ -61,11 +61,13 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
     /**
      * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
      */
+
+    private ArrayList<ActObject> allActObjects = new ArrayList<>();
     public GraphicPanel(){
-        allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
-        allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1515,75));
-        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1015,1445,75));
-        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),115,500,75));
+        allActs.add(new Act(new Artist("Ali b", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
+        allActs.add(new Act(new Artist("Boef", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1515,75));
+        allActs.add(new Act(new Artist("Lijpe", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1015,1445,75));
+        allActs.add(new Act(new Artist("Anouk", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),115,500,75));
 
 
         for (Act act : allActs){
@@ -240,6 +242,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
 
             ActObject actObject = new ActObject(beginX, (int)beginY, (int)increment, (int)height,
                     act.getArtist().getName(),act.getStartTime(),act.getEndTime());
+
             actObject.draw(g2d);
         }
     }

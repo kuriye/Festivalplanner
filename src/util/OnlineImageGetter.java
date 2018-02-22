@@ -10,7 +10,7 @@ public class OnlineImageGetter {
 
     }
 
-    public String getImage(String searchName) throws Exception {
+    public static String getImage(String searchName) throws Exception {
 
         //change spaces to plusses.
         if (searchName.contains(" ")){
@@ -21,7 +21,7 @@ public class OnlineImageGetter {
                     searchName = searchName + "+" + partOfNewSearchName;
                 }
                 else{
-                    searchName = searchName + partOfNewSearchName;
+                    searchName = partOfNewSearchName;
                     firstTimeIsPassed = true;
                 }
             }

@@ -140,10 +140,10 @@ public class ActObject {
                         break;
                     }
                 }
-                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 * spaceBetweenString);
+                g2d.drawString("End Time: " + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 * spaceBetweenString);
             }
             else{
-                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  spaceBetweenString);
+                g2d.drawString("End Time: " + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  spaceBetweenString);
             }
         }
     }

@@ -1,5 +1,9 @@
 package agenda;
 
+import util.OnlineImageGetter;
+
+import java.io.File;
+
 public class Artist {
 /**
 Name is the name of the artist
@@ -8,6 +12,7 @@ Genre is the kind of music
     private String name;
     private int popularity;
     private String genre;
+    private File onlineImage;
 
     public Artist() {}
 
@@ -16,6 +21,13 @@ Genre is the kind of music
         this.name = name;
         this.popularity = popularity;
         this.genre = genre;
+        try{
+            onlineImage = new File(OnlineImageGetter.getImage(this.getName()));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**
