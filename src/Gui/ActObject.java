@@ -67,7 +67,7 @@ public class ActObject {
         }
         else{
             g2d.setFont(new JLabel().getFont().deriveFont(18f));
-            spaceBetweenString = getHeight()/10;
+            spaceBetweenString = getHeight()/4;
             g2d.drawString("Artist: " + artistName,this.getX() + getWidth()/10, this.getY() + spaceBetweenString);
             paintTime(g2d, spaceBetweenString);
         }

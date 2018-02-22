@@ -5,17 +5,20 @@ import agenda.Program;
 import agenda.Stage;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * The GraphicPanel class extends JPanel and implements a MouseWheelListener. The GraphicPanel regulates the schedule of the festival.
  */
-public class GraphicPanel extends JPanel implements MouseWheelListener{
+public class GraphicPanel extends JPanel implements MouseWheelListener, ActionListener{
 
     private Program program = new Program();
 
@@ -60,17 +63,17 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
      */
     private int heightOfString;
 
+    private int agendaFileLength;
 
     /**
      * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
      */
-
-    private ArrayList<ActObject> allActObjects = new ArrayList<>();
-    public GraphicPanel(){
+    public GraphicPanel() {
 
         try
         {
             program = program.load();
+            agendaFileLength =(int) new File("Agenda.json").length();
         } catch (IOException e1)
         {
             e1.printStackTrace();
@@ -83,15 +86,12 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
             allActs.add(new Act(artist, stage, program.getActs(i).getStartTime(), program.getActs(i).getEndTime(), program.getActs(i).getPopularity()));
         }
 
-       // allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
-       // allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1515,75));
-       // allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1015,1445,75));
-       // allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),115,500,75));
-
-
         for (Act act : allActs){
             allStages.add(act.getStage());
         }
+
+        Timer timer = new Timer(3000,this);
+        timer.start();
     }
 
 
@@ -103,11 +103,11 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
 
         calculateAllValues();
         ifScrolled(g2d);
+
         paintTimer(g2d);
         paintStages(g2d);
         paintLines(g2d);
         paintActs(g2d);
-
     }
 
     /**
@@ -273,6 +273,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         heightOfBox1 = getHeight()/20;
         heightOfBox2 = getHeight()/10;
         increment = getWidth()/6;
+        System.out.println(increment);
         heightOfString = getHeight()/18;
     }
 
@@ -282,5 +283,34 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         scrolled = true;
         amountOfScrolled = e.getWheelRotation();
         repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (new File("Agenda.json").length() != agendaFileLength){
+            try
+            {
+                program = program.load();
+            } catch (IOException e1)
+            {
+                e1.printStackTrace();
+            }
+            finally {
+                allActs.clear();
+                allStages.clear();
+                for (int i = 0; i < program.takeGrootte(); i++)
+                {
+                    Artist artist = new Artist(program.getActs(i).getArtist().getName(), program.getActs(i).getArtist().getPopularity() , program.getActs(i).getArtist().getGenre());
+                    Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());
+                    allActs.add(new Act(artist, stage, program.getActs(i).getStartTime(), program.getActs(i).getEndTime(), program.getActs(i).getPopularity()));
+                }
+                agendaFileLength =(int) new File("Agenda.json").length();
+
+                for (Act act : allActs){
+                    allStages.add(act.getStage());
+                }
+                repaint();
+            }
+        }
     }
 }
