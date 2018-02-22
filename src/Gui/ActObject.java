@@ -51,13 +51,89 @@ public class ActObject {
 
 
         g2d.setColor(new Color(51, 51, 51));
-        g2d.setFont(new JLabel().getFont().deriveFont(20f));
+        g2d.setFont(new JLabel().getFont().deriveFont(18f));
 
         g2d.drawString("Artist: " + artistName,this.getX() + getWidth()/10, this.getY() + getHeight()/10);
-        g2d.drawString("Start Time: " + startTime,this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
-        g2d.drawString("End Time: " + endTime, this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+        paintTime(g2d);
+
+
     }
 
+
+    private void paintTime(Graphics2D g2d){
+        //draws the start time of the act
+        int partStartTime = 0;
+        int fullStartTime = startTime;
+        if (startTime < 1000){
+            if(startTime % 100 != 0){
+                partStartTime = startTime;
+                for(int i = 100; i < 1000; i+= 100){
+                    if (partStartTime - i <= 60 && i > 0){
+                        fullStartTime = i;
+                        partStartTime = partStartTime - i;
+                        break;
+                    }
+                }
+                g2d.drawString("Start Time: 0" + fullStartTime/100 + ":" + partStartTime,this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+            }
+            else{
+                g2d.drawString("Start Time: 0" + fullStartTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+            }
+        }
+        else{
+            if(startTime % 100 != 0) {
+                partStartTime = startTime;
+                for (int i = 1000; i < 2400; i += 100) {
+                    if (partStartTime - i <= 60 && i > 0) {
+                        fullStartTime = i;
+                        partStartTime = partStartTime - i;
+                        break;
+                    }
+                }
+                g2d.drawString("Start Time: " + fullStartTime/100 + ":" + partStartTime,this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+            }
+            else{
+                g2d.drawString("Start Time: " + fullStartTime/100 + ":" + partStartTime + "0",this.getX() + getWidth()/10, this.getY() + 2 *  getHeight()/10);
+            }
+        }
+
+        //draws the end time of the act.
+        int partEndTime = 0;
+        int fullEndTime = endTime;
+        if (endTime < 1000){
+            if(endTime % 100 != 0){
+                partEndTime = endTime;
+                for(int i = 100; i < 1000; i+= 100){
+                    if (partEndTime - i <= 60 && i > 0){
+                        fullEndTime = i;
+                        partEndTime = partEndTime - i;
+                        break;
+                    }
+                }
+                g2d.drawString("End Time: 0" + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+            }
+            else{
+                System.out.println(partEndTime);
+                g2d.drawString("End Time: 0" + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+            }
+        }
+        else{
+            if(endTime % 100 != 0) {
+                partEndTime = endTime;
+                for (int i = 1000; i < 2400; i += 100) {
+                    if (partEndTime - i <= 60 && i > 0) {
+                        fullEndTime = i;
+                        partEndTime = partEndTime - i;
+                        break;
+                    }
+                }
+                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + partEndTime,this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+            }
+            else{
+                g2d.drawString("Start Time: " + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  getHeight()/10);
+            }
+        }
+    }
 
 
 }
