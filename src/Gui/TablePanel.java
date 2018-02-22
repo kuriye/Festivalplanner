@@ -2,6 +2,7 @@ package Gui;
 
 import agenda.Artist;
 import agenda.Program;
+import agenda.Stage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,16 +11,16 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
-
-
-
-// Voor uitleg over TableColumModel bekijk:
-//http://www.java2s.com/Code/Java/Swing-JFC/TableColumnModelandTableColumnModelListener.htm
 
 public class TablePanel extends JTable{
 
     private Program program = new Program();
+    private JPanel panel;
+    private JPanel buttonPannel;
+    TableModel model;
+
 
     public TablePanel()
     {
@@ -31,8 +32,8 @@ public class TablePanel extends JTable{
             e.printStackTrace();
         }
 
-        JPanel panel = new JPanel(new BorderLayout());
-        JPanel buttonPannel = new JPanel(new FlowLayout());
+        panel = new JPanel(new BorderLayout());
+        buttonPannel  = new JPanel(new FlowLayout());
         JButton toevoegen = new JButton("Toevoegen");
         JButton verwijderen = new JButton("Verwijderen");
         JButton save = new JButton("Save");
@@ -43,9 +44,10 @@ public class TablePanel extends JTable{
         buttonPannel.add(load);
         buttonPannel.add(save);
 
-        panel.add(new JScrollPane(new JTable(new TableModel())), BorderLayout.CENTER);
+        panel.add(new JScrollPane(new JTable(model = new TableModel())), BorderLayout.CENTER);
         panel.add(buttonPannel, BorderLayout.SOUTH);
         panel.setSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),860));
+
         this.add(panel);
 
         toevoegen.addActionListener(new ActionListener()
@@ -54,7 +56,6 @@ public class TablePanel extends JTable{
             public void actionPerformed(ActionEvent e)
             {
                 PopUpWindow popUpWindow = new PopUpWindow();
-
             }
         });
     }
@@ -154,14 +155,42 @@ public class TablePanel extends JTable{
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                   // program.addAct();
+                    int populariteitInt = Integer.parseInt(populariteitField.getText());
+                    int capaciteitInt = Integer.parseInt(capaciteitField.getText());
+                    int lengteInt = Integer.parseInt(lengteField.getText());
+                    int breedteInt = Integer.parseInt(breedteField.getText());
+                    int startTimeInt = Integer.parseInt(startTimeField.getText());
+                    int endTimeInt = Integer.parseInt(endTimeField.getText());
+                    int populariteitPodiumInt = Integer.parseInt(populariteitPodiumField.getText());
+
+                    Artist artist2 = new Artist(artiestField.getText(), populariteitInt, genreField.getText());
+                    Stage stage = new Stage(podiumField.getText(), capaciteitInt,lengteInt, breedteInt);
+                    program.addAct(artist2, stage, startTimeInt,endTimeInt, populariteitPodiumInt);
+
+                    try
+                    {
+                        program.save(program);
+                    } catch (IOException e1)
+                    {
+                        e1.printStackTrace();
+                    }
+
+                    try
+                    {
+                        program.load();
+                    } catch (IOException e1)
+                    {
+                        e1.printStackTrace();
+                    }
+
+                    model.fireTableDataChanged();
+
+
                 }
             });
 
-
             setVisible(true);
             setSize(600,600);
-
 
         }
     }
@@ -174,7 +203,7 @@ public class TablePanel extends JTable{
         @Override
         public int getRowCount()
         {
-            return program.getSize();
+            return program.takeGrootte();
         }
 
         @Override

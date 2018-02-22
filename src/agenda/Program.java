@@ -80,7 +80,7 @@ public class Program
         return program;
     }
 
-   public int getSize()
+   public int takeGrootte()
    {
         return AllActs.size();
    }
