@@ -8,9 +8,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
-
 
 /**
  * The GraphicPanel class extends JPanel and implements a MouseWheelListener. The GraphicPanel regulates the schedule of the festival.
@@ -22,7 +20,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
     /**
      * The allStages atribute is a collection of all stagess in the agenda.
      */
-    private ArrayList<Stage> allStages = new ArrayList<>();
+    private ArrayList<Stage> allStages = new ArrayList();
 
     /**
      * The scrolled artibute will be set to true if the mousewheel is scrolled.
@@ -65,8 +63,10 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
      */
     public GraphicPanel(){
         allActs.add(new Act(new Artist("Ian", 1,"rap"),new Stage("Groot podium", 5 ,5, 5),2000,2400,75));
-        allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1925,75));
-        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),915,1445,75));
+        allActs.add(new Act(new Artist("Tom", 1,"rap"),new Stage("Linkse Podium", 5 ,5, 5),1510,1540,75));
+        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),1015,1445,75));
+        allActs.add(new Act(new Artist("Jordy", 1,"rap"),new Stage("Kleine Podium", 5 ,5, 5),115,500,75));
+
 
         for (Act act : allActs){
             allStages.add(act.getStage());
@@ -151,7 +151,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
 
     /**
      * The ifScrolled method controls if the mousewheel is scrolled and regulates the scrolling in the panel.
-     * @param g2d g2d is gotten from the paintComponent wich paints on the panel.
+     * @param g2d is gotten from the paintComponent wich paints on the panel.
      */
     protected void ifScrolled(Graphics2D g2d){
         if (scrolled){
@@ -179,8 +179,8 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
 
 
     /**
-     *
-     * @param g2d
+     * The paintsActs method paints all rectangles where the details of the act is shown off.
+     * @param g2d is gotten from the paintComponent wich paints on the panel.
      */
     protected void paintActs(Graphics2D g2d){
         for (Act act : allActs){
@@ -228,8 +228,11 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
 
 
 
+
+            //Calculates in wich stage the act belongs to.
             int beginX = increment + increment * index;
 
+            //calculates the amount of begin
             double amountForBeginY = 2*((fullStartTime/100) + (partStartTime/60));
             double amountOfBoxesForHeight = (fullEndTime- fullStartTime - 100)/100 + (partEndTime - partStartTime)/60;
 
@@ -242,6 +245,9 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
         }
     }
 
+    /**
+     * The calculateAllValues method calculates some standard values for the paintConpoment.
+     */
     public void calculateAllValues(){
         heightOfBox1 = getHeight()/20;
         heightOfBox2 = getHeight()/10;
