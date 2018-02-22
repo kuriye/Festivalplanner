@@ -19,7 +19,10 @@ public class TablePanel extends JTable{
     private Program program = new Program();
     private JPanel panel;
     private JPanel buttonPannel;
+    private JButton verwijderen;
+    private JButton toevoegen;
     TableModel model;
+    JTable jTable;
 
 
     public TablePanel()
@@ -32,33 +35,51 @@ public class TablePanel extends JTable{
             e.printStackTrace();
         }
 
+        makeTablePanel();
+
+        toevoegen.addActionListener(e -> toevoegenButton());
+        verwijderen.addActionListener(e -> verwijderenButton());
+    }
+
+    public void makeTablePanel()
+    {
         panel = new JPanel(new BorderLayout());
         buttonPannel  = new JPanel(new FlowLayout());
-        JButton toevoegen = new JButton("Toevoegen");
-        JButton verwijderen = new JButton("Verwijderen");
-        JButton save = new JButton("Save");
-        JButton load = new JButton("Load");
+        toevoegen = new JButton("Toevoegen");
+        verwijderen = new JButton("Verwijderen");
 
         buttonPannel.add(toevoegen);
         buttonPannel.add(verwijderen);
-        buttonPannel.add(load);
-        buttonPannel.add(save);
-
-        panel.add(new JScrollPane(new JTable(model = new TableModel())), BorderLayout.CENTER);
+        jTable = new JTable(model = new TableModel());
+        panel.add(new JScrollPane(jTable), BorderLayout.CENTER);
         panel.add(buttonPannel, BorderLayout.SOUTH);
         panel.setSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),860));
 
         this.add(panel);
-
-        toevoegen.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                PopUpWindow popUpWindow = new PopUpWindow();
-            }
-        });
     }
+
+    public void toevoegenButton()
+    {
+        PopUpWindow popUpWindow = new PopUpWindow();
+    }
+
+    public void verwijderenButton()
+    {
+
+        //System.out.println(jTable.getSelectedRow());
+        program.removeAct(jTable.getSelectedRow());
+
+        try
+        {
+            program.save(program);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        model.fireTableDataChanged();
+    }
+
 
     class PopUpWindow extends JFrame
     {
@@ -105,7 +126,6 @@ public class TablePanel extends JTable{
             content.add(breedte);
             JTextField breedteField = new JTextField(20);
             content.add(breedteField);
-
 
             JLabel startTime = new JLabel("Start Tijd");
             content.add(startTime);
@@ -184,8 +204,6 @@ public class TablePanel extends JTable{
                     }
 
                     model.fireTableDataChanged();
-
-
                 }
             });
 
