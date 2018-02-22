@@ -2,6 +2,7 @@ package Gui;
 
 import agenda.Artist;
 import agenda.Program;
+import agenda.Stage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,16 +11,19 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
-
-
-
-// Voor uitleg over TableColumModel bekijk:
-//http://www.java2s.com/Code/Java/Swing-JFC/TableColumnModelandTableColumnModelListener.htm
 
 public class TablePanel extends JTable{
 
     private Program program = new Program();
+    private JPanel panel;
+    private JPanel buttonPannel;
+    private JButton verwijderen;
+    private JButton toevoegen;
+    TableModel model;
+    JTable jTable;
+
 
     public TablePanel()
     {
@@ -31,33 +35,51 @@ public class TablePanel extends JTable{
             e.printStackTrace();
         }
 
-        JPanel panel = new JPanel(new BorderLayout());
-        JPanel buttonPannel = new JPanel(new FlowLayout());
-        JButton toevoegen = new JButton("Toevoegen");
-        JButton verwijderen = new JButton("Verwijderen");
-        JButton save = new JButton("Save");
-        JButton load = new JButton("Load");
+        makeTablePanel();
+
+        toevoegen.addActionListener(e -> toevoegenButton());
+        verwijderen.addActionListener(e -> verwijderenButton());
+    }
+
+    public void makeTablePanel()
+    {
+        panel = new JPanel(new BorderLayout());
+        buttonPannel  = new JPanel(new FlowLayout());
+        toevoegen = new JButton("Toevoegen");
+        verwijderen = new JButton("Verwijderen");
 
         buttonPannel.add(toevoegen);
         buttonPannel.add(verwijderen);
-        buttonPannel.add(load);
-        buttonPannel.add(save);
-
-        panel.add(new JScrollPane(new JTable(new TableModel())), BorderLayout.CENTER);
+        jTable = new JTable(model = new TableModel());
+        panel.add(new JScrollPane(jTable), BorderLayout.CENTER);
         panel.add(buttonPannel, BorderLayout.SOUTH);
         panel.setSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),860));
+
         this.add(panel);
-
-        toevoegen.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                PopUpWindow popUpWindow = new PopUpWindow();
-
-            }
-        });
     }
+
+    public void toevoegenButton()
+    {
+        PopUpWindow popUpWindow = new PopUpWindow();
+    }
+
+    public void verwijderenButton()
+    {
+
+        //System.out.println(jTable.getSelectedRow());
+        program.removeAct(jTable.getSelectedRow());
+
+        try
+        {
+            program.save(program);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        model.fireTableDataChanged();
+    }
+
 
     class PopUpWindow extends JFrame
     {
@@ -104,7 +126,6 @@ public class TablePanel extends JTable{
             content.add(breedte);
             JTextField breedteField = new JTextField(20);
             content.add(breedteField);
-
 
             JLabel startTime = new JLabel("Start Tijd");
             content.add(startTime);
@@ -154,14 +175,40 @@ public class TablePanel extends JTable{
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                   // program.addAct();
+                    int populariteitInt = Integer.parseInt(populariteitField.getText());
+                    int capaciteitInt = Integer.parseInt(capaciteitField.getText());
+                    int lengteInt = Integer.parseInt(lengteField.getText());
+                    int breedteInt = Integer.parseInt(breedteField.getText());
+                    int startTimeInt = Integer.parseInt(startTimeField.getText());
+                    int endTimeInt = Integer.parseInt(endTimeField.getText());
+                    int populariteitPodiumInt = Integer.parseInt(populariteitPodiumField.getText());
+
+                    Artist artist2 = new Artist(artiestField.getText(), populariteitInt, genreField.getText());
+                    Stage stage = new Stage(podiumField.getText(), capaciteitInt,lengteInt, breedteInt);
+                    program.addAct(artist2, stage, startTimeInt,endTimeInt, populariteitPodiumInt);
+
+                    try
+                    {
+                        program.save(program);
+                    } catch (IOException e1)
+                    {
+                        e1.printStackTrace();
+                    }
+
+                    try
+                    {
+                        program.load();
+                    } catch (IOException e1)
+                    {
+                        e1.printStackTrace();
+                    }
+
+                    model.fireTableDataChanged();
                 }
             });
 
-
             setVisible(true);
             setSize(600,600);
-
 
         }
     }
@@ -174,7 +221,7 @@ public class TablePanel extends JTable{
         @Override
         public int getRowCount()
         {
-            return program.getSize();
+            return program.takeGrootte();
         }
 
         @Override
