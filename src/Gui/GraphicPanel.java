@@ -228,8 +228,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener{
 
 
 
-
-            //Calculates in wich stage the act belongs to.
+            //Calculates in witch stage the act belongs to.
             int beginX = increment + increment * index;
 
             //calculates the amount of begin
