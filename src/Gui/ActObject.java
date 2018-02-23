@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
+/**
+ * The ActObjects class is one act object on screen.
+ * @author Jordy van Raalte
+ * @author Boudewijn Groeneboer
+ */
 public class ActObject {
     /**
      * The rectangle attribute is a round rectangle shape that will be drawn.
@@ -36,7 +41,7 @@ public class ActObject {
      */
     ActObject(int x, int y, int width, int height, String artistName, int beginTime, int  endTime){
         this.rectangle = new RoundRectangle2D.Double(x + width/20, y ,  width - width/10, height , 10 , 10);
-        this.color = new Color(153, 204 ,255);
+        this.color = new Color(153, 204 ,255, 220);
         this.artistName = artistName;
         this.startTime = beginTime;
         this.endTime = endTime;
