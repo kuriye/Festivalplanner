@@ -65,6 +65,8 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     private int agendaFileLength;
 
+    private ArrayList<Stage> preStages = new ArrayList<>();
+
     /**
      * The GraphicPanel constructor adds all stages to the arrayList all stages, so that this class can paint all stages on the frame.
      */
@@ -101,9 +103,9 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
         this.addMouseWheelListener(this);
         Graphics2D g2d = (Graphics2D)g;
 
+        preStages.clear();
         calculateAllValues();
         ifScrolled(g2d);
-
         paintTimer(g2d);
         paintStages(g2d);
         paintLines(g2d);
@@ -134,13 +136,23 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
      * @param g2d is gotten from the paintComponent which paints on the panel.
      */
     protected void paintStages(Graphics2D g2d){
+        boolean allReadyWritten = false;
         g2d.setStroke(new BasicStroke(5));
         for (int index = 1; index < 6; index ++){
             if (index <= allStages.size()){
                 Stage stage = allStages.get(index -1);
-                g2d.drawString(stage.getName(),(increment* index) + increment/2 - stage.getName().length() * 4, heightOfString);
+                for (Stage preStage : preStages){
+                    if (preStage.getName().equals(stage.getName())){
+                        allReadyWritten = true;
+                    }
+                }
+                if (!allReadyWritten){
+                    preStages.add(stage);
+                    g2d.drawString(stage.getName(),(increment* index) + increment/2 - stage.getName().length() * 4, heightOfString);
+                }
             }
             g2d.draw(new Line2D.Double(increment + increment* index, 0, increment + increment * index, heightOfBox2));
+            allReadyWritten = false;
         }
         Rectangle2D rectangle2D = new Rectangle2D.Double(increment,0,getWidth(),heightOfBox2);
         g2d.draw(rectangle2D);
