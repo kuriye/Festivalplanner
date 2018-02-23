@@ -75,8 +75,7 @@ public class Program
     public Program load() throws IOException
     {
         ObjectMapper objectMapper = new ObjectMapper();
-        Program program = objectMapper.readValue(new File("Agenda.json"), Program.class);
-        return program;
+        return objectMapper.readValue(new File("Agenda.json"), Program.class);
     }
 
    public int takeGrootte()
