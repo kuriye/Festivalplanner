@@ -241,7 +241,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             //checks wich stage the act must be placed
             int index = 0;
             for (Stage stage : allStages){
-                if (act.getStage().equals(stage)){
+                if (act.getStage().getName().equals(stage.getName())){
                     break;
                 }
                 index++;
