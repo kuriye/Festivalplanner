@@ -10,15 +10,29 @@ public class OnlineImageGetter {
 
     }
 
+    public static void main(String[] args)
+    {
+        try {
+            getImage("Paul_Lindelauf");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public static String getImage(String searchName) throws Exception {
 
-        //change spaces to plusses.
+        //change spaces to pluses.
         if (searchName.contains(" ")){
             String[] newSearchName = searchName.split(" ");
+            StringBuilder sb = new StringBuilder();
             boolean firstTimeIsPassed = false;
             for (String partOfNewSearchName : newSearchName){
                 if (firstTimeIsPassed){
-                    searchName = searchName + "+" + partOfNewSearchName;
+                    sb.append(searchName);
+                    sb.append(partOfNewSearchName);
+                    searchName = sb.toString();
                 }
                 else{
                     searchName = partOfNewSearchName;

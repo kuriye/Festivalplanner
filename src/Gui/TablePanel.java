@@ -9,17 +9,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.text.ParseException;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
 
 public class TablePanel extends JTable{
 
     private Program program = new Program();
-    private JPanel panel;
-    private JPanel buttonPannel;
     private JButton verwijderen;
     private JButton toevoegen;
     TableModel model;
@@ -50,8 +46,8 @@ public class TablePanel extends JTable{
      */
     public void makeTablePanel()
     {
-        panel = new JPanel(new BorderLayout());
-        buttonPannel  = new JPanel(new FlowLayout());
+        JPanel panel = new JPanel(new BorderLayout());
+        JPanel buttonPannel  = new JPanel(new FlowLayout());
         toevoegen = new JButton("Toevoegen");
         verwijderen = new JButton("Verwijderen");
 
@@ -96,10 +92,11 @@ public class TablePanel extends JTable{
     /**
      * This class makes the PopUp window where you can add a Program object.
      */
-    class PopUpWindow extends JFrame
+    private class PopUpWindow extends JFrame
     {
 
-        public PopUpWindow()
+
+        private PopUpWindow()
         {
             JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -185,10 +182,8 @@ public class TablePanel extends JTable{
 
             opslaan.setBounds(220,300,100,30);
 
-            opslaan.addActionListener(new ActionListener()
+            opslaan.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
                 {
                     boolean exists = false;
 

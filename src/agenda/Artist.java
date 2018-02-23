@@ -1,8 +1,5 @@
 package agenda;
 
-import util.OnlineImageGetter;
-
-import java.io.File;
 
 public class Artist {
 /**

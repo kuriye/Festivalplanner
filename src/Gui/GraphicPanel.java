@@ -24,32 +24,32 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     private ArrayList<Act> allActs = new ArrayList<>();
     /**
-     * The allStages atribute is a collection of all stagess in the agenda.
+     * The allStages attribute is a collection of all stages in the agenda.
      */
-    private ArrayList<Stage> allStages = new ArrayList();
+    private ArrayList<Stage> allStages = new ArrayList<>();
 
     /**
-     * The scrolled artibute will be set to true if the mousewheel is scrolled.
+     * The scrolled attribute will be set to true if the mousewheel is scrolled.
      */
     private boolean scrolled = false;
 
     /**
-     * The amountOfScrolled artibute regulates the amount scrolled.
+     * The amountOfScrolled attribute regulates the amount scrolled.
      */
     private int amountOfScrolled = 0;
 
     /**
-     * The yPositionScroll is the y-position wich the world will be translated at.
+     * The yPositionScroll is the y-position which the world will be translated at.
      */
     private int yPositionScroll = 0;
 
     /**
-     * The heightOfBox1 atribute is one of the two calculated values for the distance between the lines.
+     * The heightOfBox1 attribute is one of the two calculated values for the distance between the lines.
      */
     private int heightOfBox1;
 
     /**
-     * The heightOfBox2 atribute is one of the two calculated values for the distance between the lines.
+     * The heightOfBox2 attribute is one of the two calculated values for the distance between the lines.
      */
     private int heightOfBox2;
 
@@ -59,14 +59,14 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
     private int increment;
 
     /**
-     * The heightOfString atribute is the height where the stage names gets placed at.
+     * The heightOfString attribute is the height where the stage names gets placed at.
      */
     private int heightOfString;
 
     private int agendaFileLength;
 
     /**
-     * The GraphicPanel constructor adds all stages to the arraylist all stages, so that this class can paint all stages on the frame.
+     * The GraphicPanel constructor adds all stages to the arrayList all stages, so that this class can paint all stages on the frame.
      */
     public GraphicPanel() {
 
@@ -112,7 +112,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     /**
      * The paintTimer method paints all the times when a artist can preform an act. It also paints the rectangle around the times.
-     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     * @param g2d is gotten from the paintComponent which paints on the panel.
      */
     protected void paintTimer(Graphics2D g2d){
         for (int time = 0; time < 25; time++){
@@ -131,7 +131,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     /**
      * The paintStages method paints all stage names and paints a rectangle around those names.
-     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     * @param g2d is gotten from the paintComponent which paints on the panel.
      */
     protected void paintStages(Graphics2D g2d){
         g2d.setStroke(new BasicStroke(5));
@@ -148,7 +148,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     /**
      * The paintLines method paints all lines that is needed for the graphicPanel.
-     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     * @param g2d is gotten from the paintComponent which paints on the panel.
      */
     protected void paintLines(Graphics2D g2d){
         for (int i = 0; i < 5; i++){
@@ -172,7 +172,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     /**
      * The ifScrolled method controls if the mousewheel is scrolled and regulates the scrolling in the panel.
-     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     * @param g2d is gotten from the paintComponent which paints on the panel.
      */
     protected void ifScrolled(Graphics2D g2d){
         if (scrolled){
@@ -201,7 +201,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     /**
      * The paintsActs method paints all rectangles where the details of the act is shown off.
-     * @param g2d is gotten from the paintComponent wich paints on the panel.
+     * @param g2d is gotten from the paintComponent which paints on the panel.
      */
     protected void paintActs(Graphics2D g2d){
         for (Act act : allActs){
@@ -225,8 +225,8 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
                     }
                 }
             }
+             //calculates the minutes if the end time got parts of hours.
 
-            //calculates the minutes if the end time got parts of hours.
             if(endTime % 100 != 0){
                 partEndTime = endTime;
                 for(int i = 100; i < 2500; i+= 100){
@@ -238,7 +238,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
                 }
             }
 
-            //checks wich stage the act must be placed
+             // checks which stage the act must be placed
             int index = 0;
             for (Stage stage : allStages){
                 if (act.getStage().getName().equals(stage.getName())){
@@ -248,18 +248,20 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             }
 
 
+            //Calculates in which stage the act belongs to.
 
-            //Calculates in witch stage the act belongs to.
             int beginX = increment + increment * index;
 
-            //calculates the amount of begin
+
+             //calculates the amount of begin
+
             double amountForBeginY = 2*((fullStartTime/100) + (partStartTime/60));
             double amountOfBoxesForHeight = (fullEndTime- fullStartTime - 100)/100 + (partEndTime - partStartTime)/60;
 
             double beginY = heightOfBox2 + heightOfBox1 * amountForBeginY;
             double height = heightOfBox2 + heightOfBox1 * 2 * amountOfBoxesForHeight;
 
-            ActObject actObject = new ActObject(beginX, (int)beginY, (int)increment, (int)height,
+            ActObject actObject = new ActObject(beginX, (int)beginY, increment, (int)height,
                     act.getArtist().getName(),act.getStartTime(),act.getEndTime());
 
             actObject.draw(g2d);
@@ -267,13 +269,13 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
     }
 
     /**
-     * The calculateAllValues method calculates some standard values for the paintConpoment.
+     * The calculateAllValues method calculates some standard values for the paintComponent.
      */
     public void calculateAllValues(){
         heightOfBox1 = getHeight()/20;
         heightOfBox2 = getHeight()/10;
         increment = getWidth()/6;
-        System.out.println(increment);
+        //System.out.println(increment);
         heightOfString = getHeight()/18;
     }
 

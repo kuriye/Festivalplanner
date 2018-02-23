@@ -10,14 +10,13 @@ public class Program
     private ArrayList <Act> AllActs = new ArrayList<>();
 
 
-
-    public Program()
-    {
-    }
-
     /**
      *  In deze methode kan een Act object toegevoegd worden aan de AllActs ArrayList.
-     *  @param
+     *  @param artist nn artist object parameter input
+     *  @param stage a stage object parameter input
+     *  @param startTime the startTime variable input in int
+     *  @param endTime the endTime variable input in int
+     *  @param popularity the popularity variable input in int
      */
     public void addAct(Artist artist, Stage stage, int startTime, int endTime, int popularity)
     {

@@ -5,11 +5,11 @@ import java.awt.*;
 
 public class AgendaPanel extends JPanel {
 
-    public AgendaPanel(){
+    AgendaPanel(){
         addTabbedPane();
     }
 
-    public void addTabbedPane(){
+    private void addTabbedPane(){
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Graphical Agenda", new GraphicPanel());
         tabbedPane.addTab("Table Agenda", new TablePanel());

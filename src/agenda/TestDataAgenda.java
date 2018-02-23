@@ -1,19 +1,9 @@
 package agenda;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xpath.internal.SourceTree;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class TestDataAgenda
 {
-
-    public TestDataAgenda()
-    {
-
-    }
 
     public static void main(String[] args) throws IOException
     {

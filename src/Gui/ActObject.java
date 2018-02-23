@@ -12,22 +12,22 @@ public class ActObject {
     private int endTime;
 
 
-    /*
+    /**
     Creates a rectangle that with the right color.
      */
-    public ActObject(int x, int y, int width, int height, String artistName, int beginTime, int  endTime){
-        this.rectangle = new RoundRectangle2D.Double(x + width/10/2, y ,  width - width/10, height , 10 , 10);
+    ActObject(int x, int y, int width, int height, String artistName, int beginTime, int  endTime){
+        this.rectangle = new RoundRectangle2D.Double(x + width/20, y ,  width - width/10, height , 10 , 10);
         this.color = new Color(153, 204 ,255);
         this.artistName = artistName;
         this.startTime = beginTime;
         this.endTime = endTime;
     }
 
-    public int getX() {
+    private int getX() {
         return (int)this.rectangle.getX();
     }
 
-    public int getY() {
+    private int getY() {
         return (int)this.rectangle.getY();
     }
 
@@ -53,7 +53,7 @@ public class ActObject {
         g2d.setColor(new Color(51, 51, 51));
 
 
-        int spaceBetweenString = 0;
+        int spaceBetweenString;
         if (endTime - startTime <= 75 && endTime - startTime >= 30){
             g2d.setFont(new JLabel().getFont().deriveFont(12f));
             spaceBetweenString = getHeight()/4;
@@ -74,7 +74,7 @@ public class ActObject {
     }
 
 
-    private void paintTime(Graphics2D g2d, int spaceBetweenString ){
+    public void paintTime(Graphics2D g2d, int spaceBetweenString ){
         //draws the start time of the act
         int partStartTime = 0;
         int fullStartTime = startTime;
@@ -112,7 +112,7 @@ public class ActObject {
         }
 
         //draws the end time of the act.
-        int partEndTime = 0;
+        int partEndTime;
         int fullEndTime = endTime;
         if (endTime < 1000){
             if(endTime % 100 != 0){

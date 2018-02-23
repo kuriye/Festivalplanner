@@ -5,22 +5,22 @@ package agenda;
  */
 public class Stage {
     /**
-     * The name atribute is the name of the podium.
+     * The name attribute is the name of the podium.
      */
     private String name;
 
     /**
-     * The capacity atribute is how many NPC's can stand around the podium.
+     * The capacity attribute is how many NPC's can stand around the podium.
      */
     private int capacity;
 
     /**
-     * The length atribtute is how long the podium is.
+     * The length attribute is how long the podium is.
      */
     private int length;
 
     /**
-     * The width atribute is how width the podium is.
+     * The width attribute is how width the podium is.
      */
     private int width;
 

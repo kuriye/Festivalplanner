@@ -18,7 +18,7 @@ public class Mainframe extends JFrame {
         setVisible(true);
     }
 
-    public void addAgendaPanel(){
+    private void addAgendaPanel(){
         masterPanel.add(new AgendaPanel());
     }
 
