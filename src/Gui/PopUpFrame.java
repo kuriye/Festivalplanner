@@ -29,10 +29,10 @@ public class PopUpFrame extends JFrame {
     }
 
     public void createNorthPanel(){
-        Image image = act.getArtist().getImage();
-        ImageIcon imageOfArtist = new ImageIcon(image.getScaledInstance(350,250, 1));
-        JLabel labelImage = new JLabel(imageOfArtist);
-        northPanel.add(labelImage);
+        //Image image = act.getArtist().getImage();
+        //ImageIcon imageOfArtist = new ImageIcon(image.getScaledInstance(350,250, 1));
+        //JLabel labelImage = new JLabel(imageOfArtist);
+        //northPanel.add(labelImage);
     }
 
     public void createSouthPanel(){
