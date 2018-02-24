@@ -6,8 +6,6 @@ import agenda.Stage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -95,7 +93,6 @@ public class TablePanel extends JTable{
     private class PopUpWindow extends JFrame
     {
 
-
         private PopUpWindow()
         {
             JFrame frame = new JFrame();
@@ -105,89 +102,57 @@ public class TablePanel extends JTable{
             setContentPane(content);
 
             JLabel artiest = new JLabel("Artiest: ");
-            content.add(artiest);
             JTextField artiestField = new JTextField(20);
-            content.add(artiestField);
 
             JLabel populariteit = new JLabel("Populariteit: ");
-            content.add(populariteit);
             JTextField populariteitField = new JTextField(20);
-            content.add(populariteitField);
 
             JLabel genre = new JLabel("Genre: ");
-            content.add(genre);
             JTextField genreField = new JTextField(20);
-            content.add(genreField);
 
             JLabel podium = new JLabel("Podium: ");
-            content.add(podium);
             JTextField podiumField = new JTextField(20);
-            content.add(podiumField);
 
             JLabel capaciteit = new JLabel("Capaciteit: ");
-            content.add(capaciteit);
             JTextField capaciteitField = new JTextField(20);
-            content.add(capaciteitField);
 
             JLabel lengte = new JLabel("Lengte Podium: ");
-            content.add(lengte);
             JTextField lengteField = new JTextField(20);
-            content.add(lengteField);
 
             JLabel breedte = new JLabel("Breedte Podium: ");
-            content.add(breedte);
             JTextField breedteField = new JTextField(20);
-            content.add(breedteField);
 
             JLabel startTime = new JLabel("Start (militaire) Tijd: ");
-            content.add(startTime);
             JTextField startTimeField = new JTextField(20);
-            content.add(startTimeField);
 
             JLabel endTime = new JLabel("Eind (militaire) Tijd: ");
-            content.add(endTime);
             JTextField endTimeField = new JTextField(20);
-            content.add(endTimeField);
 
             JLabel populariteitPodium = new JLabel("Populariteit podium: ");
-            content.add(populariteitPodium);
             JTextField populariteitPodiumField = new JTextField(20);
-            content.add(populariteitPodiumField);
 
             JButton opslaan = new JButton("Opslaan");
             content.add(opslaan);
-
-
-            artiest.setBounds(20, 0 , 150 , 30);
-            artiestField.setBounds(200, 0,300,30);
-            populariteit.setBounds(20,25,150,30);
-            populariteitField.setBounds(200, 25, 300,30);
-            genre.setBounds(20, 50,150,30);
-            genreField.setBounds(200,50,300,30);
-            podium.setBounds(20, 75,150,30);
-            capaciteit.setBounds(20,100,150,30);
-            lengte.setBounds(20,125,150,30);
-            breedte.setBounds(20,150,150,30);
-            startTime.setBounds(20,175,150,30);
-            endTime.setBounds(20,200,150,30);
-            populariteitPodium.setBounds(20,225,150,30);
-
-            podiumField.setBounds(200,75,300,30);
-            capaciteitField.setBounds(200,100,300,30);
-            lengteField.setBounds(200,125,300,30);
-            breedteField.setBounds(200,150,300,30);
-            startTimeField.setBounds(200,175,300,30);
-            endTimeField.setBounds(200,200,300,30);
-            populariteitPodiumField.setBounds(200,225,300,30);
-
             opslaan.setBounds(220,300,100,30);
+
+            JLabel[] labelList = {artiest,populariteit,genre,podium,capaciteit,lengte,breedte,startTime,endTime,populariteitPodium};
+            JTextField[] textList = {artiestField,populariteitField,genreField,podiumField,capaciteitField,lengteField,breedteField,startTimeField,endTimeField,populariteitPodiumField};
+
+            for(int i = 0; i < labelList.length; i++)
+            {
+                content.add(labelList[i]);
+                labelList[i].setBounds(20,25*i,150,30);
+                content.add(textList[i]);
+                textList[i].setBounds(200,25*i,300,30);
+            }
 
             opslaan.addActionListener(e ->
             {
                 {
-                    boolean exists = false;
 
+                    boolean exists = false;
                     try {
+
                         int populariteitInt = Integer.parseInt(populariteitField.getText());
                         int capaciteitInt = Integer.parseInt(capaciteitField.getText());
                         int lengteInt = Integer.parseInt(lengteField.getText());
@@ -205,22 +170,15 @@ public class TablePanel extends JTable{
                                 break;
                             }
                         }
-                        if(exists == false)
+                        if(!exists)
                         {
                             Artist artist2 = new Artist(artiestField.getText(), populariteitInt, genreField.getText());
                             Stage stage = new Stage(podiumField.getText(), capaciteitInt, lengteInt, breedteInt);
                             program.addAct(artist2, stage, startTimeInt, endTimeInt, populariteitPodiumInt);
-                            artiestField.setText("");
-                            populariteitField.setText("");
-                            genreField.setText("");
-                            podiumField.setText("");
-                            capaciteitField.setText("");
-                            lengteField.setText("");
-                            breedteField.setText("");
-                            startTimeField.setText("");
-                            endTimeField.setText("");
-                            populariteitPodiumField.setText("");
-
+                            for(int i = 0; i < textList.length; i++)
+                            {
+                                textList[i].setText("");
+                            }
                         }
                     }
                     catch(NumberFormatException exc) {

@@ -4,41 +4,53 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
+/**
+ * The ActObjects class is one act object on screen.
+ * @author Jordy van Raalte
+ * @author Boudewijn Groeneboer
+ */
 public class ActObject {
+    /**
+     * The rectangle attribute is a round rectangle shape that will be drawn.
+     */
     private RoundRectangle2D.Double rectangle;
+
+    /**
+     * The color attribute is the color of the rectangle.
+     */
     private Color color;
+
+    /**
+     * The artistName attribute is the name of the artist
+     */
     private String artistName;
+
+    /**
+     * The startTime attribute is the start time of the program.
+     */
     private int startTime;
+
+    /**
+     * The endTime attribute is the end time of the program.
+     */
     private int endTime;
 
 
     /**
-    Creates a rectangle that with the right color.
+        Creates a rectangle that with the right color.
      */
     ActObject(int x, int y, int width, int height, String artistName, int beginTime, int  endTime){
         this.rectangle = new RoundRectangle2D.Double(x + width/20, y ,  width - width/10, height , 10 , 10);
-        this.color = new Color(153, 204 ,255);
+        this.color = new Color(153, 204 ,255, 220);
         this.artistName = artistName;
         this.startTime = beginTime;
         this.endTime = endTime;
     }
 
-    private int getX() {
-        return (int)this.rectangle.getX();
-    }
-
-    private int getY() {
-        return (int)this.rectangle.getY();
-    }
-
-    private int getWidth() {
-        return (int)this.rectangle.getWidth();
-    }
-
-    private int getHeight() {
-        return (int)this.rectangle.getHeight();
-    }
-
+    /**
+     * The draw method is draws the ActObjects class on the GraphicPanel
+     * @param g is gotten from the paintComponent from the GraphicPanel.
+     */
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setColor(this.color);
@@ -77,6 +89,11 @@ public class ActObject {
         return this.rectangle.contains(point);
     }
 
+    /**
+     * Paints the start time and end time of act in the ActObject.
+     * @param g2d is gotten from the paintComponent.
+     * @param spaceBetweenString is the space between the strings so the strings can be seprated in heigt.
+     */
     public void paintTime(Graphics2D g2d, int spaceBetweenString ){
         //draws the start time of the act
         int partStartTime = 0;
@@ -149,6 +166,38 @@ public class ActObject {
                 g2d.drawString("End Time: " + fullEndTime/100 + ":" + "0" + "0",this.getX() + getWidth()/10, this.getY() + 3 *  spaceBetweenString);
             }
         }
+    }
+
+    /**
+     * The getX method gets the x-position of the rectangle.
+     * @return x-position of rectangle.
+     */
+    private int getX() {
+        return (int)this.rectangle.getX();
+    }
+
+    /**
+     * The getY method gets the Y-position of the rectangle.
+     * @return Y-position of rectangle.
+     */
+    private int getY() {
+        return (int)this.rectangle.getY();
+    }
+
+    /**
+     * The getWidth method gets the width of the rectangle.
+     * @return width of rectangle.
+     */
+    private int getWidth() {
+        return (int)this.rectangle.getWidth();
+    }
+
+    /**
+     * The getHeight method gets the heigt of the rectangle.
+     * @return height of rectangle.
+     */
+    private int getHeight() {
+        return (int)this.rectangle.getHeight();
     }
 
 

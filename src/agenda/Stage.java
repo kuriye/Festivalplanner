@@ -106,6 +106,17 @@ public class Stage {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        Stage stage = (Stage)obj;
+        return stage.getName().equals(name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
     public String toString()
     {
         return "Stage{" +

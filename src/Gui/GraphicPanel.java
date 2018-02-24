@@ -11,20 +11,21 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashSet;
 /**
  * The GraphicPanel class extends JPanel and implements a MouseWheelListener. The GraphicPanel regulates the schedule of the festival.
+ * @author Jordy van Raalte
+ * @author Tom Martens
  */
 public class GraphicPanel extends JPanel implements MouseWheelListener, ActionListener, MouseListener {
-
-    private Program program = new Program();
 
     private ArrayList<Act> allActs = new ArrayList<>();
     /**
      * The allStages attribute is a collection of all stages in the agenda.
      */
-    private ArrayList<Stage> allStages = new ArrayList<>();
+    //private ArrayList<Stage> allStages = new ArrayList<>();
 
+    private HashSet<Stage> allStages = new HashSet();
     /**
      * The scrolled attribute will be set to true if the mousewheel is scrolled.
      */
@@ -60,7 +61,21 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
      */
     private int heightOfString;
 
+    /**
+     * The agendaFileLength attribute is the length of the file where all the data of the agenda is saved.
+     */
     private int agendaFileLength;
+
+    /**
+     * The preStages attribute is the list of the stage that are allready drawn.
+     */
+    private ArrayList<Stage> preStages = new ArrayList<>();
+
+
+    /**
+     * The program attribute is an attribute which loads the json file.
+     */
+    private Program program = new Program();
 
     /**
      * The GraphicPanel constructor adds all stages to the arrayList all stages, so that this class can paint all stages on the frame.
@@ -82,10 +97,10 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());
             allActs.add(new Act(artist, stage, program.getActs(i).getStartTime(), program.getActs(i).getEndTime(), program.getActs(i).getPopularity()));
         }
-
         for (Act act : allActs){
             allStages.add(act.getStage());
         }
+        //System.out.println(allStages);
 
         Timer timer = new Timer(3000,this);
         timer.start();
@@ -98,9 +113,9 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
         this.addMouseWheelListener(this);
         Graphics2D g2d = (Graphics2D)g;
 
+        preStages.clear();
         calculateAllValues();
         ifScrolled(g2d);
-
         paintTimer(g2d);
         paintStages(g2d);
         paintLines(g2d);
@@ -131,14 +146,23 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
      * @param g2d is gotten from the paintComponent which paints on the panel.
      */
     protected void paintStages(Graphics2D g2d){
+        boolean allReadyWritten = false;
         g2d.setStroke(new BasicStroke(5));
-        for (int index = 1; index < 6; index ++){
-            if (index <= allStages.size()){
-                Stage stage = allStages.get(index -1);
-                g2d.drawString(stage.getName(),(increment* index) + increment/2 - stage.getName().length() * 4, heightOfString);
+        int index = 1;
+        for (Stage stage : allStages){
+            if (index <= allStages.size())
+                for (Stage preStage : preStages){
+                    if (preStage.getName().equals(stage.getName())){
+                        allReadyWritten = true;
+                    }
+                }
+                if (!allReadyWritten){
+                    preStages.add(stage);
+                    g2d.drawString(stage.getName(),(increment* index) + increment/2 - stage.getName().length() * 4, heightOfString);
+                    index++;
+                }
+            allReadyWritten = false;
             }
-            g2d.draw(new Line2D.Double(increment + increment* index, 0, increment + increment * index, heightOfBox2));
-        }
         Rectangle2D rectangle2D = new Rectangle2D.Double(increment,0,getWidth(),heightOfBox2);
         g2d.draw(rectangle2D);
     }
@@ -164,6 +188,11 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
         }
         g2d.setStroke(new BasicStroke(5));
         g2d.draw(new Line2D.Double(increment,getHeight() + 1340, getWidth(), getHeight() + 1340));
+
+
+        for (int index = 0; index < 5; index++){
+            g2d.draw(new Line2D.Double(increment + increment* index, 0, increment + increment * index, heightOfBox2));
+        }
     }
 
 
@@ -221,6 +250,9 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
                         break;
                     }
                 }
+
+
+
             }
              //calculates the minutes if the end time got parts of hours.
 
@@ -237,13 +269,16 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
              // checks which stage the act must be placed
             int index = 0;
+
+            //System.out.println("painted on index: ");
             for (Stage stage : allStages){
                 if (act.getStage().getName().equals(stage.getName())){
+                   // System.out.println(act.getStage());
+                    //System.out.println(index);
                     break;
                 }
                 index++;
             }
-
 
             //Calculates in which stage the act belongs to.
 
