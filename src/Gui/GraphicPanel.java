@@ -32,6 +32,11 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
     private boolean scrolled = false;
 
     /**
+     * The allObjectActs ArrayList is a collection of all act object that are used in the agenda.
+     */
+    private ArrayList<ActObject> allObjectActs = new ArrayList<>();
+
+    /**
      * The amountOfScrolled attribute regulates the amount scrolled.
      */
     private int amountOfScrolled = 0;
@@ -104,6 +109,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
         Timer timer = new Timer(3000,this);
         timer.start();
+        this.addMouseListener(this);
     }
 
 
@@ -250,9 +256,6 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
                         break;
                     }
                 }
-
-
-
             }
              //calculates the minutes if the end time got parts of hours.
 
@@ -295,7 +298,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
             ActObject actObject = new ActObject(beginX, (int)beginY, increment, (int)height,
                     act.getArtist().getName(),act.getStartTime(),act.getEndTime());
-
+            allObjectActs.add(actObject);
             actObject.draw(g2d);
         }
     }
@@ -350,8 +353,13 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        for (int i = 0; i < this.allObjectActs.size(); i++) {
+            ActObject actObject = this.allObjectActs.get(i);
 
-
+            if (actObject.collides(e.getPoint())) {
+                System.out.println("werkt");
+            }
+        }
     }
 
     @Override
