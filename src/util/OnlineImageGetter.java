@@ -1,5 +1,8 @@
 package util;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -14,6 +17,10 @@ public class OnlineImageGetter {
     {
         try {
             getImage("Paul_Lindelauf");
+            BufferedImage image = ImageIO.read(new File("Resources\\OnlineImages\\" + "Paul_Lindelauf" + ".jpg"));
+            ImageIcon ii = new ImageIcon(image.getScaledInstance(200,100,1));
+            JLabel label = new JLabel(ii);
+            JOptionPane.showMessageDialog(null, label);
         }
         catch(Exception e)
         {
@@ -22,17 +29,12 @@ public class OnlineImageGetter {
     }
 
     public static String getImage(String searchName) throws Exception {
-
-        //change spaces to pluses.
         if (searchName.contains(" ")){
             String[] newSearchName = searchName.split(" ");
-            StringBuilder sb = new StringBuilder();
             boolean firstTimeIsPassed = false;
             for (String partOfNewSearchName : newSearchName){
                 if (firstTimeIsPassed){
-                    sb.append(searchName);
-                    sb.append(partOfNewSearchName);
-                    searchName = sb.toString();
+                    searchName = searchName + "_" + partOfNewSearchName;
                 }
                 else{
                     searchName = partOfNewSearchName;
@@ -41,38 +43,52 @@ public class OnlineImageGetter {
             }
         }
 
-        //establish a connection with the url to get the jpeg.
-        URL url = new URL("https://www.bing.com/images/search?q=" + searchName + "&FORM=HDRSC2");
-        URLConnection connection = url.openConnection();
+        if (new File("Resources\\OnlineImages\\" + searchName + ".jpg").exists()){
+            return "Resources\\OnlineImages\\" + searchName + ".jpg";
+        }
+        else{
 
-        //reads out the html-code.
-        String line;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String lineWithImageLink = "";
-        while ((line = reader.readLine()) != null) {
-            if (line.contains("SearchBoxAnswer")) {
-                lineWithImageLink = line;
+            //establish a connection with the url to get the jpeg.
+            URL url = new URL("https://www.bing.com/images/search?q=" + searchName + "&FORM=HDRSC2");
+            URLConnection connection = url.openConnection();
+
+            //reads out the html-code.
+            String line;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String lineWithImageLink = "";
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("SearchBoxAnswer")) {
+                    lineWithImageLink = line;
+                }
             }
+            //splits all string so only the jpeg file can be read.
+            String[] split = lineWithImageLink.split("href=");
+            String link = "http://access2school.com/img/profile_pic.jpg";
+            for (String searchForJpg : split){
+                if (searchForJpg.contains(".jpg")){
+                   link = searchForJpg;
+                   break;
+                }
+
+            }
+            String[] splitLink = link.split("\"");
+            String[] splitBackSlash = splitLink[1].split("/");
+            int length = splitBackSlash.length;
+            String path = "Resources\\OnlineImages\\" + searchName +  ".jpg";
+            //writes image to path.
+            try {
+                URL imageUrl = new URL(splitLink[1]);
+                InputStream inputStream = new BufferedInputStream(imageUrl.openStream());
+                OutputStream out = new BufferedOutputStream(new FileOutputStream(path));
+                for (int i; (i = inputStream.read()) != -1; ) {
+                    out.write(i);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return path;
         }
 
-        //splits all string so only the jpeg file can be read.
-        String[] split = lineWithImageLink.split("href=");
-        String[] splitLink = split[1].split("\"");
-        String[] splitBackSlash = splitLink[1].split("/");
-        int length = splitBackSlash.length;
-        String path = "Resources\\OnlineImages\\" + splitBackSlash[length - 1];
-        //writes image to path.
-        try {
-            URL imageUrl = new URL(splitLink[1]);
-            InputStream inputStream = new BufferedInputStream(imageUrl.openStream());
-            OutputStream out = new BufferedOutputStream(new FileOutputStream(path));
-            for (int i; (i = inputStream.read()) != -1; ) {
-                out.write(i);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return path;
     }
 }

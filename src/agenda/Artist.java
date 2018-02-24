@@ -1,6 +1,13 @@
 package agenda;
 
 
+import util.OnlineImageGetter;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 public class Artist {
 /**
 Name is the name of the artist
@@ -9,6 +16,7 @@ Genre is the kind of music
     private String name;
     private int popularity;
     private String genre;
+    private Image image;
 
     public Artist() {}
 
@@ -17,6 +25,13 @@ Genre is the kind of music
         this.name = name;
         this.popularity = popularity;
         this.genre = genre;
+
+        try{
+            this.image = ImageIO.read(new File(OnlineImageGetter.getImage(name)));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }
@@ -43,6 +58,14 @@ Genre is the kind of music
     public String getGenre() {
 
         return genre;
+    }
+
+    /**
+     * Returns a picture of the artist
+     * @return image file of the artist
+     */
+    public Image getImage() {
+        return image;
     }
 
     /**

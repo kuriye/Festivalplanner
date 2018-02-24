@@ -16,6 +16,7 @@ import java.util.HashSet;
  * The GraphicPanel class extends JPanel and implements a MouseWheelListener. The GraphicPanel regulates the schedule of the festival.
  * @author Jordy van Raalte
  * @author Tom Martens
+ * @author Boudewijn Groeneboer
  */
 public class GraphicPanel extends JPanel implements MouseWheelListener, ActionListener, MouseListener {
 
