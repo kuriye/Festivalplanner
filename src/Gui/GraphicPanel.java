@@ -5,10 +5,7 @@ import agenda.Program;
 import agenda.Stage;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
 /**
  * The GraphicPanel class extends JPanel and implements a MouseWheelListener. The GraphicPanel regulates the schedule of the festival.
  */
-public class GraphicPanel extends JPanel implements MouseWheelListener, ActionListener{
+public class GraphicPanel extends JPanel implements MouseWheelListener, ActionListener, MouseListener {
 
     private Program program = new Program();
 
@@ -315,4 +312,19 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             }
         }
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }

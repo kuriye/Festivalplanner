@@ -73,6 +73,9 @@ public class ActObject {
         }
     }
 
+    public boolean collides(Point point){
+        return this.rectangle.contains(point);
+    }
 
     public void paintTime(Graphics2D g2d, int spaceBetweenString ){
         //draws the start time of the act
