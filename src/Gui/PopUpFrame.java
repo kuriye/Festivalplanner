@@ -2,8 +2,10 @@ package Gui;
 
 import agenda.Act;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 
 public class PopUpFrame extends JFrame {
@@ -18,7 +20,14 @@ public class PopUpFrame extends JFrame {
         this.act = act;
         masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
 
-        createNorthPanel();
+        try{
+            createNorthPanel();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            reserveNorthPanel();
+        }
+
         createSouthPanel();
         masterPanel.add(northPanel);
         masterPanel.add(southPanel);
@@ -28,11 +37,23 @@ public class PopUpFrame extends JFrame {
         setVisible(true);
     }
 
-    public void createNorthPanel(){
+    public void createNorthPanel()throws Exception{
+
         //Image image = act.getArtist().getImage();
         //ImageIcon imageOfArtist = new ImageIcon(image.getScaledInstance(350,250, 1));
         //JLabel labelImage = new JLabel(imageOfArtist);
         //northPanel.add(labelImage);
+    }
+
+    public void reserveNorthPanel(){
+        try{
+            ImageIcon imageOfArtist = new ImageIcon(ImageIO.read(new File("Resources\\OnlineImages\\no_image_found.jpg")));
+            JLabel labelImage = new JLabel(imageOfArtist);
+            northPanel.add(labelImage);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void createSouthPanel(){
