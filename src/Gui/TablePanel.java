@@ -1,5 +1,6 @@
 package Gui;
 
+import agenda.Act;
 import agenda.Artist;
 import agenda.Program;
 import agenda.Stage;
@@ -7,6 +8,8 @@ import agenda.Stage;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -188,6 +191,8 @@ public class TablePanel extends JTable{
                         errorLabel.setBounds(20, 250, 400 , 30);
                         errorLabel.setForeground(Color.RED);
                     }
+
+                    Collections.sort(program.getAllActs());
 
                     try
                     {
