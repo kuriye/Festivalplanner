@@ -10,7 +10,7 @@ public class TestPopUpFrame {
     }
 
     public TestPopUpFrame(){
-        Act act = new Act(new Artist("Ronnie Flex", 67, "Rap"),new Stage("P1", 100,100,100),1000, 1200,78);
+        Act act = new Act(new Artist("Nick en Simon", 67, "Rap"),new Stage("P1", 100,100,100),1000, 1200,78);
         PopUpFrame frame = new PopUpFrame(act);
     }
 }

@@ -1,9 +1,11 @@
 package agenda;
 
+import java.util.Comparator;
+
 /**
  * Class takes the artist and stage and puts them together to an Act. Requires startTime, endTime and popularity input.
  */
-public class Act {
+public class Act implements Comparable<Act> {
 
     private Artist artist;
     private Stage stage;
@@ -111,5 +113,11 @@ public class Act {
                 ", endTime=" + endTime +
                 ", popularity=" + popularity +
                 '}';
+   }
+
+    @Override
+    public int compareTo(Act o)
+    {
+        return this.getStage().getName().compareTo(o.getStage().getName()) ;
     }
 }
