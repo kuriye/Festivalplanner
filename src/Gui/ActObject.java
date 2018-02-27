@@ -85,10 +85,6 @@ public class ActObject {
         }
     }
 
-    public boolean collides(Point point){
-        return this.rectangle.contains(point);
-    }
-
     /**
      * Paints the start time and end time of act in the ActObject.
      * @param g2d is gotten from the paintComponent.

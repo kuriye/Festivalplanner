@@ -351,24 +351,4 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             }
         }
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        for (int i = 0; i < this.allObjectActs.size(); i++) {
-            ActObject actObject = this.allObjectActs.get(i);
-
-            if (actObject.collides(e.getPoint())) {
-                System.out.println("werkt");
-            }
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {}
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-    @Override
-    public void mouseExited(MouseEvent e) {}
 }
