@@ -1,4 +1,4 @@
-package Gui;
+package gui;
 
 public class TestFrame {
     public static void main(String[] args) {

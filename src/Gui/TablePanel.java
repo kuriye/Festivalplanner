@@ -1,6 +1,5 @@
-package Gui;
+package gui;
 
-import agenda.Act;
 import agenda.Artist;
 import agenda.Program;
 import agenda.Stage;
@@ -8,7 +7,6 @@ import agenda.Stage;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
