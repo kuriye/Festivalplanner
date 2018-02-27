@@ -18,7 +18,7 @@ import java.util.HashSet;
  * @author Tom Martens
  * @author Boudewijn Groeneboer
  */
-public class GraphicPanel extends JPanel implements MouseWheelListener, ActionListener, MouseListener {
+public class GraphicPanel extends JPanel implements MouseWheelListener, ActionListener {
 
     private ArrayList<Act> allActs = new ArrayList<>();
     /**
@@ -110,7 +110,6 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
 
         Timer timer = new Timer(3000,this);
         timer.start();
-        this.addMouseListener(this);
     }
 
 

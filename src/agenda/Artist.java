@@ -1,12 +1,5 @@
 package agenda;
 
-
-import util.OnlineImageGetter;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-
 public class Artist {
 /**
 Name is the name of the artist
