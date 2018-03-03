@@ -47,7 +47,7 @@ public class PopUpFrame extends JFrame {
 
     public void reserveNorthPanel(){
         try{
-            ImageIcon imageOfArtist = new ImageIcon(ImageIO.read(new File("Resources\\OnlineImages\\no_image_found.jpg")));
+            ImageIcon imageOfArtist = new ImageIcon(ImageIO.read(new File("Resources\\Maps\\no_image_found.jpg")));
             JLabel labelImage = new JLabel(imageOfArtist);
             northPanel.add(labelImage);
         }
