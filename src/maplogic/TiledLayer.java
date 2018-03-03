@@ -9,25 +9,24 @@ public class TiledLayer {
     private ArrayList<Integer> data = new ArrayList<>();
     private int height;
     private int width;
-    private String name;
+    private boolean visible;
 
-    public TiledLayer(String fileName, int numberOfLayers){
+    public TiledLayer(String fileName, int layer){
         try {
             JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
             JsonObject root = reader.readObject();
 
-            height = root.getJsonArray("Layers").getJsonObject(0).getInt("height");
-            width =root.getJsonArray("Layers").getJsonObject(0).getInt("width");
+            height = root.getJsonArray("layers").getJsonObject(0).getInt("height");
+            width = root.getJsonArray("layers").getJsonObject(0).getInt("width");
+            visible = root.getJsonArray("layers").getJsonObject(0).getBoolean("visible");
 
             for(int y = 0; y < getHeight(); y++) {
                 for(int x = 0; x < getWidth(); x++) {
-                    data.add(root.getJsonArray("Layers").getJsonObject(numberOfLayers).getJsonArray("data").getInt(x));
-                    System.out.println(data.get(x));
+                    data.add(root.getJsonArray("layers").getJsonObject(layer).getJsonArray("data").getInt(x));
                 }
             }
-
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -56,11 +55,4 @@ public class TiledLayer {
         this.width = width;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
