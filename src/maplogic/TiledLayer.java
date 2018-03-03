@@ -17,12 +17,7 @@ public class TiledLayer {
             JsonObject root = reader.readObject();
 
             height = root.getJsonArray("Layers").getJsonObject(0).getInt("height");
-<<<<<<< Updated upstream
-            width = root.getJsonArray("Layers").getJsonObject(0).getInt("width");
-=======
             width =root.getJsonArray("Layers").getJsonObject(0).getInt("width");
->>>>>>> Stashed changes
-
 
             for(int y = 0; y < getHeight(); y++) {
                 for(int x = 0; x < getWidth(); x++) {
