@@ -3,6 +3,9 @@ package maplogic;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class TiledLayer {
@@ -10,11 +13,14 @@ public class TiledLayer {
     private int height;
     private int width;
     private boolean visible;
+    TiledMap map;
+    public int[][] indices;
 
     public TiledLayer(String fileName, int layer){
         try {
             JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
             JsonObject root = reader.readObject();
+            this.map = tiledMap;
 
             height = root.getJsonArray("layers").getJsonObject(0).getInt("height");
             width = root.getJsonArray("layers").getJsonObject(0).getInt("width");
@@ -29,6 +35,70 @@ public class TiledLayer {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public TiledLayer(String fileName, short layer){
+        try {
+            JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
+            JsonObject root = reader.readObject();
+
+            height = root.getJsonArray("layers").getJsonObject(0).getInt("height");
+            width = root.getJsonArray("layers").getJsonObject(0).getInt("width");
+            visible = root.getJsonArray("layers").getJsonObject(0).getBoolean("visible");
+
+            int i = 0;
+            for(int y = 0; y < height; y++)
+            {
+                for(int x = 0; x < width; x++)
+                {
+                    indices[y][x] = root.getJsonArray("layers").getJsonObject(layer).getJsonArray("data").getInt(i);
+                    i++;
+                }
+            }
+            }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public BufferedImage createImage()
+    {
+        BufferedImage img = new BufferedImage(32*width, 32*height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = img.createGraphics();
+
+        for(int y = 0; y < height; y++)
+        {
+            for(int x = 0; x < width; x++)
+            {
+                int tileIndex = indices[y][x];
+                int rotation = tileIndex>>29;
+                tileIndex &= ~(7<<29);
+
+                AffineTransform tx = new AffineTransform();
+                tx.translate(x*32, y*32);
+                if((rotation&4) != 0) {
+                    tx.translate(128,0);
+                    tx.scale(-1, 1);
+                }
+                if((rotation&2) != 0) {
+                    tx.translate(0,128);
+                    tx.scale(1, -1);
+                }
+                if((rotation&1) != 0) {
+                    tx.rotate(Math.toRadians(180), 64,64);
+                }
+
+                g2.drawImage(map.tiles.get(tileIndex).tile, tx, null);
+            }
+        }
+
+
+        return img;
+    }
+
+    public void updateImage() {
+        image = createImage();
     }
 
     public ArrayList<Integer> getData() {
