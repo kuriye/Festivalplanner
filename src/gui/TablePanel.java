@@ -3,11 +3,13 @@ package gui;
 import agenda.Artist;
 import agenda.Program;
 import agenda.Stage;
+import com.sun.deploy.util.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.regex.Pattern;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -153,7 +155,6 @@ public class TablePanel extends JTable{
 
                     boolean exists = false;
                     try {
-
                         int populariteitInt = Integer.parseInt(populariteitField.getText());
                         int capaciteitInt = Integer.parseInt(capaciteitField.getText());
                         int lengteInt = Integer.parseInt(lengteField.getText());
@@ -183,10 +184,10 @@ public class TablePanel extends JTable{
                         }
                     }
                     catch(NumberFormatException exc) {
-                        exc.printStackTrace();
-                        JLabel errorLabel = new JLabel("Error: Invalid input given, please enter valid input.");
+                        String part[] = exc.getMessage().split(": ");
+                        JLabel errorLabel = new JLabel("Error: Verkeerde invoer type bij: " + part[1]);
                         content.add(errorLabel);
-                        errorLabel.setBounds(20, 250, 400 , 30);
+                        errorLabel.setBounds(20, 250, 700 , 30);
                         errorLabel.setForeground(Color.RED);
                     }
 
