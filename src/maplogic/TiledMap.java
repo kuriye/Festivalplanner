@@ -11,7 +11,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
+
 
 public class TiledMap extends JPanel {
     public int height;
@@ -63,7 +63,7 @@ public class TiledMap extends JPanel {
                 else {}
             }
         }
-        catch(Exception e) {
+        catch(IOException e) {
             e.printStackTrace();
         }
     }
