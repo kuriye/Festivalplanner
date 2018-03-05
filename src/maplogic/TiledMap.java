@@ -7,6 +7,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,16 +20,19 @@ public class TiledMap extends JPanel {
     public ArrayList<TiledTile> tiles = new ArrayList<>();
     public ArrayList<TiledLayer> layers = new ArrayList<>();
 
-    public TiledMap(String filename) {
+    public TiledMap(String filename, String terrainName) {
         JsonReader reader = null;
+        JsonReader terrainReader= null;
         try {
             reader = Json.createReader(getClass().getResourceAsStream(filename));
-            JsonObject o = (JsonObject) reader.read();
+            terrainReader = Json.createReader(getClass().getResourceAsStream(terrainName));
 
-            height = o.getInt("height");
-            width = o.getInt("width");
+            JsonObject objectReader = (JsonObject) reader.read();
 
-            JsonArray tilesets = o.getJsonArray("tilesets");
+            height = objectReader.getInt("height");
+            width = objectReader.getInt("width");
+
+            JsonArray tilesets = objectReader.getJsonArray("tiles");
 
             for (int i = 0; i < tilesets.size(); i++) {
                 JsonObject tileset = tilesets.getJsonObject(i);
@@ -63,7 +67,7 @@ public class TiledMap extends JPanel {
             }
 
 
-            JsonArray jsonLayers = o.getJsonArray("layers");
+            JsonArray jsonLayers = objectReader.getJsonArray("layers");
             for (int i = 0; i < jsonLayers.size(); i++) {
                 if (jsonLayers.getJsonObject(i).getString("type").equals("tilelayer")) {
                     layers.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
@@ -80,7 +84,10 @@ public class TiledMap extends JPanel {
     }
 
 
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void draw(Graphics2D g2) {
+        for(TiledLayer l : layers) {
+            if (l.visible)
+                g2.drawImage(l.image, new AffineTransform(), null);
+        }
     }
 }

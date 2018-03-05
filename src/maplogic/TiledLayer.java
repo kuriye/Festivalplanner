@@ -1,6 +1,7 @@
 package maplogic;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.awt.*;
@@ -12,18 +13,19 @@ public class TiledLayer {
     private ArrayList<Integer> data = new ArrayList<>();
     private int height;
     private int width;
-    private boolean visible;
+    public boolean visible;
     TiledMap map;
     public int[][] indices;
+    BufferedImage image;
 
     public TiledLayer(String fileName, int layer){
         try {
             JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
             JsonObject root = reader.readObject();
-            this.map = tiledMap;
 
             height = root.getJsonArray("layers").getJsonObject(0).getInt("height");
             width = root.getJsonArray("layers").getJsonObject(0).getInt("width");
+
             visible = root.getJsonArray("layers").getJsonObject(0).getBoolean("visible");
 
             for(int y = 0; y < getHeight(); y++) {
@@ -37,29 +39,25 @@ public class TiledLayer {
         }
     }
 
-    public TiledLayer(String fileName, short layer){
-        try {
-            JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
-            JsonObject root = reader.readObject();
+    public TiledLayer(JsonObject layer, TiledMap tiledMap) {
+            this.map = tiledMap;
+            JsonArray data = layer.getJsonArray("data");
 
-            height = root.getJsonArray("layers").getJsonObject(0).getInt("height");
-            width = root.getJsonArray("layers").getJsonObject(0).getInt("width");
-            visible = root.getJsonArray("layers").getJsonObject(0).getBoolean("visible");
+            height = layer.getInt("height");
+            width = layer.getInt("width");
+            visible = layer.getBoolean("visible");
+
+            indices = new int[height][width];
 
             int i = 0;
-            for(int y = 0; y < height; y++)
-            {
-                for(int x = 0; x < width; x++)
-                {
-                    indices[y][x] = root.getJsonArray("layers").getJsonObject(layer).getJsonArray("data").getInt(i);
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    indices[y][x] = data.getInt(i);
                     i++;
                 }
             }
-            }
 
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        image = createImage();
     }
 
     public BufferedImage createImage()
@@ -78,11 +76,11 @@ public class TiledLayer {
                 AffineTransform tx = new AffineTransform();
                 tx.translate(x*32, y*32);
                 if((rotation&4) != 0) {
-                    tx.translate(128,0);
+                    tx.translate(32,0);
                     tx.scale(-1, 1);
                 }
                 if((rotation&2) != 0) {
-                    tx.translate(0,128);
+                    tx.translate(0,32);
                     tx.scale(1, -1);
                 }
                 if((rotation&1) != 0) {
@@ -92,8 +90,6 @@ public class TiledLayer {
                 g2.drawImage(map.tiles.get(tileIndex).tile, tx, null);
             }
         }
-
-
         return img;
     }
 
