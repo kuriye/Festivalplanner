@@ -39,8 +39,8 @@ public class TiledMap extends JPanel {
 
                 int tilesetWidth = width*32;
                 int tilesetHeight = height*32;
-                int tileWidth = tileset.getInt("tilewidth");
-                int tileHeight = tileset.getInt("tileheight");
+                int tileWidth = objectReader.getInt("tilewidth");
+                int tileHeight = objectReader.getInt("tileheight");
                 int index = tileset.getInt("firstgid");
 
                 while (tiles.size() < index + (height + width))
