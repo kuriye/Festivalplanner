@@ -43,7 +43,7 @@ public class TiledMap extends JPanel {
                 int tileHeight = objectReader.getInt("tileheight");
                 int index = tileset.getInt("firstgid");
 
-                while (tiles.size() < index + (height + width))
+                while (tiles.size() < index + (height * width))
                     tiles.add(new TiledTile());
 
 
@@ -54,6 +54,7 @@ public class TiledMap extends JPanel {
                     }
                 }
             }
+
             JsonArray jsonLayers = objectReader.getJsonArray("layers");
             for (int i = 0; i < jsonLayers.size(); i++) {
                 if (jsonLayers.getJsonObject(i).getString("type").equals("tilelayer")) {
