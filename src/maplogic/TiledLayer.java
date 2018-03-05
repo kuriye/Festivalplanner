@@ -70,23 +70,8 @@ public class TiledLayer {
             for(int x = 0; x < width; x++)
             {
                 int tileIndex = indices[y][x];
-                int rotation = tileIndex>>29;
-                tileIndex &= ~(7<<29);
-
                 AffineTransform tx = new AffineTransform();
                 tx.translate(x*32, y*32);
-                if((rotation&4) != 0) {
-                    tx.translate(32,0);
-                    tx.scale(-1, 1);
-                }
-                if((rotation&2) != 0) {
-                    tx.translate(0,32);
-                    tx.scale(1, -1);
-                }
-                if((rotation&1) != 0) {
-                    tx.rotate(Math.toRadians(180), 64,64);
-                }
-
                 g2.drawImage(map.tiles.get(tileIndex).tile, tx, null);
             }
         }

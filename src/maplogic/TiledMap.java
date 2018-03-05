@@ -17,68 +17,52 @@ public class TiledMap extends JPanel {
     public int height;
     public int width;
 
+    private BufferedImage image;
+
     public ArrayList<TiledTile> tiles = new ArrayList<>();
     public ArrayList<TiledLayer> layers = new ArrayList<>();
 
-    public TiledMap(String filename, String terrainName) {
+    public TiledMap(String filename) {
         JsonReader reader = null;
-        JsonReader terrainReader= null;
         try {
             reader = Json.createReader(getClass().getResourceAsStream(filename));
-            terrainReader = Json.createReader(getClass().getResourceAsStream(terrainName));
-
             JsonObject objectReader = (JsonObject) reader.read();
+            JsonArray tilesets = objectReader.getJsonArray("tilesets");
 
-            height = objectReader.getInt("height");
-            width = objectReader.getInt("width");
+            image = ImageIO.read(getClass().getResource("/terrain.png"));
 
-            JsonArray tilesets = objectReader.getJsonArray("tiles");
+            height = image.getHeight() /32;
+            width = image.getWidth() / 32;
 
             for (int i = 0; i < tilesets.size(); i++) {
                 JsonObject tileset = tilesets.getJsonObject(i);
-                String tileFile = tileset.getString("image");
-                tileFile = tileFile.replaceAll("\\.\\./", "/"); //regex
 
-                BufferedImage img = ImageIO.read(getClass().getResource(tileFile));
-
-                int tilesetWidth = tileset.getInt("imagewidth");
-                int tilesetHeight = tileset.getInt("imageheight");
+                int tilesetWidth = width*32;
+                int tilesetHeight = height*32;
                 int tileWidth = tileset.getInt("tilewidth");
                 int tileHeight = tileset.getInt("tileheight");
-
-
                 int index = tileset.getInt("firstgid");
-                while (tiles.size() < index + tileset.getInt("tilecount"))
+
+                while (tiles.size() < index + (height + width))
                     tiles.add(new TiledTile());
 
 
                 for (int y = 0; y + tileHeight <= tilesetHeight; y += tileHeight) {
                     for (int x = 0; x + tileWidth <= tilesetWidth; x += tileWidth) {
-                        tiles.get(index).tile = img.getSubimage(x, y, tileWidth, tileHeight);
+                        tiles.get(index).tile = image.getSubimage(32 * (i % 21), 32 * (i / 23), 32, 32);
                         index++;
                     }
                 }
-
-                index = tileset.getInt("firstgid");
-                for (int ii = 0; ii < tileset.getInt("tilecount"); ii++) {
-                    tiles.get(index).walkable = tileset.getJsonObject("tileproperties").getJsonObject(ii + "").getBoolean("walkable");
-                    index++;
-                }
             }
-
-
             JsonArray jsonLayers = objectReader.getJsonArray("layers");
             for (int i = 0; i < jsonLayers.size(); i++) {
                 if (jsonLayers.getJsonObject(i).getString("type").equals("tilelayer")) {
                     layers.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
-                } else {
-
                 }
+                else {}
             }
-
-
         }
-        catch(IOException e) {
+        catch(Exception e) {
             e.printStackTrace();
         }
     }
