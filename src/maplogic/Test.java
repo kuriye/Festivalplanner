@@ -16,7 +16,7 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
     private int yPositionScroll = 0;
 
     public static void main(String[] args) {
-        test = new TiledMap("/Layers.json");
+        test = new TiledMap("/dikkefix.json");
         JFrame frame = new JFrame("Simulatie");
         frame.setPreferredSize(new Dimension(800, 800));
         frame.setMinimumSize(new Dimension(800, 600));
