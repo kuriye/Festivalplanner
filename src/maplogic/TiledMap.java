@@ -29,8 +29,6 @@ public class TiledMap extends JPanel {
             JsonArray tilesets = objectReader.getJsonArray("tilesets");
 
             image = ImageIO.read(getClass().getResource("/v7.png"));
-            System.out.println(image.getHeight());
-            System.out.println(image.getWidth());
             height = image.getHeight() /32;
             width = image.getWidth() / 32;
 
@@ -70,10 +68,10 @@ public class TiledMap extends JPanel {
     }
 
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2,AffineTransform transform) {
         for(TiledLayer l : layers) {
             if (l.visible)
-                g2.drawImage(l.image, new AffineTransform(), null);
+                g2.drawImage(l.image, transform, null);
         }
     }
 }
