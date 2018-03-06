@@ -10,13 +10,11 @@ import java.util.ArrayList;
 
 
 public class Visitor {
-    Point2D position;
-    double angle;
-    BufferedImage image;
-
-    double speed;
-
-    Point2D targetPosition = new Point2D.Double(500,500);
+    private Point2D position;
+    private double angle;
+    private BufferedImage image;
+    private double speed;
+    private Point2D targetPosition = new Point2D.Double(500,500);
 
     public Visitor()
     {
@@ -45,14 +43,13 @@ public class Visitor {
         );
 
         double targetAngle = Math.atan2(diff.getY(), diff.getX());
-
-
-
         double angleDiff = angle - targetAngle;
+
+
         while(angleDiff < -Math.PI)
-            angleDiff += 2*Math.PI;
+            angleDiff += Math.PI/2;
         while(angleDiff > Math.PI)
-            angleDiff -= 2*Math.PI;
+            angleDiff -= Math.PI/2;
 
         if(angleDiff < 0)
             angle += 0.1;
@@ -73,9 +70,6 @@ public class Visitor {
             position = lastPosition;
             angle += 0.2;
         }
-
-
-
     }
 
     public boolean hasCollision(ArrayList<Visitor> visitors) {

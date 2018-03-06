@@ -23,7 +23,7 @@ public class VisitorDemo extends JPanel implements ActionListener {
 
     public VisitorDemo() {
 
-        while(visitors.size() < 100)
+        while(visitors.size() < 1)
         {
             Visitor visitor = new Visitor();
             if(!visitor.hasCollision(visitors))
