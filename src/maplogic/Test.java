@@ -12,8 +12,6 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
     private boolean scrolled = false;
     private int amountScrolled = 0;
     private int yPositionScroll = 0;
-    private Point2D startDragPos;
-    private Point2D endDragPos;
 
     public static void main(String[] args) {
         test = new TiledMap("/dikkefix.json");
@@ -54,14 +52,12 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(SwingUtilities.isRightMouseButton(e))
-        startDragPos = e.getPoint();
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(SwingUtilities.isRightMouseButton(e))
-            endDragPos = e.getPoint();
+
     }
 
     @Override
@@ -78,7 +74,7 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
     public void mouseDragged(MouseEvent e) {
         if(SwingUtilities.isRightMouseButton(e)) {
             Point2D position = e.getPoint();
-            camera.setTarget(new Point2D.Double(e.getX() - startDragPos.getX(), e.getY() - startDragPos.getY()));
+            camera.setTarget(position);
             repaint();
         }
 
