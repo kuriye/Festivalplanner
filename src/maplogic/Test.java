@@ -48,11 +48,6 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
         if(SwingUtilities.isRightMouseButton(e))
         startDragPos = e.getPoint();
@@ -64,15 +59,9 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
             endDragPos = e.getPoint();
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -81,12 +70,6 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
             camera.setTarget(new Point2D.Double(e.getX() - startDragPos.getX(), e.getY() - startDragPos.getY()));
             repaint();
         }
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
     }
 
     @Override
@@ -119,4 +102,7 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
             }
         }
     }
+
+    public void mouseMoved(MouseEvent e) {}
 }
+
