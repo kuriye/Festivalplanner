@@ -42,7 +42,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"online found.tsx"
+         "source":"online fund.tsx"
         }],
  "tilewidth":32,
  "type":"map",
