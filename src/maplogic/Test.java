@@ -7,13 +7,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
-public class Test extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class Test extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, ActionListener {
     private Camera camera;
     private static TiledMap test;
     private boolean scrolled = false;
     private int amountOfScrolled = 0;
     private int yPositionScroll = 0;
+    private ArrayList<Visitor> visitors;
 
     public static void main(String[] args) {
         test = new TiledMap("/dikkefix.json");
@@ -25,9 +28,33 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
         frame.setVisible(true);
     }
 
+    public Test()
+    {
+        visitors = new ArrayList<>();
+
+        while(visitors.size() < 20)
+        {
+            Visitor visitor = new Visitor();
+            if(!visitor.hasCollision(visitors))
+                visitors.add(visitor);
+        }
+
+        Timer t = new Timer(1000/60,this);
+        t.start();
+
+        addMouseListener(this);
+        addMouseMotionListener(this);
+
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        //Shape shape = new Rectangle2D.Double(0,0,getWidth(),getHeight());
+        //g2d.draw(shape);
+        //g2d.setClip(shape);
+
         test.draw(g2d);
 
         if (camera == null) camera = new Camera(new Point2D.Double(getWidth(), getHeight()), 0.5f);
@@ -37,7 +64,24 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
 //        for(Block block : blocks) {
 //            block.draw(g2d);
 //        }
+        for(Visitor visitor: visitors)
+        {
+            visitor.draw(g2d);
+        }
     }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for(Visitor visitor: visitors)
+        {
+            visitor.update(visitors);
+        }
+
+        repaint();
+
+    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -76,7 +120,10 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        for(Visitor visitor: visitors)
+        {
+            visitor.setTarget(e.getPoint());
+        }
     }
 
     @Override
@@ -109,4 +156,5 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
             }
         }
     }
+
 }
