@@ -22,14 +22,15 @@ public class TiledMap extends JPanel {
     public ArrayList<TiledLayer> layers = new ArrayList<>();
 
     public TiledMap(String filename) {
-        JsonReader reader = null;
+        JsonReader reader;
         try {
             reader = Json.createReader(getClass().getResourceAsStream(filename));
             JsonObject objectReader = (JsonObject) reader.read();
             JsonArray tilesets = objectReader.getJsonArray("tilesets");
 
             image = ImageIO.read(getClass().getResource("/terrain.png"));
-
+            System.out.println(image.getHeight());
+            System.out.println(image.getWidth());
             height = image.getHeight() /32;
             width = image.getWidth() / 32;
 
@@ -46,9 +47,11 @@ public class TiledMap extends JPanel {
                     tiles.add(new TiledTile());
 
 
-                for (int y = 0; y + tileHeight <= tilesetHeight; y += tileHeight) {
-                    for (int x = 0; x + tileWidth <= tilesetWidth; x += tileWidth) {
-                        tiles.get(index).tile = image.getSubimage(32 * (i % 21), 32 * (i / 23), 32, 32);
+                for (int y = 0; y < image.getHeight(); y += tileHeight) {
+                    for (int x = 0; x < image.getWidth(); x += tileWidth) {
+                        System.out.println(x);
+                        System.out.println(y);
+                        tiles.get(index).tile = image.getSubimage(32 * (x / tileWidth), 32 * (y / tileHeight), 32, 32);
                         index++;
                     }
                 }
@@ -59,7 +62,6 @@ public class TiledMap extends JPanel {
                 if (jsonLayers.getJsonObject(i).getString("type").equals("tilelayer")) {
                     layers.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
                 }
-                else {}
             }
         }
         catch(IOException e) {
