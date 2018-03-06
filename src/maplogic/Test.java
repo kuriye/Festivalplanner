@@ -66,6 +66,11 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        if(SwingUtilities.isRightMouseButton(e)) {
+            Point2D position = e.getPoint();
+            camera.setTarget(position);
+            repaint();
+        }
 
     }
 
