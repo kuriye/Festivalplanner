@@ -70,9 +70,13 @@ public class TiledLayer {
             for(int x = 0; x < width; x++)
             {
                 int tileIndex = indices[y][x];
-                AffineTransform tx = new AffineTransform();
-                tx.translate(x*32, y*32);
-                g2.drawImage(map.tiles.get(tileIndex).tile, tx, null);
+                if(tileIndex <= map.tiles.size() && tileIndex > 0)
+                {
+                    AffineTransform tx = new AffineTransform();
+                    tx.translate(x*32, y*32);
+                    g2.drawImage(map.tiles.get(tileIndex).tile, tx, null);
+                }
+
             }
         }
         return img;

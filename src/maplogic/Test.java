@@ -8,7 +8,7 @@ public class Test extends JPanel{
     private static TiledMap test;
 
     public static void main(String[] args) {
-        test = new TiledMap("/Layers.json");
+        test = new TiledMap("/dikkefix.json");
         JFrame frame = new JFrame("Simulatie");
         frame.setPreferredSize(new Dimension(800,800));
         frame.setMinimumSize(new Dimension(800, 600));
