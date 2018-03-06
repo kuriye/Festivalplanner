@@ -1,7 +1,5 @@
 package maplogic;
 
-import jdk.nashorn.internal.ir.Block;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -28,15 +26,11 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        test.draw(g2d);
 
-        if (camera == null) camera = new Camera(new Point2D.Double(getWidth(), getHeight()), 0.5f);
+        if (camera == null) camera = new Camera(new Point2D.Double(0,0), 0.5f);
 
         g2d.setTransform(camera.getTransform());
-
-//        for(Block block : blocks) {
-//            block.draw(g2d);
-//        }
+        test.draw(g2d);
     }
 
     @Override
