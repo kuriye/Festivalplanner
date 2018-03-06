@@ -28,8 +28,8 @@ public class Visitor {
         }
     }
 
-    public void draw(Graphics2D g2d) {
-        AffineTransform tx = new AffineTransform();
+    public void draw(Graphics2D g2d, AffineTransform tx) {
+
         tx.translate(position.getX() - image.getWidth()/2, position.getY() - image.getHeight()/2);
         tx.rotate(angle, image.getWidth()/2, image.getHeight()/2);
         g2d.drawImage(image, tx, null);

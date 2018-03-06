@@ -3,6 +3,7 @@ package maplogic;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -52,12 +53,6 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        //Shape shape = new Rectangle2D.Double(0,0,getWidth(),getHeight());
-        //g2d.draw(shape);
-        //g2d.setClip(shape);
-
-        test.draw(g2d);
-
         //Clipping voor anti-lag
         Shape screen = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
         g2d.setClip(screen);
@@ -67,12 +62,9 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
             camera = new Camera(new Point2D.Double(0, 0), 0.5f);
         test.draw(g2d, camera.getTransform());
 
-//        for(Block block : blocks) {
-//            block.draw(g2d);
-//        }
         for(Visitor visitor: visitors)
         {
-            visitor.draw(g2d);
+            visitor.draw(g2d , camera.getTransform());
         }
     }
 
@@ -108,7 +100,6 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
 
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
-    public void mouseClicked(MouseEvent e) {}
 
     @Override
     public void mouseDragged(MouseEvent e) {
