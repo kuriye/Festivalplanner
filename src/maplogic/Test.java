@@ -5,13 +5,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
-public class Test extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class Test extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, ActionListener {
     private Camera camera;
     private static TiledMap test;
     private boolean scrolled = false;
     private int amountScrolled = 0;
     private int yPositionScroll = 0;
+    private ArrayList<Visitor> visitors;
+    private Point2D startDragPos;
+    private Point2D endDragPos;
 
     public static void main(String[] args) {
         test = new TiledMap("/dikkefix.json");
@@ -23,16 +27,36 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
         frame.setVisible(true);
     }
 
-    Test()
+    public Test()
     {
+        visitors = new ArrayList<>();
+
+        while(visitors.size() < 20)
+        {
+            Visitor visitor = new Visitor();
+            if(!visitor.hasCollision(visitors))
+                visitors.add(visitor);
+        }
+
+        Timer t = new Timer(1000/60,this);
+        t.start();
+
         addMouseListener(this);
         addMouseMotionListener(this);
-        addMouseWheelListener(this);
-    }
 
+
+        addMouseWheelListener(this);
+
+    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        //Shape shape = new Rectangle2D.Double(0,0,getWidth(),getHeight());
+        //g2d.draw(shape);
+        //g2d.setClip(shape);
+
+        test.draw(g2d);
 
         //Clipping voor anti-lag
         Shape screen = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
@@ -43,7 +67,27 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
             camera = new Camera(new Point2D.Double(0, 0), 0.5f);
         test.draw(g2d, camera.getTransform());
 
+//        for(Block block : blocks) {
+//            block.draw(g2d);
+//        }
+        for(Visitor visitor: visitors)
+        {
+            visitor.draw(g2d);
+        }
     }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for(Visitor visitor: visitors)
+        {
+            visitor.update(visitors);
+        }
+
+        repaint();
+
+    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -52,37 +96,35 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if(SwingUtilities.isRightMouseButton(e))
+        startDragPos = e.getPoint();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if(SwingUtilities.isRightMouseButton(e))
+            endDragPos = e.getPoint();
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
     public void mouseDragged(MouseEvent e) {
         if(SwingUtilities.isRightMouseButton(e)) {
             Point2D position = e.getPoint();
-            camera.setTarget(position);
+            camera.setTarget(new Point2D.Double(e.getX() - startDragPos.getX(), e.getY() - startDragPos.getY()));
             repaint();
         }
-
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        for(Visitor visitor: visitors)
+        {
+            visitor.setTarget(e.getPoint());
+        }
     }
 
     @Override
@@ -116,3 +158,4 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
         }
     }
 }
+
