@@ -14,13 +14,13 @@ public class Visitor {
     private double angle;
     private BufferedImage image;
     private double speed;
-    private Point2D targetPosition = new Point2D.Double(500,500);
+    private Point2D targetPosition = new Point2D.Double(100,100);
 
     public Visitor()
     {
-        position = new Point2D.Double(Math.random()*1000, Math.random()*1000);
-        angle = Math.random() * 2 * Math.PI;
-        speed = 3 + 4 * Math.random();
+        position = new Point2D.Double(1000,500);
+        speed = 2;
+        angle = 0;
         try {
             image = ImageIO.read(getClass().getResource("/poppetje.png"));
         } catch (IOException e) {
@@ -36,31 +36,33 @@ public class Visitor {
     }
 
     public void update(ArrayList<Visitor> visitors) {
-
+        int directionX = 0;
+        int directionY = 0;
         Point2D diff = new Point2D.Double(
                 targetPosition.getX() - position.getX(),
                 targetPosition.getY() - position.getY()
         );
 
-        double targetAngle = Math.atan2(diff.getY(), diff.getX());
-        double angleDiff = angle - targetAngle;
-
-
-        while(angleDiff < -Math.PI)
-            angleDiff += Math.PI/2;
-        while(angleDiff > Math.PI)
-            angleDiff -= Math.PI/2;
-
-        if(angleDiff < 0)
-            angle += 0.1;
-        else if(angleDiff > 0)
-            angle -= 0.1;
-
-
+        if (position.getX() != targetPosition.getX()){
+            if (diff.getX() <= 0){
+                directionX = -1;
+            }
+            else{
+                directionX = 1;
+            }
+        }
+        else if(position.getY() != targetPosition.getY()) {
+            if (diff.getY() <= 0){
+                directionY = -1;
+            }
+            else{
+                directionY = 1;
+            }
+        }
         Point2D lastPosition = position;
         position = new Point2D.Double(
-                position.getX() + speed * Math.cos(angle),
-                position.getY() + speed * Math.sin(angle));
+                position.getX() + speed * directionX,
+                position.getY() + speed * directionY);
 
 
         boolean hasCollision = hasCollision(visitors);
@@ -68,7 +70,6 @@ public class Visitor {
         if(hasCollision)
         {
             position = lastPosition;
-            angle += 0.2;
         }
     }
 
