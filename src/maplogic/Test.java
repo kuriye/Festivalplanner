@@ -26,6 +26,7 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
     Test()
     {
         addMouseListener(this);
+        addMouseMotionListener(this);
         addMouseWheelListener(this);
     }
 
@@ -33,17 +34,14 @@ public class Test extends JPanel implements MouseListener, MouseMotionListener, 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        //Clipping voor anti-lag
         Shape screen = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
         g2d.setClip(screen);
 
-        if (camera == null) camera = new Camera(new Point2D.Double(getWidth(), getHeight()), 0.5f);
-        test.draw(g2d);
-        g2d.setTransform(camera.getTransform());
-
-//        for(Block block : blocks) {
-//            block.draw(g2d);
-//        }
-
+        //Camera movement registeren
+        if (camera == null)
+            camera = new Camera(new Point2D.Double(0, 0), 0.5f);
+        test.draw(g2d, camera.getTransform());
 
     }
 
