@@ -33,11 +33,6 @@ public class Visitor {
         }
     }
 
-     */
-     * draws the visitor on the panel.
-     * @param g2d is contained from a paintcomponent from a panel.
-     */
-    public void draw(Graphics2D g2d, AffineTransform tx) {
     public void draw(Graphics2D g2d, AffineTransform tx) {
 
         tx.translate(position.getX() - image.getWidth()/2, position.getY() - image.getHeight()/2);
@@ -55,7 +50,6 @@ public class Visitor {
                 targetPosition.getY() - position.getY()
         );
 
-                directionX = -1;
         double targetAngle = Math.atan2(diff.getY(), diff.getX());
         double angleDiff = angle - targetAngle;
 
