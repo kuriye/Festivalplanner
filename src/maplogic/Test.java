@@ -11,16 +11,13 @@ import java.util.ArrayList;
 public class Test extends JPanel implements ActionListener {
     private Camera camera;
     private static TiledMap test;
-    private boolean scrolled = false;
-    private int amountScrolled = 0;
-    private int yPositionScroll = 0;
     private ArrayList<Visitor> visitors;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
-        frame.setPreferredSize(new Dimension(800, 800));
-        frame.setMinimumSize(new Dimension(800, 600));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(1920, 1080));
+        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         frame.setContentPane(new Test());
         frame.setVisible(true);
     }
