@@ -18,8 +18,5 @@ public class TiledTarget
         width = target.getInt("width");
         x = target.getInt("x");
         y = target.getInt("y");
-
-        System.out.println(objects);
-
     }
 }
