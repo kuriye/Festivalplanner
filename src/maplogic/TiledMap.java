@@ -79,7 +79,6 @@ public class TiledMap extends JPanel {
         }
     }
 
-
     public void draw(Graphics2D g2,AffineTransform transform) {
         for(TiledLayer l : layers) {
             if (l.visible)

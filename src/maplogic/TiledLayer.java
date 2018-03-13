@@ -55,8 +55,6 @@ public class TiledLayer {
                     i++;
                 }
             }
-
-
         image = createImage();
     }
 
@@ -109,4 +107,7 @@ public class TiledLayer {
         this.width = width;
     }
 
+    public int[][] getIndices() {
+        return indices;
+    }
 }

@@ -9,13 +9,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- *
+ * The class Visitor represents one visitor which is going to visit the festival.
  */
 public class Visitor {
+    /**
+     * the position artibute is the position of the visitor;
+     */
     private Point2D position;
+
+    /**
+     * The angle artibute is the angle where the visitor is going to look at.
+     */
     private double angle;
+
+    /**
+     * The image artibute is the sprite of the visitor.
+     */
     private BufferedImage image;
+
+    /**
+     * The speed artibute is the speed of the visitor.
+     */
     private double speed;
+
+    /**
+     * The targetPosition is the position where the visitor needs to go.
+     */
     private Point2D targetPosition = new Point2D.Double(500,500);
 
     /**
@@ -33,8 +52,12 @@ public class Visitor {
         }
     }
 
+    /**
+     * The draw method draws a visitor on the graphical user interface.
+     * @param g2d is gotten from the paintComponent
+     * @param tx is an affinetransform which is needed to draw an image on the gui.
+     */
     public void draw(Graphics2D g2d, AffineTransform tx) {
-
         tx.translate(position.getX() - image.getWidth()/2, position.getY() - image.getHeight()/2);
         g2d.drawImage(image, tx, null);
     }
@@ -87,12 +110,11 @@ public class Visitor {
      */
     public boolean hasCollision(ArrayList<Visitor> visitors) {
         boolean hasCollision = false;
-        for(Visitor visitor : visitors)
-        {
-            if(visitor == this)
+        for(Visitor visitor : visitors) {
+            if (visitor == this)
                 continue;
             double distance = position.distance(visitor.position);
-            if(distance < 14)
+            if (distance < 14)
                 hasCollision = true;
         }
         return hasCollision;
