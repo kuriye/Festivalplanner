@@ -14,9 +14,9 @@ public class TiledLayer {
     private int height;
     private int width;
     public boolean visible;
-    TiledMap map;
+    private TiledMap map;
     public int[][] indices;
-    BufferedImage image;
+    public BufferedImage image;
 
     public TiledLayer(String fileName, int layer){
         try {
@@ -55,6 +55,7 @@ public class TiledLayer {
                     i++;
                 }
             }
+
         image = createImage();
     }
 

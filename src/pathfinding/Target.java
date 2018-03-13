@@ -15,12 +15,7 @@ public class Target {
         Target target = new Target();
     }
 
-
-
     public Target() {
-        TiledMap tiledMap = new TiledMap("/kleinemap.json");
-        layers = tiledMap.getLayers();
-        System.out.println(layers.get(0));
     }
 
     public void calculateDistancesFromTarget(){
