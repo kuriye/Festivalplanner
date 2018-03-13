@@ -30,7 +30,7 @@ public class TestMap extends JPanel implements ActionListener {
            Visitor visitor = new Visitor();
            if (!visitor.hasCollision(visitors))
                visitors.add(visitor);
-       }
+    }
 
         Timer t = new Timer(1000 / 60, this);
         t.start();
@@ -50,10 +50,10 @@ public class TestMap extends JPanel implements ActionListener {
         //Camera movement registeren
         if (camera == null)
             camera = new Camera(this);
-        test.draw(g2d, camera.getTransform(getHeight(),getWidth()));
+        test.draw(g2d, camera.getTransform());
 
         for (Visitor visitor : visitors) {
-            visitor.draw(g2d, camera.getTransform(getHeight(),getWidth()));
+            visitor.draw(g2d, camera.getTransform());
         }
     }
 

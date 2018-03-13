@@ -6,9 +6,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public class Camera implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener{
-    Point2D centerPoint = new Point2D.Double(-1200,-200);
+    Point2D centerPoint;
     double zoom = 1;
-    float rotation = 0;
+    float rotation = 0f;
 
     Point2D lastMousePos;
     JPanel panel;
@@ -20,17 +20,19 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         panel.addMouseMotionListener(this);
         panel.addMouseWheelListener(this);
         panel.requestFocus();
+        centerPoint = new Point2D.Double(-1400,-1000);
     }
 
-    public AffineTransform getTransform(int windowWidth,int windowHeight) {
+    public AffineTransform getTransform() {
         AffineTransform tx = new AffineTransform();
-        tx.translate(windowWidth/4, windowHeight/4);
+        tx.translate(panel.getWidth()/2, panel.getHeight()/2);
         tx.scale(zoom, zoom);
         tx.translate(centerPoint.getX(), centerPoint.getY());
         tx.rotate(rotation);
         return tx;
 
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -77,7 +79,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        zoom *= (1 - e.getWheelRotation()/25.0f);
+        zoom *= (1 - e.getPreciseWheelRotation()/25.0f);
         panel.repaint();
     }
 
