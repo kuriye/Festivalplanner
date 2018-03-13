@@ -72,4 +72,8 @@ public class TiledMap extends JPanel {
                 g2.drawImage(l.image, transform, null);
         }
     }
+
+    public ArrayList<TiledLayer> getLayers() {
+        return layers;
+    }
 }
