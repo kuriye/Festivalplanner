@@ -23,7 +23,7 @@ public class TestMap extends JPanel implements ActionListener {
     }
 
     public TestMap() {
-        test = new TiledMap("/dikkefix.json");
+        test = new TiledMap("/kleinemap.json");
         visitors = new ArrayList<>();
 
        while (visitors.size() < 20) {

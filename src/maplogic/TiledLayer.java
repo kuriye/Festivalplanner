@@ -42,7 +42,6 @@ public class TiledLayer {
     public TiledLayer(JsonObject layer, TiledMap tiledMap) {
             this.map = tiledMap;
             JsonArray data = layer.getJsonArray("data");
-
             height = layer.getInt("height");
             width = layer.getInt("width");
             visible = layer.getBoolean("visible");
@@ -56,6 +55,7 @@ public class TiledLayer {
                     i++;
                 }
             }
+
 
         image = createImage();
     }
