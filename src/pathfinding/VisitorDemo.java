@@ -21,14 +21,14 @@ public class VisitorDemo extends JPanel implements ActionListener {
         frame.setVisible(true);
     }
 
-    ArrayList<Visitor> visitors = new ArrayList<>();
+    private ArrayList<Visitor> visitors = new ArrayList<>();
 
     public VisitorDemo() {
 
         while(visitors.size() < 1)
         {
             Visitor visitor = new Visitor();
-            if(!visitor.hasCollision(visitors, tiledmap.getLayers()))
+            if(!visitor.hasCollision(visitors))
                 visitors.add(visitor);
         }
         new Timer(1000/60, this).start();
@@ -49,7 +49,7 @@ public class VisitorDemo extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for(Visitor visitor : visitors)
-            visitor.update(visitors, tiledmap.getLayers());
+            visitor.update(visitors);
         repaint();
     }
 }
