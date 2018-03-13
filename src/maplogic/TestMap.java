@@ -23,14 +23,14 @@ public class TestMap extends JPanel implements ActionListener {
     }
 
     public TestMap() {
-        test = new TiledMap("/kleinemap.json");
+        test = new TiledMap("/dikkefix.json");
         visitors = new ArrayList<>();
 
-//        while (visitors.size() < 20) {
-//            Visitor visitor = new Visitor();
-//            if (!visitor.hasCollision(visitors))
-//                visitors.add(visitor);
-//        }
+       while (visitors.size() < 20) {
+           Visitor visitor = new Visitor();
+           if (!visitor.hasCollision(visitors))
+               visitors.add(visitor);
+       }
 
         Timer t = new Timer(1000 / 60, this);
         t.start();
