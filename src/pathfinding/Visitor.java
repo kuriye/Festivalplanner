@@ -27,7 +27,7 @@ public class Visitor {
         angle = Math.random() * 2 * Math.PI;
         speed = 3 + 4 * Math.random();
         try {
-            image = ImageIO.read(getClass().getResource("/poppetje3.png"));
+            image = ImageIO.read(getClass().getResource("/poppetje.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

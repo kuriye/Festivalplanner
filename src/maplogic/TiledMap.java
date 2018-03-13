@@ -29,7 +29,7 @@ public class TiledMap extends JPanel {
             JsonObject objectReader = (JsonObject) reader.read();
             JsonArray tilesets = objectReader.getJsonArray("tilesets");
 
-            image = ImageIO.read(getClass().getResource("/v7.png"));
+            image = ImageIO.read(getClass().getResource("/terrain.png"));
             height = image.getHeight() /32;
             width = image.getWidth() / 32;
 
