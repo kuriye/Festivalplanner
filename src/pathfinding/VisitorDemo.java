@@ -10,7 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class VisitorDemo extends JPanel implements ActionListener {
-    private static TiledMap tiledmap;
+    private static TiledMap tiledmap = null;
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("Visitor");
@@ -28,7 +28,7 @@ public class VisitorDemo extends JPanel implements ActionListener {
         while(visitors.size() < 1)
         {
             Visitor visitor = new Visitor();
-            if(!visitor.hasCollision(visitors))
+            if(!visitor.hasCollision(visitors, tiledmap.getLayers()))
                 visitors.add(visitor);
         }
         new Timer(1000/60, this).start();
@@ -49,7 +49,7 @@ public class VisitorDemo extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for(Visitor visitor : visitors)
-            visitor.update(visitors);
+            visitor.update(visitors, tiledmap.getLayers());
         repaint();
     }
 }

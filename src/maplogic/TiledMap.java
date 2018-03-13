@@ -87,7 +87,7 @@ public class TiledMap extends JPanel {
         }
     }
 
-    public ArrayList<TiledLayer> getLayers() {
+    public ArrayList<TiledLayer> getLayers(){
         return layers;
     }
 }

@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class TiledLayer {
-    private ArrayList<Integer> data = new ArrayList<>();
+    private JsonArray data = null;
     private int height;
     private int width;
     public boolean visible;
@@ -30,7 +30,7 @@ public class TiledLayer {
 
             for(int y = 0; y < getHeight(); y++) {
                 for(int x = 0; x < getWidth(); x++) {
-                    data.add(root.getJsonArray("layers").getJsonObject(layer).getJsonArray("data").getInt(x));
+                    data.add(root.getJsonArray("layers").getJsonObject(layer).getJsonArray("data"));
                 }
             }
         }
@@ -41,7 +41,7 @@ public class TiledLayer {
 
     public TiledLayer(JsonObject layer, TiledMap tiledMap) {
             this.map = tiledMap;
-            JsonArray data = layer.getJsonArray("data");
+            data = layer.getJsonArray("data");
             height = layer.getInt("height");
             width = layer.getInt("width");
             visible = layer.getBoolean("visible");
@@ -85,11 +85,11 @@ public class TiledLayer {
         image = createImage();
     }
 
-    public ArrayList<Integer> getData() {
+    public JsonArray getData() {
         return data;
     }
 
-    public void setData(ArrayList<Integer> data) {
+    public void setData(JsonArray data) {
         this.data = data;
     }
 
