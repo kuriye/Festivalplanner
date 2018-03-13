@@ -23,14 +23,14 @@ public class TestMap extends JPanel implements ActionListener {
     }
 
     public TestMap() {
-        test = new TiledMap("/dikkefix.json");
+        test = new TiledMap("/kleinemap.json");
         visitors = new ArrayList<>();
 
-        while (visitors.size() < 20) {
-            Visitor visitor = new Visitor();
-            if (!visitor.hasCollision(visitors))
-                visitors.add(visitor);
-        }
+//        while (visitors.size() < 20) {
+//            Visitor visitor = new Visitor();
+//            if (!visitor.hasCollision(visitors))
+//                visitors.add(visitor);
+//        }
 
         Timer t = new Timer(1000 / 60, this);
         t.start();
@@ -40,6 +40,8 @@ public class TestMap extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        setBackground(new Color(21,108,153));
 
         //Clipping voor anti-lag
         Shape screen = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
