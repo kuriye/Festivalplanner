@@ -47,6 +47,8 @@ public class TiledMap extends JPanel {
 
                 for (int y = 0; y < image.getHeight(); y += tileHeight) {
                     for (int x = 0; x < image.getWidth(); x += tileWidth) {
+                        System.out.println(x);
+                        System.out.println(y);
                         tiles.get(index).tile = image.getSubimage(32 * (x / tileWidth), 32 * (y / tileHeight), 32, 32);
                         index++;
                     }
