@@ -1,14 +1,14 @@
 package maplogic;
 
+import pathfinding.Visitor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class Test extends JPanel implements ActionListener {
+public class TestMap extends JPanel implements ActionListener {
     private Camera camera;
     private static TiledMap test;
     private ArrayList<Visitor> visitors;
@@ -18,11 +18,11 @@ public class Test extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(1920, 1080));
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        frame.setContentPane(new Test());
+        frame.setContentPane(new TestMap());
         frame.setVisible(true);
     }
 
-    public Test() {
+    public TestMap() {
         test = new TiledMap("/dikkefix.json");
         visitors = new ArrayList<>();
 

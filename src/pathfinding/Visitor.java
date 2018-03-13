@@ -1,4 +1,4 @@
-package maplogic;
+package pathfinding;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
