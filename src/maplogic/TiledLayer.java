@@ -76,7 +76,6 @@ public class TiledLayer {
                     tx.translate(x*32, y*32);
                     g2.drawImage(map.tiles.get(tileIndex).tile, tx, null);
                 }
-
             }
         }
         return img;
