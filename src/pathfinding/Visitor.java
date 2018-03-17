@@ -94,7 +94,7 @@ public class Visitor {
                 position.getY() + speed * Math.sin(angle));
 
 
-        boolean hasCollision = hasCollision(visitors);
+        boolean hasCollision = hasCollisionWithVisitor(visitors);
 
         if(hasCollision)
         {
@@ -108,7 +108,7 @@ public class Visitor {
      * @param visitors contains all the visitors including itself.
      * @return boolean if collision is true or not.
      */
-    public boolean hasCollision(ArrayList<Visitor> visitors) {
+    public boolean hasCollisionWithVisitor(ArrayList<Visitor> visitors) {
         boolean hasCollision = false;
         for(Visitor visitor : visitors) {
             if (visitor == this)
@@ -126,5 +126,9 @@ public class Visitor {
      */
     public void setTarget(Point2D targetPosition) {
         this.targetPosition = targetPosition;
+    }
+
+    public Point2D getPosition() {
+        return position;
     }
 }

@@ -12,6 +12,7 @@ public class TestMap extends JPanel implements ActionListener {
     private Camera camera;
     private static TiledMap test;
     private ArrayList<Visitor> visitors;
+    private ArrayList<CollisionTile> collisionTiles;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -24,11 +25,12 @@ public class TestMap extends JPanel implements ActionListener {
 
     public TestMap() {
         test = new TiledMap("/Map.json");
+        collisionTiles = test.getCollisionTiles();
         visitors = new ArrayList<>();
 
        while (visitors.size() < 20) {
            Visitor visitor = new Visitor();
-           if (!visitor.hasCollision(visitors))
+           if (!visitor.hasCollisionWithVisitor(visitors))
                visitors.add(visitor);
     }
 
@@ -54,6 +56,10 @@ public class TestMap extends JPanel implements ActionListener {
 
         for (Visitor visitor : visitors) {
             visitor.draw(g2d, camera.getTransform());
+        }
+
+        for(CollisionTile tile : collisionTiles){
+            tile.debugDraw(g2d, camera.getTransform());
         }
     }
 

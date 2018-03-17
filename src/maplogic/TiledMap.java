@@ -21,7 +21,7 @@ public class TiledMap extends JPanel {
     public ArrayList<TiledTile> tiles = new ArrayList<>();
     public ArrayList<TiledLayer> layers = new ArrayList<>();
     public ArrayList<TiledTarget> target = new ArrayList<>();
-    public CollisionLayer collisionLayer;
+    private CollisionLayer collisionLayer;
 
     public TiledMap(String filename) {
         JsonReader reader;
@@ -91,7 +91,8 @@ public class TiledMap extends JPanel {
         }
     }
 
-    public ArrayList<TiledLayer> getLayers(){
-        return layers;
+    public ArrayList<CollisionTile> getCollisionTiles(){
+        return collisionLayer.getCollisionTiles();
     }
+
 }

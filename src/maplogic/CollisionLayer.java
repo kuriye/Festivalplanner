@@ -3,6 +3,8 @@ package maplogic;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import java.util.ArrayList;
+
 public class CollisionLayer {
 
     private JsonArray data = null;
@@ -28,7 +30,16 @@ public class CollisionLayer {
         }
     }
 
-    public int[][] getIndices() {
-        return indices;
+    public ArrayList<CollisionTile> getCollisionTiles(){
+        ArrayList<CollisionTile> collisionTiles = new ArrayList<>();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if(indices[y][x] == 326){
+                    collisionTiles.add(new CollisionTile(y,x));
+                }
+            }
+        }
+        return collisionTiles;
     }
+
 }
