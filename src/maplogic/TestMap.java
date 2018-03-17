@@ -13,6 +13,7 @@ public class TestMap extends JPanel implements ActionListener {
     private static TiledMap test;
     private ArrayList<Visitor> visitors;
     private ArrayList<CollisionTile> collisionTiles;
+    private ArrayList<TiledTarget> targets;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -27,6 +28,7 @@ public class TestMap extends JPanel implements ActionListener {
         test = new TiledMap("/Map.json");
         collisionTiles = test.getCollisionTiles();
         visitors = new ArrayList<>();
+        targets = test.getTargets();
 
        while (visitors.size() < 20) {
            Visitor visitor = new Visitor();
@@ -52,7 +54,7 @@ public class TestMap extends JPanel implements ActionListener {
         //Camera movement registeren
         if (camera == null)
             camera = new Camera(this);
-        test.draw(g2d, camera.getTransform());
+        test.debugDraw(g2d, camera.getTransform());
 
         for (Visitor visitor : visitors) {
             visitor.draw(g2d, camera.getTransform());
@@ -60,6 +62,10 @@ public class TestMap extends JPanel implements ActionListener {
 
         for(CollisionTile tile : collisionTiles){
             tile.debugDraw(g2d, camera.getTransform());
+        }
+
+        for(TiledTarget target : targets){
+            target.debugDraw(g2d, camera.getTransform());
         }
     }
 
@@ -69,7 +75,6 @@ public class TestMap extends JPanel implements ActionListener {
         for (Visitor visitor : visitors) {
             visitor.update(visitors);
         }
-
         repaint();
 
     }

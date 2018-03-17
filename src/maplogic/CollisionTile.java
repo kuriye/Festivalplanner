@@ -29,7 +29,6 @@ public class CollisionTile {
     }
 
     public void debugDraw(Graphics2D g2d, AffineTransform tx){
-        Line2D line2D = new Line2D.Double(position, new Point2D.Double(position.getX() + WIDTH, position.getY()));
         Rectangle2D rectangle2D = new Rectangle2D.Double(position.getX(), position.getY(),WIDTH,HEIGHT);
         g2d.setColor(Color.blue);
         g2d.draw(tx.createTransformedShape(rectangle2D));

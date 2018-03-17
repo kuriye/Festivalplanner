@@ -1,5 +1,7 @@
 package pathfinding;
 
+import maplogic.CollisionTile;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;

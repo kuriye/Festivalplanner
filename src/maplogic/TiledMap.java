@@ -8,6 +8,7 @@ import javax.json.JsonReader;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class TiledMap extends JPanel {
 
     public ArrayList<TiledTile> tiles = new ArrayList<>();
     public ArrayList<TiledLayer> layers = new ArrayList<>();
-    public ArrayList<TiledTarget> target = new ArrayList<>();
+    private ArrayList<TiledTarget> targets = new ArrayList<>();
     public CollisionLayer collisionLayer;
 
     public TiledMap(String filename) {
@@ -76,7 +77,7 @@ public class TiledMap extends JPanel {
             for (int i = 0; i < jsontarget.size() ; i++)
             {
                 JsonObject targetObject = jsontarget.getJsonObject(i);
-                target.add(new TiledTarget(targetObject));
+                targets.add(new TiledTarget(targetObject));
             }
         }
         catch(IOException e) {
@@ -91,8 +92,26 @@ public class TiledMap extends JPanel {
         }
     }
 
+    public void debugDraw(Graphics2D g2d, AffineTransform tx){
+        for(TiledLayer l : layers) {
+            if (l.visible)
+                g2d.drawImage(l.image, tx,null);
+        }
+
+        g2d.setColor(Color.RED);
+        for(int y = 0; y <= 112; y++){
+            for(int x = 0; x <= 128; x++){
+                Rectangle2D rectangle2D = new Rectangle2D.Double(x * 32, y * 32, 32,32);
+                g2d.draw(tx.createTransformedShape(rectangle2D));
+            }
+        }
+    }
+
     public ArrayList<CollisionTile> getCollisionTiles(){
         return collisionLayer.getCollisionTiles();
     }
 
+    public ArrayList<TiledTarget> getTargets() {
+        return targets;
+    }
 }
