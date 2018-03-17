@@ -9,7 +9,7 @@ public class CollisionLayer {
     private int height;
     private int width;
     private TiledMap map;
-    public int[][] indices;
+    private int[][] indices;
 
     public CollisionLayer(JsonObject layer, TiledMap tiledMap) {
         this.map = tiledMap;
@@ -26,6 +26,9 @@ public class CollisionLayer {
                 i++;
             }
         }
-        System.out.println();
+    }
+
+    public int[][] getIndices() {
+        return indices;
     }
 }

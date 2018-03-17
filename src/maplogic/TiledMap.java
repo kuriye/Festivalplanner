@@ -21,7 +21,7 @@ public class TiledMap extends JPanel {
     public ArrayList<TiledTile> tiles = new ArrayList<>();
     public ArrayList<TiledLayer> layers = new ArrayList<>();
     public ArrayList<TiledTarget> target = new ArrayList<>();
-    private CollisionLayer collisionLayer;
+    public CollisionLayer collisionLayer;
 
     public TiledMap(String filename) {
         JsonReader reader;
@@ -62,8 +62,9 @@ public class TiledMap extends JPanel {
                 {
                     if(jsonLayers.getJsonObject(i).getString("name").equals("collision"))
                         collisionLayer = new CollisionLayer(jsonLayers.getJsonObject(i), this);
-
-                    layers.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
+                    else{
+                        layers.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
+                    }
                 }
                 else if (jsonLayers.getJsonObject(i).getString("type").equals("objectgroup"))
                 {
