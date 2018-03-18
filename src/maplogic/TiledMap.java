@@ -12,17 +12,16 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TiledMap extends JPanel {
-    public int height;
-    public int width;
+    private int height;
+    private int width;
 
-    private BufferedImage image;
-
-    public ArrayList<TiledTile> tiles = new ArrayList<>();
-    public ArrayList<TiledLayer> layers = new ArrayList<>();
+    private ArrayList<TiledTile> tiles = new ArrayList<>();
+    private ArrayList<TiledLayer> layers = new ArrayList<>();
     private ArrayList<TiledTarget> targets = new ArrayList<>();
-    public CollisionLayer collisionLayer;
+    private CollisionLayer collisionLayer;
 
     public TiledMap(String filename) {
         JsonReader reader;
@@ -31,15 +30,13 @@ public class TiledMap extends JPanel {
             JsonObject objectReader = (JsonObject) reader.read();
             JsonArray tilesets = objectReader.getJsonArray("tilesets");
 
-            image = ImageIO.read(getClass().getResource("/terrain.png"));
+            BufferedImage image = ImageIO.read(getClass().getResource("/terrain.png"));
             height = image.getHeight() /32;
             width = image.getWidth() / 32;
 
             for (int i = 0; i < tilesets.size(); i++) {
                 JsonObject tileset = tilesets.getJsonObject(i);
 
-                int tilesetWidth = width*32;
-                int tilesetHeight = height*32;
                 int tileWidth = objectReader.getInt("tilewidth");
                 int tileHeight = objectReader.getInt("tileheight");
                 int index = tileset.getInt("firstgid");
@@ -74,7 +71,7 @@ public class TiledMap extends JPanel {
             }
 
             //saves places of targets.
-            for (int i = 0; i < jsontarget.size() ; i++)
+            for (int i = 0; i < Objects.requireNonNull(jsontarget).size() ; i++)
             {
                 JsonObject targetObject = jsontarget.getJsonObject(i);
                 targets.add(new TiledTarget(targetObject));
@@ -87,15 +84,15 @@ public class TiledMap extends JPanel {
 
     public void draw(Graphics2D g2,AffineTransform transform) {
         for(TiledLayer l : layers) {
-            if (l.visible)
-                g2.drawImage(l.image, transform, null);
+            if (l.isVisible())
+                g2.drawImage(l.getImage(), transform, null);
         }
     }
 
     public void debugDraw(Graphics2D g2d, AffineTransform tx){
         for(TiledLayer l : layers) {
-            if (l.visible)
-                g2d.drawImage(l.image, tx,null);
+            if (l.isVisible())
+                g2d.drawImage(l.getImage(), tx,null);
         }
 
         g2d.setColor(Color.RED);
@@ -114,4 +111,6 @@ public class TiledMap extends JPanel {
     public ArrayList<TiledTarget> getTargets() {
         return targets;
     }
+
+    public ArrayList<TiledTile> getTiledSize() {return tiles; }
 }

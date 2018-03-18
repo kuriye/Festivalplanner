@@ -19,8 +19,8 @@ public class TablePanel extends JTable{
     private Program program = new Program();
     private JButton verwijderen;
     private JButton toevoegen;
-    TableModel model;
-    JTable jTable;
+    private TableModel model;
+    private JTable jTable;
 
 
     /**
@@ -177,9 +177,8 @@ public class TablePanel extends JTable{
                             Artist artist2 = new Artist(artiestField.getText(), populariteitInt, genreField.getText());
                             Stage stage = new Stage(podiumField.getText(), capaciteitInt, lengteInt, breedteInt);
                             program.addAct(artist2, stage, startTimeInt, endTimeInt, populariteitPodiumInt);
-                            for(int i = 0; i < textList.length; i++)
-                            {
-                                textList[i].setText("");
+                            for (JTextField aTextList : textList) {
+                                aTextList.setText("");
                             }
                         }
                     }

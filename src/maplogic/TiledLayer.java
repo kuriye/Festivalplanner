@@ -13,10 +13,10 @@ public class TiledLayer {
     private JsonArray data = null;
     private int height;
     private int width;
-    public boolean visible;
+    private boolean visible;
     private TiledMap map;
-    public int[][] indices;
-    public BufferedImage image;
+    private int[][] indices;
+    private BufferedImage image;
 
     public TiledLayer(String fileName, int layer){
         try {
@@ -69,16 +69,20 @@ public class TiledLayer {
             for(int x = 0; x < width; x++)
             {
                 int tileIndex = indices[y][x];
-                if(tileIndex <= map.tiles.size() && tileIndex > 0)
+                if(tileIndex <= map.getTiledSize().size() && tileIndex > 0)
                 {
                     AffineTransform tx = new AffineTransform();
                     tx.translate(x*32, y*32);
-                    g2.drawImage(map.tiles.get(tileIndex).tile, tx, null);
+                    g2.drawImage(map.getTiledSize().get(tileIndex).tile, tx, null);
                 }
             }
         }
         return img;
     }
+
+    public boolean isVisible() { return visible;}
+
+    public BufferedImage getImage() {return image; }
 
     public void updateImage() {
         image = createImage();
