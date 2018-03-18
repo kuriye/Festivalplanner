@@ -34,7 +34,7 @@ public class PathFind {
     }
 
     private void findPath(){
-       while(index < 60){
+       while(index < 40){
            System.out.println(index);
            for(Point2D currentTile : currentTiles ){
                visited.put(currentTile, index);
