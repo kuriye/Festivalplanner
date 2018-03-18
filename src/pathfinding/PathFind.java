@@ -6,51 +6,49 @@ import maplogic.TiledTarget;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class PathFind {
 
-    private HashMap<Point2D, Integer> visited = new HashMap<>();
-    private HashMap<Point2D,Integer> unvisited = new HashMap<>();
-    private Queue<Point2D> neighbours;
-    private Point2D startingTile;
-    private ArrayList<Point2D> currentTiles = new ArrayList<>();
-    private Integer[][] offsets = {{1,0}, {0,1},{-1,0},{0,-1}};
-    private ArrayList<CollisionTile> collisionTiles;
+    private final HashMap<Point2D, Integer> visited = new HashMap<>();
+    private final Queue<Point2D> neighbours;
+    private final HashSet<Point2D> currentTiles = new HashSet<>();
+    private final Integer[][] offsets = {{1,0}, {0,1},{-1,0},{0,-1}};
+    private final ArrayList<CollisionTile> collisionTiles;
     private int index = 0;
+
     public PathFind(TiledTarget tiledTarget, ArrayList<CollisionTile> collisionTiles){
         for(int x = 0; x < 128; x++ ){
             for(int y = 0; y < 122; y++){
+                HashMap<Point2D, Integer> unvisited = new HashMap<>();
                 unvisited.put(new Point2D.Double(x,y),-1);
             }
         }
         this.collisionTiles = collisionTiles;
-        startingTile = new Point2D.Double(tiledTarget.getTileNumberX() + 1,tiledTarget.getTileNumberY() + 1 );
+        Point2D startingTile = new Point2D.Double(tiledTarget.getTileNumberX() + 1, tiledTarget.getTileNumberY() + 1);
         currentTiles.add(startingTile);
         neighbours = new LinkedList<>();
         addNewNeighbours(); // haalt de eerste buren op.
         findPath();
+        System.out.println();
     }
 
-    public void findPath(){
-       while(index < 20){
+    private void findPath(){
+       while(index < 60){
            System.out.println(index);
            for(Point2D currentTile : currentTiles ){
                visited.put(currentTile, index);
            }
+
            currentTiles.clear();
 
-           for(Point2D neighBour : neighbours)
-               currentTiles.add(neighBour);
+           currentTiles.addAll(neighbours);
            addNewNeighbours();
        }
     }
 
     //werkt is getest, alleen if statement !visited.containsKey is nieuwe toevoeging.
-    public void addNewNeighbours(){
+    private void addNewNeighbours(){
         neighbours.clear();
         for(Point2D currentTile : currentTiles){
             for(Integer[] offset : offsets){
@@ -67,7 +65,7 @@ public class PathFind {
     }
 
     //werkt, is getest.
-    public boolean isCollisionTile(Point2D nextTile){
+    private boolean isCollisionTile(Point2D nextTile){
         boolean isCollision = false;
         for(CollisionTile collisionTile : collisionTiles){
             if(collisionTile.getTilePosition().equals(nextTile)){
