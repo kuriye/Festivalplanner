@@ -13,7 +13,7 @@ public class CollisionTile {
     private static final int WIDTH = 32;
     private static final int HEIGHT = 32;
 
-    public CollisionTile(int yIndice, int xIndice){
+    CollisionTile(int yIndice, int xIndice){
         position = new Point2D.Double(xIndice * 32,yIndice * 32);
     }
 

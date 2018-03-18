@@ -10,7 +10,7 @@ public class Renderable {
     private float rotation;
     private float scale;
 
-    public Renderable(Shape shape, Point2D position, float rotation, float scale) {
+    Renderable(Shape shape, Point2D position, float rotation, float scale) {
         this.shape = shape;
         this.position = position;
         this.rotation = rotation;

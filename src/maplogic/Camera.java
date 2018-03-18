@@ -6,12 +6,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public class Camera implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener{
-    Point2D centerPoint;
-    double zoom = 1;
-    float rotation = 0f;
+    private Point2D centerPoint;
+    private double zoom = 1;
+    private float rotation = 0f;
 
-    Point2D lastMousePos;
-    JPanel panel;
+    private Point2D lastMousePos;
+    private JPanel panel;
 
     Camera(JPanel panel) {
         this.panel = panel;

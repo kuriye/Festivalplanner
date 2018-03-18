@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class CollisionLayer {
 
-    private JsonArray data = null;
+    private JsonArray data;
     private int height;
     private int width;
     private TiledMap map;
