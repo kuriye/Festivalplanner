@@ -74,9 +74,7 @@ public class TestMap extends JPanel implements ActionListener {
             target.debugDraw(g2d, camera.getTransform());
         }
 
-        for(PathFind pathFind : pathFinds){
-            pathFind.debugDraw(g2d, camera.getTransform());
-        }
+        pathFinds.get(0).debugDraw(g2d,camera.getTransform());
     }
 
 
