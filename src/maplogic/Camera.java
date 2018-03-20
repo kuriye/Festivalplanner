@@ -9,8 +9,9 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     private Point2D centerPoint;
     private double zoom = 1;
     private float rotation = 0f;
+    private Point2D currentPosScreen;
 
-    private Point2D lastMousePos;
+    private Point2D lastMousePos = new Point2D.Double(-1400,-1000);
     private JPanel panel;
 
     Camera(JPanel panel) {
@@ -21,6 +22,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         panel.addMouseWheelListener(this);
         panel.requestFocus();
         centerPoint = new Point2D.Double(-1400,-1000);
+        currentPosScreen = panel.getMousePosition();
     }
 
     public AffineTransform getTransform() {
@@ -28,7 +30,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         tx.translate(panel.getWidth()/2, panel.getHeight()/2);
         tx.scale(zoom, zoom);
         tx.translate(centerPoint.getX(), centerPoint.getY());
-        tx.rotate(rotation);
+        tx.rotate(rotation,currentPosScreen.getX(),currentPosScreen.getY());
         return tx;
 
     }
