@@ -1,16 +1,13 @@
 package pathfinding;
 
-import maplogic.CollisionTile;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The class Visitor represents one visitor which is going to visit the festival.
@@ -47,7 +44,9 @@ public class Visitor {
 
     private PathFind path;
 
+    private Point2D nextTile;
 
+    private HashMap<Point2D, Integer> currentVisited;
 
     /**
      * Creates a visitor object wich will walk around the festival.
@@ -56,7 +55,9 @@ public class Visitor {
     {
         this.pathFinds = pathFinds;
         setTargetPosition();
-        position = new Point2D.Double(Math.random()*1000, Math.random()*1000);
+
+        //Spawnt buiten de map
+        position = new Point2D.Double(796,98);
         angle = Math.random() * 2 * Math.PI;
         speed = 3 + 4 * Math.random();
         try {
@@ -65,23 +66,49 @@ public class Visitor {
             e.printStackTrace();
         }
 
-        calculateDirection();
-
+        //calculateSpawnTile();
+        //setNextTile();
     }
 
     public void setTargetPosition()
     {
-        path = pathFinds.get((int) (Math.random() * pathFinds.size()));
-        targetPosition = path.getStartingTile();
-    }
+            path = pathFinds.get(0);
+            targetPosition = path.getStartingTile();
+     }
 
-    public void calculateDirection()
+    public void calculateSpawnTile()
     {
         Point2D tileVisitor = new Point2D.Double( Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
+        System.out.println(position);
+        System.out.println(tileVisitor);
         if(path.getVisited().containsKey(tileVisitor))
         {
             tilePosition = tileVisitor;
-            System.out.println();
+            currentVisited = path.getVisited();
+            System.out.println("true");
+        }
+    }
+
+    public void setNextTile()
+    {
+        int distance = currentVisited.get(tilePosition);
+
+        for (Integer[] offset: PathFind.offsets)
+        {
+            try
+            {
+                int nextDistance = currentVisited.get(new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]));
+                if (nextDistance < distance)
+                {
+                    nextTile = new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]);
+                    System.out.println();
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
         }
     }
 

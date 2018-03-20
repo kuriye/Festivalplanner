@@ -32,7 +32,7 @@ public class PathFind {
     /**
      * The offsets attribute is an Array with directions the current tile can go.
      */
-    private final Integer[][] offsets = {{1,0}, {0,1},{-1,0},{0,-1}};
+    public static final Integer[][] offsets = {{1,0}, {0,1},{-1,0},{0,-1}};
 
     /**
      * The collisionTiles attribute are the tiles which contains collision. These tiles can't be passed.
