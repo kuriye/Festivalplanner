@@ -30,7 +30,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         tx.translate(panel.getWidth()/2, panel.getHeight()/2);
         tx.scale(zoom, zoom);
         tx.translate(centerPoint.getX(), centerPoint.getY());
-        tx.rotate(rotation,currentPosScreen.getX(),currentPosScreen.getY());
+        tx.rotate(rotation);
         return tx;
 
     }
