@@ -1,6 +1,8 @@
 package pathfinding;
 
 import maplogic.SpawnPoint;
+import visitorInformation.RandomColour;
+import visitorInformation.RandomNameGenerator;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -40,17 +42,12 @@ public class Visitor {
      * The targetPosition is the position where the visitor needs to go.
      */
     private Point2D targetPosition;
-
     private ArrayList<PathFind> pathFinds;
-
     private Point2D tilePosition;
-
     private PathFind path;
-
     private Point2D nextTile;
-
     private HashMap<Point2D, Integer> currentVisited;
-
+    private String name;
     private Point2D oldPosition;
 
    /**
@@ -71,6 +68,10 @@ public class Visitor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        RandomColour color = new RandomColour();
+        image = color.colorImage(image);
+        RandomNameGenerator gen = new RandomNameGenerator();
+        name = gen.nameGenerator();
 
         calculateSpawnTile();
         setNextTile();

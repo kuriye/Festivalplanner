@@ -15,7 +15,6 @@ public class RandomNameGenerator {
         String currentVoornaam = nameLoader.getVoornamen().get(currentVoornaamNumber);
         String currentAchternaam = nameLoader.getAchternamen().get(currentAchternaamNumber);
 
-        System.out.println(currentVoornaam + " " + currentAchternaam);
         return currentVoornaam + " " + currentAchternaam;
     }
 
