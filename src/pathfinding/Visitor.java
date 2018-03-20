@@ -128,7 +128,7 @@ public class Visitor {
      * @param tx is an affinetransform which is needed to draw an image on the gui.
      */
     public void draw(Graphics2D g2d, AffineTransform tx) {
-        tx.translate(position.getX() + 16 - image.getWidth()/2, position.getY() + 16 - image.getHeight()/2);
+        tx.translate(position.getX() + 16 - image.getWidth()/2, position.getY() + 12 - image.getHeight()/2);
         tx.rotate(angle);
         g2d.drawImage(image, tx, null);
     }

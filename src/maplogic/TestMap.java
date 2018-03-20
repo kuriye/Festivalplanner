@@ -66,7 +66,6 @@ public class TestMap extends JPanel implements ActionListener {
         if (camera == null)
             camera = new Camera(this);
         test.debugDraw(g2d, camera.getTransform());
-
         for (Visitor visitor : visitors) {
             visitor.draw(g2d, camera.getTransform());
         }
@@ -78,6 +77,8 @@ public class TestMap extends JPanel implements ActionListener {
         for(TiledTarget target : targets){
             target.debugDraw(g2d, camera.getTransform());
         }
+        test.drawHouse(g2d,camera.getTransform());
+
 
         pathFinds.get(0).debugDraw(g2d,camera.getTransform());
     }

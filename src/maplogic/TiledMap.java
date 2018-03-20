@@ -20,6 +20,7 @@ public class TiledMap extends JPanel {
 
     private ArrayList<TiledTile> tiles = new ArrayList<>();
     private ArrayList<TiledLayer> layers = new ArrayList<>();
+    private ArrayList<TiledLayer> houseLayer = new ArrayList<>();
     private ArrayList<TiledTarget> targets = new ArrayList<>();
     private CollisionLayer collisionLayer;
     private SpawnPoint spawnPoint;
@@ -55,13 +56,16 @@ public class TiledMap extends JPanel {
 
             JsonArray jsonLayers = objectReader.getJsonArray("layers");
             JsonArray jsontarget = null;
-            for (int i = 0; i < jsonLayers.size(); i++)
+            for (int i = 0; i < jsonLayers.size() ; i++)
             {
                 if (jsonLayers.getJsonObject(i).getString("type").equals("tilelayer"))
                 {
                     if(jsonLayers.getJsonObject(i).getString("name").equals("collision"))
                         collisionLayer = new CollisionLayer(jsonLayers.getJsonObject(i), this);
-                    else{
+                    else if(jsonLayers.getJsonObject(i).getString("name").equals("Entry") || jsonLayers.getJsonObject(i).getString("name").equals("Stages")){
+                       houseLayer.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
+                    }
+                    else {
                         layers.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
                     }
                 }
@@ -87,25 +91,25 @@ public class TiledMap extends JPanel {
         }
     }
 
-    public void draw(Graphics2D g2,AffineTransform transform) {
-        for(TiledLayer l : layers) {
+    public void debugDraw(Graphics2D g2d, AffineTransform tx) {
+        for (TiledLayer l : layers) {
             if (l.isVisible())
-                g2.drawImage(l.getImage(), transform, null);
+                g2d.drawImage(l.getImage(), tx, null);
         }
-    }
-
-    public void debugDraw(Graphics2D g2d, AffineTransform tx){
-        for(TiledLayer l : layers) {
-            if (l.isVisible())
-                g2d.drawImage(l.getImage(), tx,null);
-        }
-
-        g2d.setColor(Color.RED);
-        for(int y = 0; y <= 112; y++){
-            for(int x = 0; x <= 128; x++){
-                Rectangle2D rectangle2D = new Rectangle2D.Double(x * 32, y * 32, 32,32);
-                g2d.draw(tx.createTransformedShape(rectangle2D));
+            g2d.setColor(Color.RED);
+            for (int y = 0; y <= 112; y++) {
+                for (int x = 0; x <= 128; x++) {
+                    Rectangle2D rectangle2D = new Rectangle2D.Double(x * 32, y * 32, 32, 32);
+                    g2d.draw(tx.createTransformedShape(rectangle2D));
+                }
             }
+        }
+
+    public void drawHouse(Graphics2D g2d, AffineTransform te)
+    {
+        for(TiledLayer l : houseLayer) {
+            if (l.isVisible())
+                g2d.drawImage(l.getImage(), te,null);
         }
     }
 
