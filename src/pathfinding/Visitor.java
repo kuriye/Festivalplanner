@@ -8,6 +8,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**
@@ -37,13 +39,23 @@ public class Visitor {
     /**
      * The targetPosition is the position where the visitor needs to go.
      */
-    private Point2D targetPosition = new Point2D.Double(500,500);
+    private Point2D targetPosition;
+
+    private ArrayList<PathFind> pathFinds;
+
+    private Point2D tilePosition;
+
+    private PathFind path;
+
+
 
     /**
      * Creates a visitor object wich will walk around the festival.
      */
-    public Visitor()
+    public Visitor(ArrayList<PathFind> pathFinds)
     {
+        this.pathFinds = pathFinds;
+        setTargetPosition();
         position = new Point2D.Double(Math.random()*1000, Math.random()*1000);
         angle = Math.random() * 2 * Math.PI;
         speed = 3 + 4 * Math.random();
@@ -51,6 +63,25 @@ public class Visitor {
             image = ImageIO.read(getClass().getResource("/poppetje.png"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        calculateDirection();
+
+    }
+
+    public void setTargetPosition()
+    {
+        path = pathFinds.get((int) (Math.random() * pathFinds.size()));
+        targetPosition = path.getStartingTile();
+    }
+
+    public void calculateDirection()
+    {
+        Point2D tileVisitor = new Point2D.Double( Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
+        if(path.getVisited().containsKey(tileVisitor))
+        {
+            tilePosition = tileVisitor;
+            System.out.println();
         }
     }
 
@@ -94,24 +125,6 @@ public class Visitor {
         position = new Point2D.Double(
                 position.getX() + speed * Math.cos(angle),
                 position.getY() + speed * Math.sin(angle));
-
-    }
-
-    /**
-     * checks if some visitor collides
-     * @param visitors contains all the visitors including itself.
-     * @return boolean if collision is true or not.
-     */
-    public boolean hasCollisionWithVisitor(ArrayList<Visitor> visitors) {
-        boolean hasCollision = false;
-        for(Visitor visitor : visitors) {
-            if (visitor == this)
-                continue;
-            double distance = position.distance(visitor.position);
-            if (distance < 14)
-                hasCollision = true;
-        }
-        return hasCollision;
     }
 
     /**

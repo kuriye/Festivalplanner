@@ -16,6 +16,7 @@ public class TiledTarget
     private int tileNumberY;
     private double tilesWidth;
     private int tilesHeight;
+    private String stageName;
 
     public TiledTarget(JsonObject target)
     {
@@ -23,6 +24,8 @@ public class TiledTarget
         width = target.getInt("width");
         int x = target.getInt("x");
         int y = target.getInt("y");
+
+        stageName = target.getString("name");
 
         position = new Point2D.Double(x,y);
 
@@ -92,5 +95,15 @@ public class TiledTarget
 
     public void setPosition(Point2D position) {
         this.position = position;
+    }
+
+    public String getStageName()
+    {
+        return stageName;
+    }
+
+    public void setStageName(String stageName)
+    {
+        this.stageName = stageName;
     }
 }

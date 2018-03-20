@@ -36,9 +36,8 @@ public class TestMap extends JPanel implements ActionListener {
             pathFinds.add(new PathFind(target,collisionTiles));
         }
 
-       while (visitors.size() < 1500) {
-           Visitor visitor = new Visitor();
-           if (!visitor.hasCollisionWithVisitor(visitors))
+       while (visitors.size() < 50) {
+           Visitor visitor = new Visitor(pathFinds);
                visitors.add(visitor);
     }
 
@@ -47,6 +46,12 @@ public class TestMap extends JPanel implements ActionListener {
 
     }
 
+    public void getJsonTarget()
+    {
+
+    }
+
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -84,7 +89,6 @@ public class TestMap extends JPanel implements ActionListener {
             visitor.update(visitors);
         }
         repaint();
-
     }
 }
 

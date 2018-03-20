@@ -45,6 +45,8 @@ public class PathFind {
      */
     private int index = 0;
 
+    private Point2D startingTile;
+
     /**
      * The PathFind constructor calculates the path from a target.
      * @param tiledTarget is the target where the calculations starts.
@@ -60,7 +62,7 @@ public class PathFind {
             }
         }
         this.collisionTiles = collisionTiles;
-        Point2D startingTile = new Point2D.Double(tiledTarget.getTileNumberX() + 1, tiledTarget.getTileNumberY() + 1);
+        startingTile = new Point2D.Double(tiledTarget.getTileNumberX() + 1, tiledTarget.getTileNumberY() + 1);
         currentTiles.add(startingTile);
         neighbours = new LinkedList<>();
         addNewNeighbours();
@@ -129,5 +131,20 @@ public class PathFind {
         for(Point2D key : visited.keySet()){
             g2d.drawString(String.valueOf(visited.get(key)), (int)key.getX() * 32,(int)key.getY() * 32);
         }
+    }
+
+    public Point2D getStartingTile()
+    {
+        return startingTile;
+    }
+
+    public void setStartingTile(Point2D startingTile)
+    {
+        this.startingTile = startingTile;
+    }
+
+    public HashMap<Point2D, Integer> getVisited()
+    {
+        return visited;
     }
 }

@@ -66,7 +66,6 @@ public class Program
     {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(new FileOutputStream("Agenda.json"), program);
-
     }
 
     /**
