@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * The class Visitor represents one visitor which is going to visit the festival.
@@ -49,17 +50,24 @@ public class Visitor {
     private HashMap<Point2D, Integer> currentVisited;
 
     /**
-     * Creates a visitor object wich will walk around the festival.
+     * Creates a visitor object which will walk around the festival.
      */
     public Visitor(ArrayList<PathFind> pathFinds)
     {
+        ArrayList<Point2D> spawnPoints = new ArrayList<>();
+        spawnPoints.add(new Point2D.Double(864,128));
+        spawnPoints.add(new Point2D.Double(832,128));
+        spawnPoints.add(new Point2D.Double(892,128));
+
+
         this.pathFinds = pathFinds;
         setTargetPosition();
 
         //Spawnt buiten de map
-        position = new Point2D.Double(818,130);
+        Random random = new Random();
+        position = spawnPoints.get(random.nextInt(spawnPoints.size()));
         angle = Math.random() * 2 * Math.PI;
-        speed = 3 + 4 * Math.random();
+        speed = Math.pow(2,random.nextInt(3));
         try {
             image = ImageIO.read(getClass().getResource("/poppetje.png"));
         } catch (IOException e) {
@@ -72,8 +80,9 @@ public class Visitor {
 
     public void setTargetPosition()
     {
-            path = pathFinds.get(0);
-            targetPosition = path.getStartingTile();
+        Random random = new Random();
+        path = pathFinds.get(random.nextInt(pathFinds.size()));
+        targetPosition = path.getStartingTile();
      }
 
     public void calculateSpawnTile()
@@ -98,14 +107,12 @@ public class Visitor {
                 if (nextDistance < distance)
                 {
                     nextTile = new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]);
-                    System.out.println();
                 }
             }
             catch (Exception e)
             {
                 //e.printStackTrace();
             }
-
         }
     }
 
@@ -115,40 +122,44 @@ public class Visitor {
      * @param tx is an affinetransform which is needed to draw an image on the gui.
      */
     public void draw(Graphics2D g2d, AffineTransform tx) {
-        tx.translate(position.getX() - image.getWidth()/2, position.getY() - image.getHeight()/2);
+        tx.translate(position.getX() + 16 - image.getWidth()/2, position.getY() + 16 - image.getHeight()/2);
         g2d.drawImage(image, tx, null);
     }
 
     /**
      * Updates the position of the visitors.
-     * @param visitors checks if visitors don't collide with other visitors.
      */
-    public void update(ArrayList<Visitor> visitors) {
+    public void update() {
+        Point2D nextTilePosition = new Point2D.Double(nextTile.getX() * 32, nextTile.getY()* 32);
+        int[] offset = new int[2];
 
-        Point2D diff = new Point2D.Double(
-                targetPosition.getX() - position.getX(),
-                targetPosition.getY() - position.getY()
-        );
+        if(position.getX() < nextTilePosition.getX()){
+            offset[0] = (int)speed;
+        }
+        else if(position.getX() > nextTilePosition.getX()){
+            offset[0] = -(int)speed;
+        }
+        else{
+            offset[0] = 0;
+        }
 
-        double targetAngle = Math.atan2(diff.getY(), diff.getX());
-        double angleDiff = angle - targetAngle;
+        if(position.getY() < nextTilePosition.getY()){
+            offset[1] = (int)speed;
+        }
+        else if(position.getY() > nextTilePosition.getY()){
+            offset[1] = -(int)speed;
+        }
+        else{
+            offset[1] = 0;
+        }
 
-
-        while(angleDiff < -Math.PI)
-            angleDiff += Math.PI/2;
-        while(angleDiff > Math.PI)
-            angleDiff -= Math.PI/2;
-
-        if(angleDiff < 0)
-            angle += 0.1;
-        else if(angleDiff > 0)
-            angle -= 0.1;
-
-
-        Point2D lastPosition = position;
-        position = new Point2D.Double(
-                position.getX() + speed * Math.cos(angle),
-                position.getY() + speed * Math.sin(angle));
+        if(position.distance(nextTilePosition) <= 1){
+            tilePosition = nextTile;
+            setNextTile();
+        }
+        else{
+            position = new Point2D.Double(position.getX() + offset[0], position.getY() + offset[1]);
+        }
     }
 
     /**

@@ -97,6 +97,7 @@ public class PathFind {
                         currentTile.getX() + offset[0],
                         currentTile.getY() + offset[1]
                 );
+
                 if(!isCollisionTile(nextPosition) && !visited.containsKey(nextPosition)){
                     neighbours.add(nextPosition);
                 }

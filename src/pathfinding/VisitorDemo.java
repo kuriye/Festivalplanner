@@ -49,7 +49,7 @@ public class VisitorDemo extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for(Visitor visitor : visitors)
-            visitor.update(visitors);
+            visitor.update();
         repaint();
     }
 }

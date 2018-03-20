@@ -36,7 +36,7 @@ public class TestMap extends JPanel implements ActionListener {
             pathFinds.add(new PathFind(target,collisionTiles));
         }
 
-       while (visitors.size() < 50) {
+       while (visitors.size() < 1) {
            Visitor visitor = new Visitor(pathFinds);
                visitors.add(visitor);
     }
@@ -87,8 +87,12 @@ public class TestMap extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Visitor visitor : visitors) {
-            visitor.update(visitors);
+            visitor.update();
         }
+
+        if(visitors.size() < 500)
+            visitors.add(new Visitor(pathFinds));
+
         repaint();
     }
 }
