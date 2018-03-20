@@ -22,6 +22,7 @@ public class TiledMap extends JPanel {
     private ArrayList<TiledLayer> layers = new ArrayList<>();
     private ArrayList<TiledTarget> targets = new ArrayList<>();
     private CollisionLayer collisionLayer;
+    private SpawnPoint spawnPoint;
 
     public TiledMap(String filename) {
         JsonReader reader;
@@ -75,9 +76,10 @@ public class TiledMap extends JPanel {
             {
                 JsonObject targetObject = jsontarget.getJsonObject(i);
                 if(targetObject.getString("type").equals("spawn")){
-
+                    spawnPoint = new SpawnPoint(targetObject);
+                }else{
+                    targets.add(new TiledTarget(targetObject));
                 }
-                targets.add(new TiledTarget(targetObject));
             }
         }
         catch(IOException e) {
@@ -116,4 +118,8 @@ public class TiledMap extends JPanel {
     }
 
     public ArrayList<TiledTile> getTiledSize() {return tiles; }
+
+    public SpawnPoint getSpawnPoint() {
+        return spawnPoint;
+    }
 }

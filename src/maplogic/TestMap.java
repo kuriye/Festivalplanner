@@ -37,7 +37,7 @@ public class TestMap extends JPanel implements ActionListener {
         }
 
        while (visitors.size() < 1) {
-           Visitor visitor = new Visitor(pathFinds);
+           Visitor visitor = new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints());
                visitors.add(visitor);
     }
 
@@ -80,7 +80,6 @@ public class TestMap extends JPanel implements ActionListener {
         }
 
         pathFinds.get(0).debugDraw(g2d,camera.getTransform());
-        g2d.drawString("spawn", 818,130);
     }
 
 
@@ -91,7 +90,7 @@ public class TestMap extends JPanel implements ActionListener {
         }
 
         if(visitors.size() < 500)
-            visitors.add(new Visitor(pathFinds));
+            visitors.add(new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints()));
 
         repaint();
     }
