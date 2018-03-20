@@ -97,7 +97,7 @@ public class Visitor {
     public void setNextTile()
     {
         int distance = currentVisited.get(tilePosition);
-
+        ArrayList<Point2D> values = new ArrayList<>();
         for (Integer[] offset: PathFind.offsets)
         {
             try
@@ -105,13 +105,20 @@ public class Visitor {
                 int nextDistance = currentVisited.get(new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]));
                 if (nextDistance < distance)
                 {
-                    nextTile = new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]);
+                    values.add(new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]));
                 }
             }
             catch (Exception e)
             {
                 //e.printStackTrace();
             }
+        }
+        try{
+            Random random = new Random();
+            nextTile = values.get(random.nextInt(values.size()));
+        }
+        catch (Exception e){
+            //e.printStackTrace();
         }
     }
 
@@ -162,6 +169,7 @@ public class Visitor {
             oldPosition = position;
             position = new Point2D.Double(position.getX() + offset[0], position.getY() + offset[1]);
         }
+
 //        if (position.distance(oldPosition) == 0)
 //        {
 //            System.out.println("test");
