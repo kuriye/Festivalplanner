@@ -49,7 +49,9 @@ public class Visitor {
 
     private HashMap<Point2D, Integer> currentVisited;
 
-    /**
+    private Point2D oldPosition;
+
+   /**
      * Creates a visitor object which will walk around the festival.
      */
     public Visitor(ArrayList<PathFind> pathFinds)
@@ -58,7 +60,6 @@ public class Visitor {
         spawnPoints.add(new Point2D.Double(864,128));
         spawnPoints.add(new Point2D.Double(832,128));
         spawnPoints.add(new Point2D.Double(892,128));
-
 
         this.pathFinds = pathFinds;
         setTargetPosition();
@@ -123,6 +124,7 @@ public class Visitor {
      */
     public void draw(Graphics2D g2d, AffineTransform tx) {
         tx.translate(position.getX() + 16 - image.getWidth()/2, position.getY() + 16 - image.getHeight()/2);
+        tx.rotate(angle);
         g2d.drawImage(image, tx, null);
     }
 
@@ -156,10 +158,18 @@ public class Visitor {
         if(position.distance(nextTilePosition) <= 1){
             tilePosition = nextTile;
             setNextTile();
+
         }
         else{
+            oldPosition = position;
             position = new Point2D.Double(position.getX() + offset[0], position.getY() + offset[1]);
         }
+//        if (position.distance(oldPosition) == 0)
+//        {
+//            System.out.println("test");
+//            angle += 1;
+//        }
+
     }
 
     /**

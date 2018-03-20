@@ -74,6 +74,9 @@ public class TiledMap extends JPanel {
             for (int i = 0; i < Objects.requireNonNull(jsontarget).size() ; i++)
             {
                 JsonObject targetObject = jsontarget.getJsonObject(i);
+                if(targetObject.getString("type").equals("spawn")){
+
+                }
                 targets.add(new TiledTarget(targetObject));
             }
         }

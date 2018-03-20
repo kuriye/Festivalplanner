@@ -67,7 +67,6 @@ public class PathFind {
         neighbours = new LinkedList<>();
         addNewNeighbours();
         findPath();
-        System.out.println();
     }
 
     /**
