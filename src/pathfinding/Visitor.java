@@ -1,5 +1,7 @@
 package pathfinding;
 
+import maplogic.SpawnPoint;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -54,13 +56,8 @@ public class Visitor {
    /**
      * Creates a visitor object which will walk around the festival.
      */
-    public Visitor(ArrayList<PathFind> pathFinds)
+    public Visitor(ArrayList<PathFind> pathFinds, ArrayList<Point2D> spawnPoints)
     {
-        ArrayList<Point2D> spawnPoints = new ArrayList<>();
-        spawnPoints.add(new Point2D.Double(864,128));
-        spawnPoints.add(new Point2D.Double(832,128));
-        spawnPoints.add(new Point2D.Double(892,128));
-
         this.pathFinds = pathFinds;
         setTargetPosition();
 
