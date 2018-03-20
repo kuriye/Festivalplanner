@@ -57,7 +57,7 @@ public class Visitor {
         setTargetPosition();
 
         //Spawnt buiten de map
-        position = new Point2D.Double(796,98);
+        position = new Point2D.Double(818,130);
         angle = Math.random() * 2 * Math.PI;
         speed = 3 + 4 * Math.random();
         try {
@@ -66,8 +66,8 @@ public class Visitor {
             e.printStackTrace();
         }
 
-        //calculateSpawnTile();
-        //setNextTile();
+        calculateSpawnTile();
+        setNextTile();
     }
 
     public void setTargetPosition()
@@ -79,13 +79,10 @@ public class Visitor {
     public void calculateSpawnTile()
     {
         Point2D tileVisitor = new Point2D.Double( Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
-        System.out.println(position);
-        System.out.println(tileVisitor);
         if(path.getVisited().containsKey(tileVisitor))
         {
             tilePosition = tileVisitor;
             currentVisited = path.getVisited();
-            System.out.println("true");
         }
     }
 
@@ -106,7 +103,7 @@ public class Visitor {
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
         }

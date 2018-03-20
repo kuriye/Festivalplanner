@@ -80,6 +80,7 @@ public class TestMap extends JPanel implements ActionListener {
         }
 
         pathFinds.get(0).debugDraw(g2d,camera.getTransform());
+        g2d.drawString("spawn", 818,130);
     }
 
 
