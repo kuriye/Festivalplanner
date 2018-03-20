@@ -15,7 +15,7 @@ public class TestMap extends JPanel implements ActionListener {
     private ArrayList<Visitor> visitors;
     private ArrayList<CollisionTile> collisionTiles;
     private ArrayList<TiledTarget> targets;
-    ArrayList<PathFind> pathFinds = new ArrayList<>();
+    private ArrayList<PathFind> pathFinds = new ArrayList<>();
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -36,7 +36,7 @@ public class TestMap extends JPanel implements ActionListener {
             pathFinds.add(new PathFind(target,collisionTiles));
         }
 
-       while (visitors.size() < 20) {
+       while (visitors.size() < 1500) {
            Visitor visitor = new Visitor();
            if (!visitor.hasCollisionWithVisitor(visitors))
                visitors.add(visitor);

@@ -95,14 +95,6 @@ public class Visitor {
                 position.getX() + speed * Math.cos(angle),
                 position.getY() + speed * Math.sin(angle));
 
-
-        boolean hasCollision = hasCollisionWithVisitor(visitors);
-
-        if(hasCollision)
-        {
-            position = lastPosition;
-            angle += 0.2;
-        }
     }
 
     /**
