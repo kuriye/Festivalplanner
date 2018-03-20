@@ -113,12 +113,11 @@ public class Visitor {
                 //e.printStackTrace();
             }
         }
-        try{
+        if(values.size() == 0);
+
+        else{
             Random random = new Random();
             nextTile = values.get(random.nextInt(values.size()));
-        }
-        catch (Exception e){
-            //e.printStackTrace();
         }
     }
 
@@ -139,26 +138,21 @@ public class Visitor {
     public void update() {
         Point2D nextTilePosition = new Point2D.Double(nextTile.getX() * 32, nextTile.getY()* 32);
         int[] offset = new int[2];
+        offset[0] = 0;
+        offset[1] = 0;
 
-        if(position.getX() < nextTilePosition.getX()){
+        if(position.getX() < nextTilePosition.getX())
             offset[0] = (int)speed;
-        }
-        else if(position.getX() > nextTilePosition.getX()){
-            offset[0] = -(int)speed;
-        }
-        else{
-            offset[0] = 0;
-        }
 
-        if(position.getY() < nextTilePosition.getY()){
+        else if(position.getX() > nextTilePosition.getX())
+            offset[0] = -(int)speed;
+
+        if(position.getY() < nextTilePosition.getY())
             offset[1] = (int)speed;
-        }
-        else if(position.getY() > nextTilePosition.getY()){
+
+        else if(position.getY() > nextTilePosition.getY())
             offset[1] = -(int)speed;
-        }
-        else{
-            offset[1] = 0;
-        }
+
 
         if(position.distance(nextTilePosition) <= 1){
             tilePosition = nextTile;
