@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Mainframe extends JFrame {
+    private TimePanel timePanel = new TimePanel();;
 
 
-
-    private JPanel masterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    private JPanel masterPanel = new JPanel(new BorderLayout());
 
     public Mainframe(){
         super("Simulatie");
@@ -19,7 +19,8 @@ public class Mainframe extends JFrame {
     }
 
     private void addAgendaPanel(){
-        masterPanel.add(new AgendaPanel());
+        masterPanel.add(new AgendaPanel(timePanel), BorderLayout.CENTER);
+        masterPanel.add(timePanel, BorderLayout.SOUTH);
     }
 
 
