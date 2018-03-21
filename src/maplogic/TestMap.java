@@ -47,8 +47,21 @@ public class TestMap extends JPanel implements ActionListener {
         t = new Timer(1000 / 60, this);
     }
 
-    public void startSimulation() {
-        t.start();
+    public void simulationTimer(int i) {
+        int teller = 0;
+        if(i == 1){
+            t.start();
+        }
+        else if( i == 2){
+            t.stop();
+        }
+//            case 1: t.start();
+//                break;
+//
+//            case 2: t.stop();
+//                System.out.println("stop");
+//                break;
+
     }
 
     public void getJsonTarget()

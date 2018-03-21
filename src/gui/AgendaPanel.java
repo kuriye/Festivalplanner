@@ -28,13 +28,19 @@ public class AgendaPanel extends JPanel implements  ActionListener{
         tabbedPane.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),900));
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         add(tabbedPane);
-        Timer t = new Timer(1000 / 600, this);
+        Timer t = new Timer(1000 / 60, this);
         t.start();
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(panel.getPressed()){
-            testMap.startSimulation();
+        if(panel.getStartPressed()){
+            testMap.simulationTimer(1);
+            panel.setStartPressed(false);
         }
+        else if(panel.getPausePressed()){
+            testMap.simulationTimer(2);
+            panel.setPausePressed(false);
+        }
+
     }
 }
