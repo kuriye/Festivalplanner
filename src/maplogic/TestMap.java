@@ -16,6 +16,7 @@ public class TestMap extends JPanel implements ActionListener {
     private ArrayList<CollisionTile> collisionTiles;
     private ArrayList<TiledTarget> targets;
     private ArrayList<PathFind> pathFinds = new ArrayList<>();
+    private Timer t;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -39,11 +40,13 @@ public class TestMap extends JPanel implements ActionListener {
        while (visitors.size() < 1) {
            Visitor visitor = new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints());
                visitors.add(visitor);
+        }
+
+        t = new Timer(1000 / 60, this);
     }
 
-        Timer t = new Timer(1000 / 60, this);
+    public void startSimulation() {
         t.start();
-
     }
 
     public void getJsonTarget()
@@ -95,5 +98,7 @@ public class TestMap extends JPanel implements ActionListener {
 
         repaint();
     }
+
+
 }
 
