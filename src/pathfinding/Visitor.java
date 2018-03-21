@@ -183,4 +183,10 @@ public class Visitor {
     public Point2D getPosition() {
         return position;
     }
+
+    public String getName() {
+        return name;
+    }
+
+
 }

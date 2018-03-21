@@ -81,7 +81,7 @@ public class TestMap extends JPanel implements ActionListener {
         }
         test.drawHouse(g2d,camera.getTransform());
 
-        visitorLayer.drawVisitorInformation(g2d,null);
+        visitorLayer.drawVisitorInformation(g2d,visitors, camera);
 
 
         pathFinds.get(0).debugDraw(g2d,camera.getTransform());
