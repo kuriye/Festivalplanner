@@ -110,7 +110,7 @@ public class TestMap extends JPanel implements ActionListener {
             visitor.update();
         }
 
-        if(visitors.size() < 500)
+        if(visitors.size() < 10)
             visitors.add(new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints()));
 
         repaint();

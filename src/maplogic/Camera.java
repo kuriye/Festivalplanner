@@ -12,7 +12,6 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     private Point2D currentPosScreen;
     private int mouseclickX;
     private int mouseClickY;
-    private boolean isControlPressed = false;
 
     private Point2D lastMousePos = new Point2D.Double(-1400,-1000);
     private JPanel panel;
@@ -42,9 +41,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     @Override
     public void mouseClicked(MouseEvent e) {
         mouseclickX = e.getX();
-        System.out.println(e.getX());
         mouseClickY = e.getY();
-        System.out.println(e.getY());
     }
 
     @Override
@@ -105,15 +102,12 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
             case KeyEvent.VK_RIGHT :
                 rotation+=0.01f;
                 break;
-            case KeyEvent.VK_CONTROL :
-                isControlPressed = true;
-                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        isControlPressed = false;
+
     }
 
     public int getMouseclickX() {
@@ -124,9 +118,6 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         return mouseClickY;
     }
 
-    public boolean isControlPressed() {
-        return isControlPressed;
-    }
 
     public double getZoom() {
         return zoom;
