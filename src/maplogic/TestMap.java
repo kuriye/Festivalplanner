@@ -2,6 +2,7 @@ package maplogic;
 
 import pathfinding.PathFind;
 import pathfinding.Visitor;
+import visitorInformation.VisitorLayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class TestMap extends JPanel implements ActionListener {
     private ArrayList<CollisionTile> collisionTiles;
     private ArrayList<TiledTarget> targets;
     private ArrayList<PathFind> pathFinds = new ArrayList<>();
+    VisitorLayer visitorLayer;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -31,11 +33,11 @@ public class TestMap extends JPanel implements ActionListener {
         collisionTiles = test.getCollisionTiles();
         visitors = new ArrayList<>();
         targets = test.getTargets();
+        visitorLayer = new VisitorLayer();
 
         for(TiledTarget target : targets){
             pathFinds.add(new PathFind(target,collisionTiles));
         }
-
        while (visitors.size() < 1) {
            Visitor visitor = new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints());
                visitors.add(visitor);
@@ -78,6 +80,8 @@ public class TestMap extends JPanel implements ActionListener {
             target.debugDraw(g2d, camera.getTransform());
         }
         test.drawHouse(g2d,camera.getTransform());
+
+        visitorLayer.drawVisitorInformation(g2d,null);
 
 
         pathFinds.get(0).debugDraw(g2d,camera.getTransform());
