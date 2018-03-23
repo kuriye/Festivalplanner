@@ -17,8 +17,10 @@ public class TestMap extends JPanel implements ActionListener {
     private ArrayList<CollisionTile> collisionTiles;
     private ArrayList<TiledTarget> targets;
     private ArrayList<PathFind> pathFinds = new ArrayList<>();
-    VisitorLayer visitorLayer;
+    private DarknessControl darkness;
+    private VisitorLayer visitorLayer;
     private Timer t;
+    private float time = 0f;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -35,6 +37,7 @@ public class TestMap extends JPanel implements ActionListener {
         visitors = new ArrayList<>();
         targets = test.getTargets();
         visitorLayer = new VisitorLayer();
+        darkness = new DarknessControl(100);
 
         for(TiledTarget target : targets){
             pathFinds.add(new PathFind(target,collisionTiles));
@@ -48,20 +51,17 @@ public class TestMap extends JPanel implements ActionListener {
     }
 
     public void simulationTimer(int i) {
-        int teller = 0;
-        if(i == 1){
-            t.start();
-        }
-        else if( i == 2){
-            t.stop();
-        }
-//            case 1: t.start();
-//                break;
-//
-//            case 2: t.stop();
-//                System.out.println("stop");
-//                break;
+        switch (i) {
+            case 1:
+                t.start();
+                break;
 
+            case 2:
+                t.stop();
+                System.out.println("stop");
+                break;
+
+        }
     }
 
     public void getJsonTarget()
@@ -96,9 +96,8 @@ public class TestMap extends JPanel implements ActionListener {
             target.debugDraw(g2d, camera.getTransform());
         }
         test.drawHouse(g2d,camera.getTransform());
-
+        darkness.setAlphaValue(time,g2d,getWidth(),getHeight());
         visitorLayer.drawVisitorInformation(g2d,visitors, camera);
-
 
         pathFinds.get(0).debugDraw(g2d,camera.getTransform());
     }
@@ -109,7 +108,7 @@ public class TestMap extends JPanel implements ActionListener {
         for (Visitor visitor : visitors) {
             visitor.update();
         }
-
+        time += 1f;
         if(visitors.size() < 10)
             visitors.add(new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints()));
 
