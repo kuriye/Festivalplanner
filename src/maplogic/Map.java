@@ -1,5 +1,9 @@
 package maplogic;
 
+import agenda.Act;
+import agenda.Artist;
+import agenda.Program;
+import agenda.Stage;
 import pathfinding.PathFind;
 import pathfinding.Visitor;
 import visitorInformation.VisitorLayer;
@@ -8,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TestMap extends JPanel implements ActionListener {
@@ -17,7 +22,9 @@ public class TestMap extends JPanel implements ActionListener {
     private ArrayList<CollisionTile> collisionTiles;
     private ArrayList<TiledTarget> targets;
     private ArrayList<PathFind> pathFinds = new ArrayList<>();
-    VisitorLayer visitorLayer;
+    private ArrayList<Act> allActs = new ArrayList<>();
+    private Program program = new Program();
+    private VisitorLayer visitorLayer;
     private Timer t;
 
     public static void main(String[] args) {
@@ -35,6 +42,7 @@ public class TestMap extends JPanel implements ActionListener {
         visitors = new ArrayList<>();
         targets = test.getTargets();
         visitorLayer = new VisitorLayer();
+        loadProgram();
 
         for(TiledTarget target : targets){
             pathFinds.add(new PathFind(target,collisionTiles));
@@ -48,25 +56,29 @@ public class TestMap extends JPanel implements ActionListener {
     }
 
     public void simulationTimer(int i) {
-        int teller = 0;
         if(i == 1){
             t.start();
         }
         else if( i == 2){
             t.stop();
         }
-//            case 1: t.start();
-//                break;
-//
-//            case 2: t.stop();
-//                System.out.println("stop");
-//                break;
 
     }
 
-    public void getJsonTarget()
+    public void loadProgram()
     {
+        try {
+            program = program.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        for (int i = 0; i < program.getGrootte(); i++)
+        {
+            Artist artist = new Artist(program.getActs(i).getArtist().getName(), program.getActs(i).getArtist().getPopularity() , program.getActs(i).getArtist().getGenre());
+            Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());
+            allActs.add(new Act(artist, stage, program.getActs(i).getStartTime(), program.getActs(i).getEndTime(), program.getActs(i).getPopularity()));
+        }
     }
 
     @Override
@@ -110,7 +122,7 @@ public class TestMap extends JPanel implements ActionListener {
             visitor.update();
         }
 
-        if(visitors.size() < 10)
+        if(visitors.size() < 300)
             visitors.add(new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints()));
 
         repaint();

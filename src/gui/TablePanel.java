@@ -3,13 +3,11 @@ package gui;
 import agenda.Artist;
 import agenda.Program;
 import agenda.Stage;
-import com.sun.deploy.util.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.regex.Pattern;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -163,7 +161,7 @@ public class TablePanel extends JTable{
                         int endTimeInt = Integer.parseInt(endTimeField.getText());
                         int populariteitPodiumInt = Integer.parseInt(populariteitPodiumField.getText());
 
-                        for (int i = 0; i < program.takeGrootte(); i++)
+                        for (int i = 0; i < program.getGrootte(); i++)
                         {
                             if (program.getActs(i).getStage().getName().equals(podiumField.getText()) &&  program.getActs(i).getStartTime() == startTimeInt )
                             {
@@ -226,7 +224,7 @@ public class TablePanel extends JTable{
         @Override
         public int getRowCount()
         {
-            return program.takeGrootte();
+            return program.getGrootte();
         }
 
         @Override

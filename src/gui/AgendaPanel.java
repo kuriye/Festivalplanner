@@ -1,17 +1,15 @@
 package gui;
-import maplogic.TestMap;
+import maplogic.Map;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.*;
-import java.sql.Time;
 
 
 public class AgendaPanel extends JPanel implements  ActionListener{
     private JTabbedPane tabbedPane;
-    private TestMap testMap;
+    private Map map;
     private TimePanel panel;
 
     AgendaPanel(TimePanel panel){
@@ -21,10 +19,10 @@ public class AgendaPanel extends JPanel implements  ActionListener{
 
     private void addTabbedPane(){
         tabbedPane = new JTabbedPane();
-        testMap = new TestMap();
+        map = new Map();
         tabbedPane.addTab("Graphical Agenda", new GraphicPanel());
         tabbedPane.addTab("Table Agenda", new TablePanel());
-        tabbedPane.addTab("simulatie", testMap);
+        tabbedPane.addTab("Simulatie", map);
         tabbedPane.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),900));
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         add(tabbedPane);
@@ -32,13 +30,14 @@ public class AgendaPanel extends JPanel implements  ActionListener{
         t.start();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if(panel.getStartPressed()){
-            testMap.simulationTimer(1);
+            map.simulationTimer(1);
             panel.setStartPressed(false);
         }
         else if(panel.getPausePressed()){
-            testMap.simulationTimer(2);
+            map.simulationTimer(2);
             panel.setPausePressed(false);
         }
 

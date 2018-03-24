@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Mainframe extends JFrame {
-    private TimePanel timePanel = new TimePanel();;
+    private TimePanel timePanel = new TimePanel();
 
 
     private JPanel masterPanel = new JPanel(new BorderLayout());
