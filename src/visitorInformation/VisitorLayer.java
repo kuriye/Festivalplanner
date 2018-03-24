@@ -5,10 +5,7 @@ import pathfinding.Visitor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
 
 public class VisitorLayer {
@@ -44,6 +41,7 @@ public class VisitorLayer {
             if(currentVisitor == null) {
 
             } else{
+                AffineTransform tb = currentVisitor.getTransform();
                 g2d.setColor(Color.green);
                 g2d.fill(rectangle2D);
                 g2d.setColor(Color.WHITE);
@@ -52,6 +50,7 @@ public class VisitorLayer {
                 g2d.setFont(new JLabel().getFont().deriveFont(20f));
                 g2d.drawString("Name: " +currentVisitor.getName(), (int)rectangle2D.getX() + 10, (int)rectangle2D.getY() + 32);
                 g2d.setFont(new JLabel().getFont());
+                g2d.draw(new Rectangle2D.Double((int)tb.getTranslateX() -12,(int)tb.getTranslateY() - 16,10,10));
                 prePosition = clickPosition;
             }
         }
