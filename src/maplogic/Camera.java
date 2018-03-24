@@ -10,7 +10,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     private double zoom = 1;
     private float rotation = 0f;
     private Point2D currentPosScreen;
-    private int mouseclickX;
+    private int mouseClickX;
     private int mouseClickY;
 
     private Point2D lastMousePos = new Point2D.Double(-1400,-1000);
@@ -40,8 +40,10 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        mouseclickX = e.getX();
-        mouseClickY = e.getY();
+        if(SwingUtilities.isLeftMouseButton(e) && e.isControlDown()) {
+            mouseClickX = e.getX();
+            mouseClickY = e.getY();
+        }
     }
 
     @Override
@@ -110,8 +112,8 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
     }
 
-    public int getMouseclickX() {
-        return mouseclickX;
+    public int getMouseClickX() {
+        return mouseClickX;
     }
 
     public int getMouseClickY() {

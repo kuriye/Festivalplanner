@@ -5,9 +5,7 @@ import pathfinding.Visitor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
 
 public class VisitorLayer {
@@ -17,25 +15,32 @@ public class VisitorLayer {
     private Visitor currentVisitor;
     private Rectangle2D rectangle2D;
     public void drawVisitorInformation(Graphics2D g2d, ArrayList<Visitor> visitors, Camera camera){
-        clickPosition = new Point2D.Double(camera.getMouseclickX() ,camera.getMouseClickY());
+        AffineTransform at = camera.getTransform();
+        try {
+            at.invert();
+        } catch (NoninvertibleTransformException e) {
+            e.printStackTrace();
+        }
+        Point2D p = at.transform(new Point2D.Double(camera.getMouseClickX(), camera.getMouseClickY()), null);
+        clickPosition = new Point2D.Double(p.getX() ,p.getY());
         if(clickPosition == null || clickPosition.getX() == 0 || clickPosition.getY() == 0 ){
 
         }
         else{
             if (!clickPosition.equals(prePosition)) {
-                currentVisitor = null;
                 rectangle2D = new Rectangle2D.Double(10,10,256,48);
-                double smallestDistance = 10000;
+                double smallestDistance = 20;
                 for(Visitor visitor : visitors){
                     if(visitor.getPosition().distance(clickPosition) < smallestDistance){
                         currentVisitor = visitor;
-                        smallestDistance = visitor.getPosition().distance(clickPosition);
+                        break;
                     }
                 }
             }
             if(currentVisitor == null) {
 
             } else{
+                AffineTransform tb = currentVisitor.getTransform();
                 g2d.setColor(Color.green);
                 g2d.fill(rectangle2D);
                 g2d.setColor(Color.WHITE);
@@ -44,6 +49,7 @@ public class VisitorLayer {
                 g2d.setFont(new JLabel().getFont().deriveFont(20f));
                 g2d.drawString("Name: " +currentVisitor.getName(), (int)rectangle2D.getX() + 10, (int)rectangle2D.getY() + 32);
                 g2d.setFont(new JLabel().getFont());
+                g2d.draw(new Ellipse2D.Double((int)tb.getTranslateX() ,(int)tb.getTranslateY(),10,10));
                 prePosition = clickPosition;
             }
         }

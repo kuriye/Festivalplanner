@@ -1,5 +1,6 @@
 package pathfinding;
 
+import javafx.scene.transform.Affine;
 import maplogic.SpawnPoint;
 import visitorInformation.RandomColour;
 import visitorInformation.RandomNameGenerator;
@@ -7,6 +8,8 @@ import visitorInformation.RandomNameGenerator;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -49,6 +52,7 @@ public class Visitor {
     private HashMap<Point2D, Integer> currentVisited;
     private String name;
     private Point2D oldPosition;
+    private AffineTransform tx;
 
    /**
      * Creates a visitor object which will walk around the festival.
@@ -130,7 +134,11 @@ public class Visitor {
         tx.translate(position.getX() + 16 - image.getWidth()/2, position.getY() + 12 - image.getHeight()/2);
         tx.rotate(angle);
 
+        this.tx = tx;
         g2d.drawImage(image, tx, null);
+
+
+        //g2d.draw(new Ellipse2D.Double((int)tx.getTranslateX(),(int)tx.getTranslateY(),10,10));
     }
 
     /**
@@ -188,6 +196,8 @@ public class Visitor {
     public String getName() {
         return name;
     }
+
+    public AffineTransform getTransform() { return tx;};
 
 
 }
