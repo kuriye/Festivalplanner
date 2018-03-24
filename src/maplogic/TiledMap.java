@@ -1,5 +1,9 @@
 package maplogic;
 
+import agenda.Act;
+import agenda.Program;
+import pathfinding.Target;
+
 import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -11,8 +15,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class TiledMap extends JPanel {
     private int height;
@@ -24,9 +28,12 @@ public class TiledMap extends JPanel {
     private ArrayList<TiledTarget> targets = new ArrayList<>();
     private CollisionLayer collisionLayer;
     private SpawnPoint spawnPoint;
+    private ArrayList<Act> allActs;
 
-    public TiledMap(String filename) {
+
+    public TiledMap(String filename, ArrayList<Act> allActs) {
         JsonReader reader;
+        this.allActs = allActs;
         try {
             reader = Json.createReader(getClass().getResourceAsStream(filename));
             JsonObject objectReader = (JsonObject) reader.read();
@@ -63,7 +70,7 @@ public class TiledMap extends JPanel {
                     if(jsonLayers.getJsonObject(i).getString("name").equals("collision"))
                         collisionLayer = new CollisionLayer(jsonLayers.getJsonObject(i), this);
                     else if(jsonLayers.getJsonObject(i).getString("name").equals("Entry") || jsonLayers.getJsonObject(i).getString("name").equals("Stages")){
-                       houseLayer.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
+                        houseLayer.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
                     }
                     else {
                         layers.add(new TiledLayer(jsonLayers.getJsonObject(i), this));
@@ -83,6 +90,35 @@ public class TiledMap extends JPanel {
                     spawnPoint = new SpawnPoint(targetObject);
                 }else{
                     targets.add(new TiledTarget(targetObject));
+                }
+            }
+
+            //sorts form the max value to the min value.
+            Collections.sort(allActs, new Comparator<Act>() {
+                @Override
+                public int compare(Act o1, Act o2) {
+                    return  o2.getStage().getLength() * o2.getStage().getWidth() - o1.getStage().getWidth() * o1.getStage().getLength();
+                }
+            });
+
+            //sorts form the max value to the min value.
+            Collections.sort(targets, new Comparator<TiledTarget>() {
+                @Override
+                public int compare(TiledTarget o1, TiledTarget o2) {
+                    return o2.getWidth() * o2.getHeight() - o1.getWidth() * o1.getHeight();
+                }
+            });
+
+            int index = 0;
+            for(Act act : allActs){
+                targets.get(index).linkAgendaStage(act.getStage());
+                index++;
+            }
+
+            Iterator<TiledTarget> targetIterator = targets.iterator();
+            while (targetIterator.hasNext()){
+                if (targetIterator.next().getStage() == null){
+                    targetIterator.remove();
                 }
             }
         }

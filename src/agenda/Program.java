@@ -77,7 +77,7 @@ public class Program
         return objectMapper.readValue(new File("Agenda.json"), Program.class);
     }
 
-   public int getGrootte()
+   public int takeGrootte()
    {
         return AllActs.size();
    }

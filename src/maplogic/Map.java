@@ -39,17 +39,18 @@ public class Map extends JPanel implements ActionListener {
     }
 
     public Map() {
-        test = new TiledMap("/Map.json");
+        loadProgram();
+        test = new TiledMap("/Map.json", allActs);
         collisionTiles = test.getCollisionTiles();
         visitors = new ArrayList<>();
         targets = test.getTargets();
         visitorLayer = new VisitorLayer();
         darkness = new DarknessControl(darknessValue);
-        loadProgram();
 
         for(TiledTarget target : targets){
             pathFinds.add(new PathFind(target,collisionTiles));
         }
+
        while (visitors.size() < 1) {
            Visitor visitor = new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints());
                visitors.add(visitor);
@@ -65,7 +66,6 @@ public class Map extends JPanel implements ActionListener {
         else if( i == 2){
             t.stop();
         }
-
     }
 
     public void loadProgram()
@@ -76,7 +76,7 @@ public class Map extends JPanel implements ActionListener {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < program.getGrootte(); i++)
+        for (int i = 0; i < program.takeGrootte(); i++)
         {
             Artist artist = new Artist(program.getActs(i).getArtist().getName(), program.getActs(i).getArtist().getPopularity() , program.getActs(i).getArtist().getGenre());
             Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());

@@ -97,7 +97,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             e1.printStackTrace();
         }
 
-        for (int i = 0; i < program.getGrootte(); i++)
+        for (int i = 0; i < program.takeGrootte(); i++)
         {
             Artist artist = new Artist(program.getActs(i).getArtist().getName(), program.getActs(i).getArtist().getPopularity() , program.getActs(i).getArtist().getGenre());
             Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());
@@ -336,7 +336,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             finally {
                 allActs.clear();
                 allStages.clear();
-                for (int i = 0; i < program.getGrootte(); i++)
+                for (int i = 0; i < program.takeGrootte(); i++)
                 {
                     Artist artist = new Artist(program.getActs(i).getArtist().getName(), program.getActs(i).getArtist().getPopularity() , program.getActs(i).getArtist().getGenre());
                     Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());

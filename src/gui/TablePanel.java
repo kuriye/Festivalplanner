@@ -161,7 +161,7 @@ public class TablePanel extends JTable{
                         int endTimeInt = Integer.parseInt(endTimeField.getText());
                         int populariteitPodiumInt = Integer.parseInt(populariteitPodiumField.getText());
 
-                        for (int i = 0; i < program.getGrootte(); i++)
+                        for (int i = 0; i < program.takeGrootte(); i++)
                         {
                             if (program.getActs(i).getStage().getName().equals(podiumField.getText()) &&  program.getActs(i).getStartTime() == startTimeInt )
                             {
@@ -224,7 +224,7 @@ public class TablePanel extends JTable{
         @Override
         public int getRowCount()
         {
-            return program.getGrootte();
+            return program.takeGrootte();
         }
 
         @Override

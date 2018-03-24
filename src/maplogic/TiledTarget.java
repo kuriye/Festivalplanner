@@ -1,5 +1,7 @@
 package maplogic;
 
+import agenda.Stage;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.awt.*;
@@ -16,7 +18,7 @@ public class TiledTarget
     private int tileNumberY;
     private double tilesWidth;
     private int tilesHeight;
-    private String stageName;
+    private Stage stage;
 
     public TiledTarget(JsonObject target)
     {
@@ -25,7 +27,6 @@ public class TiledTarget
         int x = target.getInt("x");
         int y = target.getInt("y");
 
-        stageName = target.getString("name");
 
         position = new Point2D.Double(x,y);
 
@@ -39,6 +40,10 @@ public class TiledTarget
         g2d.setColor(Color.green);
         Rectangle2D rectangle2D = new Rectangle2D.Double(position.getX(), position.getY(), tilesWidth * 32, tilesHeight * 32);
         g2d.draw(tx.createTransformedShape(rectangle2D));
+    }
+
+    public void linkAgendaStage(Stage stage){
+        this.stage = stage;
     }
 
     public int getHeight() {
@@ -97,13 +102,11 @@ public class TiledTarget
         this.position = position;
     }
 
-    public String getStageName()
-    {
-        return stageName;
+    public Stage getStage() {
+        return stage;
     }
 
-    public void setStageName(String stageName)
-    {
-        this.stageName = stageName;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

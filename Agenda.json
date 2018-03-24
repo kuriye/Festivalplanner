@@ -1,1 +1,1 @@
-{"allActs":[{"artist":{"name":"Ali B","popularity":78,"genre":"Rap"},"stage":{"name":"P1","capacity":100,"length":100,"width":100},"startTime":1200,"endTime":1900,"popularity":67}]}
+{"allActs":[{"artist":{"name":"Ali B","popularity":78,"genre":"Rap"},"stage":{"name":"P1","capacity":100,"length":100,"width":100},"startTime":1200,"endTime":1900,"popularity":67},{"artist":{"name":"tom martens","popularity":1,"genre":"Hardstyle"},"stage":{"name":"P2","capacity":100,"length":200,"width":300},"startTime":1200,"endTime":1400,"popularity":56}]}
