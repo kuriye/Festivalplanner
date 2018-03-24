@@ -15,7 +15,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TestMap extends JPanel implements ActionListener {
+public class Map extends JPanel implements ActionListener {
     private Camera camera;
     private static TiledMap test;
     private ArrayList<Visitor> visitors;
@@ -32,11 +32,11 @@ public class TestMap extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(1920, 1080));
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        frame.setContentPane(new TestMap());
+        frame.setContentPane(new Map());
         frame.setVisible(true);
     }
 
-    public TestMap() {
+    public Map() {
         test = new TiledMap("/Map.json");
         collisionTiles = test.getCollisionTiles();
         visitors = new ArrayList<>();
