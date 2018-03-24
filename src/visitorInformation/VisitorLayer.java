@@ -21,20 +21,19 @@ public class VisitorLayer {
         } catch (NoninvertibleTransformException e) {
             e.printStackTrace();
         }
-        Point2D p = at.transform(new Point2D.Double(camera.getMouseclickX(), camera.getMouseClickY()), null);
+        Point2D p = at.transform(new Point2D.Double(camera.getMouseClickX(), camera.getMouseClickY()), null);
         clickPosition = new Point2D.Double(p.getX() ,p.getY());
         if(clickPosition == null || clickPosition.getX() == 0 || clickPosition.getY() == 0 ){
 
         }
         else{
             if (!clickPosition.equals(prePosition)) {
-                currentVisitor = null;
                 rectangle2D = new Rectangle2D.Double(10,10,256,48);
                 double smallestDistance = 20;
                 for(Visitor visitor : visitors){
                     if(visitor.getPosition().distance(clickPosition) < smallestDistance){
                         currentVisitor = visitor;
-                        smallestDistance = visitor.getPosition().distance(clickPosition);
+                        break;
                     }
                 }
             }
@@ -50,7 +49,7 @@ public class VisitorLayer {
                 g2d.setFont(new JLabel().getFont().deriveFont(20f));
                 g2d.drawString("Name: " +currentVisitor.getName(), (int)rectangle2D.getX() + 10, (int)rectangle2D.getY() + 32);
                 g2d.setFont(new JLabel().getFont());
-                g2d.draw(new Rectangle2D.Double((int)tb.getTranslateX() -12,(int)tb.getTranslateY() - 16,10,10));
+                g2d.draw(new Ellipse2D.Double((int)tb.getTranslateX() ,(int)tb.getTranslateY(),10,10));
                 prePosition = clickPosition;
             }
         }
