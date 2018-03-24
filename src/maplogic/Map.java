@@ -26,6 +26,8 @@ public class Map extends JPanel implements ActionListener {
     private Program program = new Program();
     private VisitorLayer visitorLayer;
     private Timer t;
+    private DarknessControl darkness;
+    private float darknessValue = 0f;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -42,6 +44,7 @@ public class Map extends JPanel implements ActionListener {
         visitors = new ArrayList<>();
         targets = test.getTargets();
         visitorLayer = new VisitorLayer();
+        darkness = new DarknessControl(darknessValue);
         loadProgram();
 
         for(TiledTarget target : targets){
@@ -110,7 +113,7 @@ public class Map extends JPanel implements ActionListener {
         test.drawHouse(g2d,camera.getTransform());
 
         visitorLayer.drawVisitorInformation(g2d,visitors, camera);
-
+        darkness.setAlphaValue(darknessValue,g2d,getWidth(),getHeight());
 
         pathFinds.get(0).debugDraw(g2d,camera.getTransform());
     }
@@ -124,7 +127,7 @@ public class Map extends JPanel implements ActionListener {
 
         if(visitors.size() < 300)
             visitors.add(new Visitor(pathFinds, test.getSpawnPoint().getSpawnPoints()));
-
+        darknessValue += 0.1f;
         repaint();
     }
 
