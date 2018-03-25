@@ -114,7 +114,7 @@ public class Map extends JPanel implements ActionListener {
         visitorLayer.drawVisitorInformation(g2d, visitors, camera);
         darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
 
-        pathFinds.get(0).debugDraw(g2d, camera.getTransform());
+        //pathFinds.get(0).debugDraw(g2d, camera.getTransform());
     }
 
 
@@ -131,7 +131,6 @@ public class Map extends JPanel implements ActionListener {
                 visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints()));
             darknessValue += 0.1f;
 
-            System.out.println(timer2.isRunning());
 
 
             repaint();

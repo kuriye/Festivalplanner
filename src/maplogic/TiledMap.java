@@ -1,8 +1,7 @@
 package maplogic;
 
 import agenda.Act;
-import agenda.Program;
-import pathfinding.Target;
+import agenda.Stage;
 
 import javax.imageio.ImageIO;
 import javax.json.Json;
@@ -15,7 +14,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class TiledMap extends JPanel {
@@ -109,9 +107,14 @@ public class TiledMap extends JPanel {
                 }
             });
 
-            int index = 0;
+            HashSet<Stage> stages = new HashSet<>();
             for(Act act : allActs){
-                targets.get(index).linkAgendaStage(act.getStage());
+                stages.add(act.getStage());
+            }
+
+            int index = 0;
+            for(Stage stage : stages){
+                targets.get(index).linkAgendaStage(stage);
                 index++;
             }
 
@@ -121,6 +124,7 @@ public class TiledMap extends JPanel {
                     targetIterator.remove();
                 }
             }
+
         }
         catch(IOException e) {
             e.printStackTrace();

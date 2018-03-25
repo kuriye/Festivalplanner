@@ -136,9 +136,6 @@ public class Visitor {
 
         this.tx = tx;
         g2d.drawImage(image, tx, null);
-
-
-        //g2d.draw(new Ellipse2D.Double((int)tx.getTranslateX(),(int)tx.getTranslateY(),10,10));
     }
 
     /**
@@ -172,13 +169,6 @@ public class Visitor {
             oldPosition = position;
             position = new Point2D.Double(position.getX() + offset[0], position.getY() + offset[1]);
         }
-
-//        if (position.distance(oldPosition) == 0)
-//        {
-//            System.out.println("test");
-//            angle += 1;
-//        }
-
     }
 
     /**

@@ -1,5 +1,6 @@
 package maplogic;
 
+import agenda.Artist;
 import agenda.Stage;
 
 import javax.json.JsonArray;
@@ -26,7 +27,6 @@ public class TiledTarget
         width = target.getInt("width");
         int x = target.getInt("x");
         int y = target.getInt("y");
-
 
         position = new Point2D.Double(x,y);
 
@@ -109,4 +109,5 @@ public class TiledTarget
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
 }
