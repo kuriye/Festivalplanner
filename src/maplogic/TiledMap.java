@@ -149,6 +149,7 @@ public class TiledMap extends JPanel {
         }
     }
 
+
     public ArrayList<CollisionTile> getCollisionTiles(){
         return collisionLayer.getCollisionTiles();
     }
