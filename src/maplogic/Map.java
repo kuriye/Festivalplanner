@@ -24,6 +24,7 @@ public class Map extends JPanel implements ActionListener {
     private ArrayList<TiledTarget> targets;
     private ArrayList<PathFind> pathFinds = new ArrayList<>();
     private ArrayList<Act> allActs = new ArrayList<>();
+    private ArrayList<Act> currentActs = new ArrayList<>();
     private Program program = new Program();
     private VisitorLayer visitorLayer;
     private Timer timer1;
@@ -31,6 +32,7 @@ public class Map extends JPanel implements ActionListener {
     private DarknessControl darkness;
     private float darknessValue = 0f;
     private int agendaFileLength;
+    private int time = 1200;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simulatie");
@@ -56,7 +58,7 @@ public class Map extends JPanel implements ActionListener {
         }
 
         timer1 = new Timer(1000 / 60, this);
-        timer2 = new Timer(1000/60, this);
+        timer2 = new Timer(2000, this);
         timer2.start();
     }
 
@@ -114,7 +116,7 @@ public class Map extends JPanel implements ActionListener {
         visitorLayer.drawVisitorInformation(g2d, visitors, camera);
         darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
 
-        //pathFinds.get(0).debugDraw(g2d, camera.getTransform());
+        pathFinds.get(0).debugDraw(g2d, camera.getTransform());
     }
 
 
@@ -131,8 +133,7 @@ public class Map extends JPanel implements ActionListener {
                 visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints()));
             darknessValue += 0.1f;
 
-
-
+            findCurrentActs();
             repaint();
         }
 
@@ -158,6 +159,17 @@ public class Map extends JPanel implements ActionListener {
                 for (TiledTarget target : targets) {
                     pathFinds.add(new PathFind(target, collisionTiles));
                 }
+            }
+        }
+    }
+
+    public void findCurrentActs(){
+        currentActs.clear();
+        for(Act act : allActs){
+            int startTime = act.getStartTime();
+            int endTime = act.getEndTime();
+            if(time >= startTime && time <= endTime ){
+                currentActs.add(act);
             }
         }
     }

@@ -1,5 +1,6 @@
 package pathfinding;
 
+import agenda.Act;
 import javafx.scene.transform.Affine;
 import maplogic.SpawnPoint;
 import visitorInformation.RandomColour;
@@ -53,6 +54,7 @@ public class Visitor {
     private String name;
     private Point2D oldPosition;
     private AffineTransform tx;
+    private ArrayList<Act> currentActs;
 
    /**
      * Creates a visitor object which will walk around the festival.
