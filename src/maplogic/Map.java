@@ -104,13 +104,13 @@ public class Map extends JPanel implements ActionListener {
             visitor.draw(g2d, camera.getTransform());
         }
 
-        for (CollisionTile tile : collisionTiles) {
+        /*for (CollisionTile tile : collisionTiles) {
             tile.debugDraw(g2d, camera.getTransform());
-        }
+        }*/
 
-        for (TiledTarget target : targets) {
+        /*for (TiledTarget target : targets) {
             target.debugDraw(g2d, camera.getTransform());
-        }
+        }*/
         tiledMap.drawHouse(g2d, camera.getTransform());
 
         visitorLayer.drawVisitorInformation(g2d, visitors, camera);

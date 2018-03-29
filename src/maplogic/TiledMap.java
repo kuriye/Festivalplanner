@@ -136,13 +136,13 @@ public class TiledMap extends JPanel {
             if (l.isVisible())
                 g2d.drawImage(l.getImage(), tx, null);
         }
-            g2d.setColor(Color.RED);
+            /*g2d.setColor(Color.RED);
             for (int y = 0; y <= 112; y++) {
                 for (int x = 0; x <= 128; x++) {
                     Rectangle2D rectangle2D = new Rectangle2D.Double(x * 32, y * 32, 32, 32);
                     g2d.draw(tx.createTransformedShape(rectangle2D));
                 }
-            }
+            }*/
         }
 
     public void drawHouse(Graphics2D g2d, AffineTransform te)

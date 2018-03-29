@@ -58,12 +58,6 @@ public class PathFind {
      */
     public PathFind(TiledTarget tiledTarget, ArrayList<CollisionTile> collisionTiles){
         stage = tiledTarget.getStage();
-        for(int x = 0; x < 128; x++ ){
-            for(int y = 0; y < 122; y++){
-                HashMap<Point2D, Integer> unvisited = new HashMap<>();
-                unvisited.put(new Point2D.Double(x,y),-1);
-            }
-        }
         this.collisionTiles = collisionTiles;
         startingTile = new Point2D.Double(tiledTarget.getTileNumberX() + 1, tiledTarget.getTileNumberY() + 1);
         currentTiles.add(startingTile);
