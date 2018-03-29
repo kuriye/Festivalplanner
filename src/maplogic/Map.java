@@ -4,6 +4,7 @@ import agenda.Act;
 import agenda.Artist;
 import agenda.Program;
 import agenda.Stage;
+import gui.TimePanel;
 import pathfinding.PathFind;
 import pathfinding.Visitor;
 import visitorInformation.VisitorLayer;
@@ -132,7 +133,6 @@ public class Map extends JPanel implements ActionListener {
             if (visitors.size() < 300)
                 visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints()));
             darknessValue += 0.1f;
-
             findCurrentActs();
             repaint();
         }

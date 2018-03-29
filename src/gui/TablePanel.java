@@ -112,7 +112,7 @@ public class TablePanel extends JTable{
             JLabel artiest = new JLabel("Artiest: ");
             JTextField artiestField = new JTextField(20);
 
-            JLabel populariteit = new JLabel("Populariteit: ");
+            JLabel populariteit = new JLabel("Populariteit: % ");
             JTextField populariteitField = new JTextField(20);
 
             JLabel genre = new JLabel("Genre: ");
@@ -121,13 +121,13 @@ public class TablePanel extends JTable{
             JLabel podium = new JLabel("Podium: ");
             JTextField podiumField = new JTextField(20);
 
-            JLabel capaciteit = new JLabel("Capaciteit: ");
+            JLabel capaciteit = new JLabel("Capaciteit podium: ");
             JTextField capaciteitField = new JTextField(20);
 
-            JLabel lengte = new JLabel("Lengte Podium: ");
+            JLabel lengte = new JLabel("Lengte Podium: (m) ");
             JTextField lengteField = new JTextField(20);
 
-            JLabel breedte = new JLabel("Breedte Podium: ");
+            JLabel breedte = new JLabel("Breedte Podium: (m) ");
             JTextField breedteField = new JTextField(20);
 
             JLabel startTime = new JLabel("Start (militaire) Tijd: ");
@@ -136,7 +136,7 @@ public class TablePanel extends JTable{
             JLabel endTime = new JLabel("Eind (militaire) Tijd: ");
             JTextField endTimeField = new JTextField(20);
 
-            JLabel populariteitPodium = new JLabel("Populariteit podium: ");
+            JLabel populariteitPodium = new JLabel("Populariteit podium: % ");
             JTextField populariteitPodiumField = new JTextField(20);
 
             JButton opslaan = new JButton("Opslaan");
@@ -253,7 +253,7 @@ public class TablePanel extends JTable{
                     (program.getAllActs().indexOf(program.searchByName(
                             (String) optredens.getSelectedItem()))).getStage().getName(),20);
 
-            JLabel capaciteit = new JLabel("Capaciteit (%): ");
+            JLabel capaciteit = new JLabel("Capaciteit podium: ");
             JTextField capaciteitField = new JTextField("" + program.getAllActs().get
                     (program.getAllActs().indexOf(program.searchByName(
                             (String) optredens.getSelectedItem()))).getStage().getCapacity(),20);

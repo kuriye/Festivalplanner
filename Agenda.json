@@ -1,1 +1,1 @@
-{"allActs":[{"artist":{"name":"Jordi","popularity":0,"genre":"IDK"},"stage":{"name":"P1","capacity":10,"length":250,"width":100},"startTime":1000,"endTime":1200,"popularity":50},{"artist":{"name":"Ralph Rouwen","popularity":75,"genre":"Pop"},"stage":{"name":"P3","capacity":50,"length":200,"width":100},"startTime":1300,"endTime":1700,"popularity":60}]}
+{"allActs":[{"artist":{"name":"AliB","popularity":30,"genre":"Hiphop"},"stage":{"name":"P1","capacity":20000,"length":200,"width":200},"startTime":900,"endTime":1400,"popularity":40}]}
