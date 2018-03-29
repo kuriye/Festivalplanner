@@ -76,7 +76,8 @@ public class TimePanel extends JPanel implements ActionListener
     }
 
     public int getIntTime() {
-        return intTime;
+        int temp = (int) (intTime * 1.66);
+        return temp;
     }
 
 
