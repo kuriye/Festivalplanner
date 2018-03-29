@@ -32,6 +32,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         tx.translate(panel.getWidth()/2, panel.getHeight()/2);
         tx.scale(zoom, zoom);
         tx.translate(centerPoint.getX(), centerPoint.getY());
+        System.out.println(tx);
         tx.rotate(rotation);
         return tx;
 
@@ -68,16 +69,31 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if(SwingUtilities.isLeftMouseButton(e) && !e.isControlDown())
-        {
-            centerPoint = new Point2D.Double(
-                    (centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom),
-                    (centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom)
-            );
-            lastMousePos = e.getPoint();
-            panel.repaint();
+//        if (SwingUtilities.isLeftMouseButton(e) && !e.isControlDown()) {
+//            if (centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom <= -2500 || centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom >= -700) {
+//                centerPoint = new Point2D.Double(
+//                        (centerPoint.getX()),
+//                        (centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom)
+//                );
+//            }
+//            if (centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom <= -2500 || centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom >= -700) {
+//                centerPoint = new Point2D.Double(
+//                        (centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom),
+//                        (centerPoint.getY())
+//                );
+//                lastMousePos = e.getPoint();
+//                panel.repaint();
+//            } else {
+                centerPoint = new Point2D.Double(
+                        (centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom),
+                        (centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom)
+                );
+                lastMousePos = e.getPoint();
+                panel.repaint();
+           // }
+           // System.out.println(centerPoint);
         }
-    }
+
 
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -86,7 +102,9 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        zoom *= (1 - e.getPreciseWheelRotation()/25.0f);
+        if (0.24 < (zoom* (1 - e.getPreciseWheelRotation()/25.0f))) {
+            zoom *= (1 - e.getPreciseWheelRotation() / 25.0f);
+        }
         panel.repaint();
     }
 
