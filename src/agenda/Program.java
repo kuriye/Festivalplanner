@@ -51,6 +51,19 @@ public class Program
         AllActs.remove(index);
     }
 
+    public Act searchByName(String artistname)
+    {
+        Act act = null;
+        for(Act a : AllActs){
+            if(a.getArtist().getName().equals(artistname)){
+                act = a;
+                break;
+            }
+            System.out.println(a.getArtist().getName());
+        }
+        return act;
+    }
+
     /**
      *  De methode verwijderd alle Acts objecten uit de ArrayList AllActs
      */
