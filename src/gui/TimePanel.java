@@ -15,6 +15,8 @@ public class TimePanel extends JPanel implements ActionListener
     private JLabel timeLabel;
     public LocalTime time;
 
+    private int intTime;
+
     private boolean startPressed;
     private boolean pausePressed;
 
@@ -29,6 +31,8 @@ public class TimePanel extends JPanel implements ActionListener
         pause = new JButton("pauze");
         time = LocalTime.parse("00:00:00");
         timeLabel = new JLabel(String.valueOf(time));
+
+
 
         add(start);
         add(pause);
@@ -68,6 +72,14 @@ public class TimePanel extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         timeLabel.setText(String.valueOf(time = time.plusMinutes(1)));
+        intTime++;
+        System.out.println(intTime);
     }
+
+    public int getIntTime() {
+        return intTime;
+
+    }
+
 
 }
