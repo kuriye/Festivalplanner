@@ -13,13 +13,13 @@ public class AgendaPanel extends JPanel implements  ActionListener{
     private TimePanel panel;
 
     AgendaPanel(TimePanel panel){
-        addTabbedPane();
         this.panel = panel;
+        addTabbedPane();
     }
 
     private void addTabbedPane(){
         tabbedPane = new JTabbedPane();
-        map = new Map();
+        map = new Map(panel);
         tabbedPane.addTab("Graphical Agenda", new GraphicPanel());
         tabbedPane.addTab("Table Agenda", new TablePanel());
         tabbedPane.addTab("Simulatie", map);

@@ -16,6 +16,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Map extends JPanel implements ActionListener {
     private Camera camera;
@@ -33,18 +34,11 @@ public class Map extends JPanel implements ActionListener {
     private DarknessControl darkness;
     private float darknessValue = 0f;
     private int agendaFileLength;
-    private int time = 1200;
+    private int time = 0;
+    private TimePanel timePanel;
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Simulatie");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(1920, 1080));
-        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        frame.setContentPane(new Map());
-        frame.setVisible(true);
-    }
-
-    public Map() {
+    public Map(TimePanel timePanel) {
+        this.timePanel = timePanel;
         loadProgram();
         agendaFileLength = (int) new File("Agenda.json").length();
         tiledMap = new TiledMap("/Map.json", allActs);
@@ -53,7 +47,6 @@ public class Map extends JPanel implements ActionListener {
         targets = tiledMap.getTargets();
         visitorLayer = new VisitorLayer();
         darkness = new DarknessControl(darknessValue);
-
         for (TiledTarget target : targets) {
             pathFinds.add(new PathFind(target, collisionTiles));
         }
@@ -126,6 +119,8 @@ public class Map extends JPanel implements ActionListener {
         if(timer2.isRunning())
             reloadProgram();
         else{
+            time = timePanel.getIntTime();
+            System.out.println(time);
             for (Visitor visitor : visitors) {
                 visitor.update(currentActs);
             }
@@ -161,6 +156,10 @@ public class Map extends JPanel implements ActionListener {
                 }
             }
         }
+    }
+
+    public void update(){
+
     }
 
     public void findCurrentActs(){
