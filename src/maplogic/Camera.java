@@ -1,6 +1,7 @@
 package maplogic;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -12,8 +13,12 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     private Point2D currentPosScreen;
     private int mouseClickX;
     private int mouseClickY;
+    private double changedX;
+    private double changedY;
 
+    private Point2D backupMousePos;
     private Point2D lastMousePos = new Point2D.Double(-1400,-1000);
+    private Point2D newCenterPos = new Point2D.Double(-1400,-1000);
     private JPanel panel;
 
     Camera(JPanel panel) {
@@ -32,6 +37,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         tx.translate(panel.getWidth()/2, panel.getHeight()/2);
         tx.scale(zoom, zoom);
         tx.translate(centerPoint.getX(), centerPoint.getY());
+        //System.out.println(tx);
         tx.rotate(rotation);
         return tx;
 
@@ -69,30 +75,25 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     @Override
     public void mouseDragged(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e) && !e.isControlDown()) {
-            if (centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom <= -2500 || centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom >= -700) {
+
+
+            changedX = ((lastMousePos.getX() - e.getX()));
+            changedY = ((lastMousePos.getY() - e.getY()));
+            Point2D volgendpunt = new Point2D.Double(
+                    (centerPoint.getX() - changedX),
+                    (centerPoint.getY() - changedY));
+
+            if (newCenterPos.distance(centerPoint) <= 2000 || newCenterPos.distance(volgendpunt) <= 2000) {
                 centerPoint = new Point2D.Double(
-                        (centerPoint.getX()),
-                        (centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom)
-                );
+                        (centerPoint.getX() - changedX),
+                        (centerPoint.getY() - changedY));
             }
-            if (centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom <= -2500 || centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom >= -700) {
-                centerPoint = new Point2D.Double(
-                        (centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom),
-                        (centerPoint.getY())
-                );
-                lastMousePos = e.getPoint();
-                panel.repaint();
-            } else {
-                centerPoint = new Point2D.Double(
-                        (centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom),
-                        (centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom)
-                );
-                lastMousePos = e.getPoint();
-                panel.repaint();
-            }
-           // System.out.println(centerPoint);
+            lastMousePos = e.getPoint();
+            panel.repaint();
+            backupMousePos = centerPoint;
         }
     }
+
 
     @Override
     public void mouseMoved(MouseEvent e) {
