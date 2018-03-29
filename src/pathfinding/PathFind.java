@@ -148,4 +148,9 @@ public class PathFind {
     public Stage getStage() {
         return stage;
     }
+
+    @Override
+    public String toString() {
+        return stage.getName();
+    }
 }

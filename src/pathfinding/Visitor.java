@@ -71,7 +71,10 @@ public class Visitor {
         Random random = new Random();
         position = spawnPoints.get(random.nextInt(spawnPoints.size()));
         angle = Math.random() * 2 * Math.PI;
-        speed = Math.pow(2,random.nextInt(3));
+        speed = Math.pow(2,random.nextInt(5));
+        while(speed == Math.pow(2,0) || speed == Math.pow(2,1) || speed == Math.pow(2,2) || speed == Math.pow(2,3)){
+            speed = Math.pow(2,random.nextInt(5));
+        }
         try {
             image = ImageIO.read(getClass().getResource("/poppetje.png"));
         } catch (IOException e) {
@@ -94,7 +97,7 @@ public class Visitor {
             for(Act currentAct : currentActs){
                 int[] range = new int[2];
                 range[0] = currentRange;
-                range[1] = currentAct.getPopularity();
+                range[1] = currentAct.getPopularity() + currentRange;
                 currentRange = currentRange + currentAct.getPopularity();
                 ranges.put(range, currentAct);
             }
@@ -111,12 +114,12 @@ public class Visitor {
                     break;
                 }
             }
+
             Act followAct = ranges.get(keyRange);
             PathFind rightPath = pathFinds.get(0);
             for(PathFind pathFind : pathFinds){
                 if(pathFind.getStage().equals(followAct.getStage())){
                     rightPath = pathFind;
-                    System.out.println(rightPath);
                     break;
                 }
             }

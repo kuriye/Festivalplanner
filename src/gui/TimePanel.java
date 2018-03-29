@@ -38,7 +38,7 @@ public class TimePanel extends JPanel implements ActionListener
         add(pause);
         add(timeLabel);
 
-        Timer timer = new Timer(5,this);
+        Timer timer = new Timer(75,this);
         timer.setInitialDelay(1);
 
         start.addActionListener(e -> {
@@ -73,7 +73,6 @@ public class TimePanel extends JPanel implements ActionListener
     {
         timeLabel.setText(String.valueOf(time = time.plusMinutes(1)));
         intTime++;
-        System.out.println(intTime);
     }
 
     public int getIntTime() {

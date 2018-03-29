@@ -68,7 +68,7 @@ public class PopUpFrame extends JFrame {
         southPanel.add(genre);
         southPanel.add(startTime);
         southPanel.add(endTime);
-        southPanel.add(artistPopularity);
         southPanel.add(stagePopularity);
+        southPanel.add(artistPopularity);
     }
 }
