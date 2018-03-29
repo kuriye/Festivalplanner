@@ -126,11 +126,11 @@ public class Map extends JPanel implements ActionListener {
             reloadProgram();
         else{
             for (Visitor visitor : visitors) {
-                visitor.update();
+                visitor.update(currentActs);
             }
 
             if (visitors.size() < 300)
-                visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints()));
+                visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints(), currentActs));
             darknessValue += 0.1f;
 
             findCurrentActs();

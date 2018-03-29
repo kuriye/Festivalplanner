@@ -14,9 +14,11 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * The class Visitor represents one visitor which is going to visit the festival.
@@ -59,8 +61,9 @@ public class Visitor {
    /**
      * Creates a visitor object which will walk around the festival.
      */
-    public Visitor(ArrayList<PathFind> pathFinds, ArrayList<Point2D> spawnPoints)
+    public Visitor(ArrayList<PathFind> pathFinds, ArrayList<Point2D> spawnPoints, ArrayList<Act> currentActs)
     {
+        this.currentActs = currentActs;
         this.pathFinds = pathFinds;
         setTargetPosition();
 
@@ -85,9 +88,47 @@ public class Visitor {
 
     public void setTargetPosition()
     {
-        Random random = new Random();
-        path = pathFinds.get(random.nextInt(pathFinds.size()));
-        targetPosition = path.getStartingTile();
+        try{
+            int currentRange = 1;
+            HashMap<int[],Act> ranges = new HashMap<>();
+            for(Act currentAct : currentActs){
+                int[] range = new int[2];
+                range[0] = currentRange;
+                range[1] = currentAct.getPopularity();
+                currentRange = currentRange + currentAct.getPopularity();
+                ranges.put(range, currentAct);
+            }
+            Random random = new Random();
+            int value = random.nextInt(currentRange);
+            int[] keyRange = new int[2];
+            keyRange[0] = 0;
+            keyRange[1] = 1;
+            for(int[] range : ranges.keySet()){
+                int begin = range[0];
+                int end = range[1];
+                if(value >= begin && value <= end){
+                    keyRange = range;
+                    break;
+                }
+            }
+            Act followAct = ranges.get(keyRange);
+            PathFind rightPath = pathFinds.get(0);
+            for(PathFind pathFind : pathFinds){
+                if(pathFind.getStage().equals(followAct.getStage())){
+                    rightPath = pathFind;
+                    System.out.println(rightPath);
+                    break;
+                }
+            }
+            path = rightPath;
+            targetPosition = path.getStartingTile();
+        }
+        catch (Exception e){
+            path = pathFinds.get(0);
+            targetPosition = path.getStartingTile();
+        }
+
+
      }
 
     public void calculateSpawnTile()
@@ -143,7 +184,8 @@ public class Visitor {
     /**
      * Updates the position of the visitors.
      */
-    public void update() {
+    public void update(ArrayList<Act> currentActs) {
+        this.currentActs = currentActs;
         Point2D nextTilePosition = new Point2D.Double(nextTile.getX() * 32, nextTile.getY()* 32);
         int[] offset = new int[2];
         offset[0] = 0;
@@ -165,7 +207,6 @@ public class Visitor {
         if(position.distance(nextTilePosition) <= 1){
             tilePosition = nextTile;
             setNextTile();
-
         }
         else{
             oldPosition = position;

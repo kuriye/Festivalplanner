@@ -145,4 +145,7 @@ public class PathFind {
         return visited;
     }
 
+    public Stage getStage() {
+        return stage;
+    }
 }
