@@ -1,9 +1,7 @@
 package maplogic;
 
-import agenda.Artist;
 import agenda.Stage;
 
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -21,7 +19,7 @@ public class TiledTarget
     private int tilesHeight;
     private Stage stage;
 
-    public TiledTarget(JsonObject target)
+    TiledTarget(JsonObject target)
     {
         height = target.getInt("height");
         width = target.getInt("width");
