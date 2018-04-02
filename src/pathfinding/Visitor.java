@@ -1,20 +1,15 @@
 package pathfinding;
 
 import agenda.Act;
-import javafx.scene.transform.Affine;
-import maplogic.SpawnPoint;
 import visitorInformation.RandomColour;
 import visitorInformation.RandomNameGenerator;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -138,7 +133,7 @@ public class Visitor {
             }
      }
 
-    public void calculateSpawnTile()
+    private void calculateSpawnTile()
     {
         Point2D tileVisitor = new Point2D.Double( Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
         if(path.getVisited().containsKey(tileVisitor))
@@ -148,7 +143,7 @@ public class Visitor {
         }
     }
 
-    public void setNextTile()
+    private void setNextTile()
     {
         if(currentActs.size() == 0){
             ArrayList<Point2D> values = new ArrayList<>();
@@ -274,7 +269,7 @@ public class Visitor {
         return name;
     }
 
-    public AffineTransform getTransform() { return tx;};
+    public AffineTransform getTransform() { return tx;}
 
 
 }
