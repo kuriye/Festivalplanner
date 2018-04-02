@@ -50,23 +50,29 @@ public class Visitor {
     private AffineTransform tx;
     private ArrayList<Act> currentActs;
     private Point2D preTile;
+    private ArrayList<Point2D> spawnPoints;
+    private PathFind spawnPath;
+    private int time;
+    private boolean spawnIsActivited = false;
 
    /**
      * Creates a visitor object which will walk around the festival.
      */
-    public Visitor(ArrayList<PathFind> pathFinds, ArrayList<Point2D> spawnPoints, ArrayList<Act> currentActs)
+    public Visitor(ArrayList<PathFind> pathFinds, ArrayList<Point2D> spawnPoints, ArrayList<Act> currentActs, PathFind spawnPath, int time)
     {
 
         this.currentActs = currentActs;
         this.pathFinds = pathFinds;
-
+        this.spawnPoints = spawnPoints;
+        this.spawnPath = spawnPath;
+        this.time = time;
         //Spawnt buiten de map
         Random random = new Random();
         position = spawnPoints.get(random.nextInt(spawnPoints.size()));
         angle = Math.random() * 2 * Math.PI;
         speed = Math.pow(2,random.nextInt(5));
         while(speed == Math.pow(2,0) || speed == Math.pow(2,1) || speed == Math.pow(2,2) || speed == Math.pow(2,3)){
-            speed = Math.pow(2,random.nextInt(5));
+            speed = Math.pow(2,random.nextInt(6));
         }
 
         try {
@@ -125,7 +131,10 @@ public class Visitor {
                     path = rightPath;
                     targetPosition = path.getStartingTile();
                     calculateSpawnTile();
-                    System.out.println(true);
+                    speed = Math.pow(2,random.nextInt(5));
+                    while(speed == Math.pow(2,0) || speed == Math.pow(2,1) || speed == Math.pow(2,2) || speed == Math.pow(2,3)){
+                        speed = Math.pow(2,random.nextInt(6));
+                    }
                 }
                 catch (Exception e){
                     path = pathFinds.get(0);
@@ -146,7 +155,7 @@ public class Visitor {
 
     private void setNextTile()
     {
-        if(currentActs.size() == 0){
+        if(currentActs.size() == 0 && !spawnIsActivited){
             ArrayList<Point2D> values = new ArrayList<>();
             Set<Point2D> points = currentVisited.keySet();
             for (Integer[] offset: PathFind.offsets)
@@ -231,7 +240,15 @@ public class Visitor {
     /**
      * Updates the position of the visitors.
      */
-    public void update(ArrayList<Act> currentActs) {
+    public void update(ArrayList<Act> currentActs, int time) {
+        this.time = time;
+        if(time >= 2400 && !spawnIsActivited){
+            path = spawnPath;
+            tilePosition = new Point2D.Double(Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
+            calculateSpawnTile();
+            spawnIsActivited = true;
+        }
+
         this.currentActs = currentActs;
         Point2D nextTilePosition = new Point2D.Double(nextTile.getX() * 32, nextTile.getY()* 32);
         int[] offset = new int[2];

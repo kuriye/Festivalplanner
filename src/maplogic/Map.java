@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Map extends JPanel implements ActionListener {
     private Camera camera;
@@ -39,6 +40,7 @@ public class Map extends JPanel implements ActionListener {
     private int time = 0;
     private TimePanel timePanel;
     int current = 1;
+    private PathFind spawnPathfind;
 
     public Map(TimePanel timePanel) {
         this.timePanel = timePanel;
@@ -53,6 +55,8 @@ public class Map extends JPanel implements ActionListener {
         for (TiledTarget target : targets) {
             pathFinds.add(new PathFind(target, collisionTiles));
         }
+        spawnPathfind = new PathFind(tiledMap.getSpawnTarget(), collisionTiles);
+
         timer1 = new Timer(1000 / 60, this);
         timer2 = new Timer(2000, this);
         timer2.start();
@@ -123,11 +127,11 @@ public class Map extends JPanel implements ActionListener {
         else{
             time = timePanel.getIntTime();
             for (Visitor visitor : visitors) {
-                visitor.update(currentActs);
+                visitor.update(currentActs, time);
             }
 
             if (visitors.size() < 300)
-                visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints(), currentActs));
+                visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints(), currentActs, spawnPathfind, time));
             darknessValue += 0.1f;
             findCurrentActs();
             repaint();

@@ -123,11 +123,11 @@ public class PathFind {
      * @param tx is the affineTransform gotten from the camera, so the string will be written right on the panel.
      */
     public void debugDraw(Graphics2D g2d, AffineTransform tx){
-        g2d.setColor(Color.black);
+        /*g2d.setColor(Color.black);
         g2d.setTransform(tx);
         for(Point2D key : visited.keySet()){
             g2d.drawString(String.valueOf(visited.get(key)), (int)key.getX() * 32,(int)key.getY() * 32);
-        }
+        }*/
     }
 
     public Point2D getStartingTile()

@@ -71,8 +71,13 @@ public class TimePanel extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        timeLabel.setText(String.valueOf(time = time.plusMinutes(1)));
-        intTime++;
+        if(getIntTime() >= 2400){
+        }
+        else{
+            timeLabel.setText(String.valueOf(time = time.plusMinutes(1)));
+            intTime++;
+        }
+
     }
 
     public int getIntTime() {

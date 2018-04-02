@@ -26,6 +26,7 @@ public class TiledMap extends JPanel {
     private ArrayList<TiledTarget> targets = new ArrayList<>();
     private CollisionLayer collisionLayer;
     private SpawnPoint spawnPoint;
+    private TiledTarget spawnTarget;
     private ArrayList<Act> allActs;
 
 
@@ -86,6 +87,7 @@ public class TiledMap extends JPanel {
                 JsonObject targetObject = jsontarget.getJsonObject(i);
                 if(targetObject.getString("type").equals("spawn")){
                     spawnPoint = new SpawnPoint(targetObject);
+                    targets.add(new TiledTarget(targetObject));
                 }else{
                     targets.add(new TiledTarget(targetObject));
                 }
@@ -112,16 +114,29 @@ public class TiledMap extends JPanel {
                 stages.add(act.getStage());
             }
 
-            int index = 0;
-            for(Stage stage : stages){
-                targets.get(index).linkAgendaStage(stage);
-                index++;
+            for(TiledTarget target : targets){
+                if(target.getType().equals("spawn")){
+                    spawnTarget = target;
+                }
             }
 
-            Iterator<TiledTarget> targetIterator = targets.iterator();
-            while (targetIterator.hasNext()){
-                if (targetIterator.next().getStage() == null){
-                    targetIterator.remove();
+            Iterator<TiledTarget> targetIterator1 = targets.iterator();
+            while (targetIterator1.hasNext()){
+                if (targetIterator1.next().getType().equals("spawn")){
+                    targetIterator1.remove();
+                }
+            }
+
+            int index = 0;
+            for(Stage stage : stages){
+                    targets.get(index).linkAgendaStage(stage);
+                    index++;
+            }
+
+            Iterator<TiledTarget> targetIterator2 = targets.iterator();
+            while (targetIterator2.hasNext()){
+                if (targetIterator2.next().getStage() == null){
+                    targetIterator2.remove();
                 }
             }
 
@@ -136,13 +151,7 @@ public class TiledMap extends JPanel {
             if (l.isVisible())
                 g2d.drawImage(l.getImage(), tx, null);
         }
-            /*g2d.setColor(Color.RED);
-            for (int y = 0; y <= 112; y++) {
-                for (int x = 0; x <= 128; x++) {
-                    Rectangle2D rectangle2D = new Rectangle2D.Double(x * 32, y * 32, 32, 32);
-                    g2d.draw(tx.createTransformedShape(rectangle2D));
-                }
-            }*/
+
         }
 
     public void drawHouse(Graphics2D g2d, AffineTransform te)
@@ -166,5 +175,9 @@ public class TiledMap extends JPanel {
 
     public SpawnPoint getSpawnPoint() {
         return spawnPoint;
+    }
+
+    public TiledTarget getSpawnTarget() {
+        return spawnTarget;
     }
 }

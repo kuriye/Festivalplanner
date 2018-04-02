@@ -15,7 +15,6 @@ public class SpawnPoint {
         width = targetObject.getInt("width");
         height = targetObject.getInt("height");
         startPosition = new Point2D.Double(targetObject.getInt("x"), targetObject.getInt("y"));
-        System.out.println(startPosition);
         tilesHorizontalFromStart = width/32;
         tilesVerticalFromStart = height/32;
     }
