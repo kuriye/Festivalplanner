@@ -15,10 +15,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * The class Visitor represents one visitor which is going to visit the festival.
@@ -57,15 +54,16 @@ public class Visitor {
     private Point2D oldPosition;
     private AffineTransform tx;
     private ArrayList<Act> currentActs;
+    private Point2D preTile;
 
    /**
      * Creates a visitor object which will walk around the festival.
      */
     public Visitor(ArrayList<PathFind> pathFinds, ArrayList<Point2D> spawnPoints, ArrayList<Act> currentActs)
     {
+
         this.currentActs = currentActs;
         this.pathFinds = pathFinds;
-        setTargetPosition();
 
         //Spawnt buiten de map
         Random random = new Random();
@@ -75,63 +73,69 @@ public class Visitor {
         while(speed == Math.pow(2,0) || speed == Math.pow(2,1) || speed == Math.pow(2,2) || speed == Math.pow(2,3)){
             speed = Math.pow(2,random.nextInt(5));
         }
+
         try {
             image = ImageIO.read(getClass().getResource("/poppetje.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         RandomColour color = new RandomColour();
         image = color.colorImage(image);
         RandomNameGenerator gen = new RandomNameGenerator();
         name = gen.nameGenerator();
-
+        setTargetPosition();
         calculateSpawnTile();
         setNextTile();
     }
 
     public void setTargetPosition()
     {
-        try{
-            int currentRange = 1;
-            HashMap<int[],Act> ranges = new HashMap<>();
-            for(Act currentAct : currentActs){
-                int[] range = new int[2];
-                range[0] = currentRange;
-                range[1] = currentAct.getPopularity() + currentRange;
-                currentRange = currentRange + currentAct.getPopularity();
-                ranges.put(range, currentAct);
+            if(currentActs.size() == 0){
+                path = pathFinds.get(0);
+                tilePosition = new Point2D.Double(Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
             }
-            Random random = new Random();
-            int value = random.nextInt(currentRange);
-            int[] keyRange = new int[2];
-            keyRange[0] = 0;
-            keyRange[1] = 1;
-            for(int[] range : ranges.keySet()){
-                int begin = range[0];
-                int end = range[1];
-                if(value >= begin && value <= end){
-                    keyRange = range;
-                    break;
+            else{
+                try{
+                    int currentRange = 1;
+                    HashMap<int[],Act> ranges = new HashMap<>();
+                    for(Act currentAct : currentActs){
+                        int[] range = new int[2];
+                        range[0] = currentRange;
+                        range[1] = currentAct.getPopularity() + currentRange;
+                        currentRange = currentRange + currentAct.getPopularity();
+                        ranges.put(range, currentAct);
+                    }
+                    Random random = new Random();
+                    int value = random.nextInt(currentRange);
+                    int[] keyRange = new int[2];
+                    keyRange[0] = 0;
+                    keyRange[1] = 1;
+                    for(int[] range : ranges.keySet()){
+                        int begin = range[0];
+                        int end = range[1];
+                        if(value >= begin && value <= end){
+                            keyRange = range;
+                            break;
+                        }
+                    }
+                    Act followAct = ranges.get(keyRange);
+                    PathFind rightPath = pathFinds.get(0);
+                    for(PathFind pathFind : pathFinds){
+                        if(pathFind.getStage().getName().hashCode() == followAct.getStage().getName().hashCode()) {
+                            rightPath = pathFind;
+                            break;
+                        }
+                    }
+                    path = rightPath;
+                    targetPosition = path.getStartingTile();
+                    calculateSpawnTile();
+                }
+                catch (Exception e){
+                    path = pathFinds.get(0);
+                    calculateSpawnTile();
                 }
             }
-
-            Act followAct = ranges.get(keyRange);
-            PathFind rightPath = pathFinds.get(0);
-            for(PathFind pathFind : pathFinds){
-                if(pathFind.getStage().equals(followAct.getStage())){
-                    rightPath = pathFind;
-                    break;
-                }
-            }
-            path = rightPath;
-            targetPosition = path.getStartingTile();
-        }
-        catch (Exception e){
-            path = pathFinds.get(0);
-            targetPosition = path.getStartingTile();
-        }
-
-
      }
 
     public void calculateSpawnTile()
@@ -146,28 +150,75 @@ public class Visitor {
 
     public void setNextTile()
     {
-        int distance = currentVisited.get(tilePosition);
-        ArrayList<Point2D> values = new ArrayList<>();
-        for (Integer[] offset: PathFind.offsets)
-        {
-            try
+        if(currentActs.size() == 0){
+            ArrayList<Point2D> values = new ArrayList<>();
+            Set<Point2D> points = currentVisited.keySet();
+            for (Integer[] offset: PathFind.offsets)
             {
-                int nextDistance = currentVisited.get(new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]));
-                if (nextDistance < distance)
+                try
                 {
-                    values.add(new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]));
+                   Point2D next = new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]);
+                    if(points.contains(next)){
+                        values.add(next);
+                    }
+
                 }
-            }
-            catch (Exception e)
-            {
-                //e.printStackTrace();
+                catch (Exception e)
+                {
+                    //e.printStackTrace();
+                }
+
+                if(values.size() == 0);
+
+                else{
+                    Random random = new Random();
+                    if(preTile != null){
+                        Iterator<Point2D> iterator = values.iterator();
+                        while (iterator.hasNext()){
+                            if(iterator.next().equals(preTile)){
+                                iterator.remove();
+                            }
+                        }
+                    }
+
+                    if(nextTile == null){
+                        nextTile = values.get(random.nextInt(values.size()));
+                    }
+                    else{
+                        if(values.size() != 0){
+                            preTile = nextTile;
+                            nextTile = values.get(random.nextInt(values.size()));
+                        }
+                    }
+                }
+
             }
         }
-        if(values.size() == 0);
-
         else{
-            Random random = new Random();
-            nextTile = values.get(random.nextInt(values.size()));
+            int distance = currentVisited.get(tilePosition);
+            ArrayList<Point2D> values = new ArrayList<>();
+            for (Integer[] offset: PathFind.offsets)
+            {
+                try
+                {
+                    int nextDistance = currentVisited.get(new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]));
+                    if (nextDistance < distance)
+                    {
+                        values.add(new Point2D.Double(tilePosition.getX() + offset[0], tilePosition.getY() + offset[1]));
+                    }
+                }
+                catch (Exception e)
+                {
+                    //e.printStackTrace();
+                }
+            }
+
+            if(values.size() == 0);
+
+            else{
+                Random random = new Random();
+                nextTile = values.get(random.nextInt(values.size()));
+            }
         }
     }
 
@@ -217,13 +268,6 @@ public class Visitor {
         }
     }
 
-    /**
-     * sets targetPosition where the visitor will be going.
-     * @param targetPosition
-     */
-    public void setTarget(Point2D targetPosition) {
-        this.targetPosition = targetPosition;
-    }
 
     public Point2D getPosition() {
         return position;

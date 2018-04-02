@@ -27,6 +27,7 @@ public class Map extends JPanel implements ActionListener {
     private ArrayList<PathFind> pathFinds = new ArrayList<>();
     private ArrayList<Act> allActs = new ArrayList<>();
     private ArrayList<Act> currentActs = new ArrayList<>();
+    private ArrayList<Act> preActs = new ArrayList<>();
     private Program program = new Program();
     private VisitorLayer visitorLayer;
     private Timer timer1;
@@ -50,7 +51,6 @@ public class Map extends JPanel implements ActionListener {
         for (TiledTarget target : targets) {
             pathFinds.add(new PathFind(target, collisionTiles));
         }
-
         timer1 = new Timer(1000 / 60, this);
         timer2 = new Timer(2000, this);
         timer2.start();
@@ -120,7 +120,6 @@ public class Map extends JPanel implements ActionListener {
             reloadProgram();
         else{
             time = timePanel.getIntTime();
-            System.out.println(time);
             for (Visitor visitor : visitors) {
                 visitor.update(currentActs);
             }
@@ -131,6 +130,7 @@ public class Map extends JPanel implements ActionListener {
             findCurrentActs();
             repaint();
         }
+        System.out.println(currentActs.size());
 
     }
 
@@ -154,15 +154,22 @@ public class Map extends JPanel implements ActionListener {
                 for (TiledTarget target : targets) {
                     pathFinds.add(new PathFind(target, collisionTiles));
                 }
+                findCurrentActs();
             }
         }
     }
 
     public void update(){
-
+        if(!currentActs.containsAll(preActs)){
+            for(Visitor visitor : visitors){
+                visitor.setTargetPosition();
+            }
+        }
     }
 
+
     public void findCurrentActs(){
+        preActs = currentActs;
         currentActs.clear();
         for(Act act : allActs){
             int startTime = act.getStartTime();
