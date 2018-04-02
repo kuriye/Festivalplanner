@@ -205,7 +205,7 @@ public class Map extends JPanel implements ActionListener {
             darknessValue -= 1;
             darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
         }
-        if(currentTime > 1800 && currentTime < 2400)
+        if(currentTime > 1800 && currentTime < 2410)
         {
             darknessValue += 1;
             darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
