@@ -16,7 +16,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Map extends JPanel implements ActionListener {
     private Camera camera;
@@ -65,7 +64,7 @@ public class Map extends JPanel implements ActionListener {
         }
     }
 
-    public void loadProgram() {
+    private void loadProgram() {
         try {
             program = program.load();
         } catch (IOException e) {
@@ -128,13 +127,13 @@ public class Map extends JPanel implements ActionListener {
                 visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints(), currentActs));
             darknessValue += 0.1f;
             findCurrentActs();
+            update();
             repaint();
         }
-        System.out.println(currentActs.size());
 
     }
 
-    public void reloadProgram() {
+    private void reloadProgram() {
         if (new File("Agenda.json").length() != agendaFileLength) {
             try {
                 program = program.load();
@@ -168,7 +167,7 @@ public class Map extends JPanel implements ActionListener {
     }
 
 
-    public void findCurrentActs(){
+    private void findCurrentActs(){
         preActs = currentActs;
         currentActs.clear();
         for(Act act : allActs){
