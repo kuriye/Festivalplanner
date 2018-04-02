@@ -128,9 +128,9 @@ public class Map extends JPanel implements ActionListener {
                 visitors.add(new Visitor(pathFinds, tiledMap.getSpawnPoint().getSpawnPoints(), currentActs));
             darknessValue += 0.1f;
             findCurrentActs();
+            update();
             repaint();
         }
-        System.out.println(currentActs.size());
 
     }
 

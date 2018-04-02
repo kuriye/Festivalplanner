@@ -161,7 +161,6 @@ public class Visitor {
                     if(points.contains(next)){
                         values.add(next);
                     }
-
                 }
                 catch (Exception e)
                 {
@@ -172,21 +171,19 @@ public class Visitor {
 
                 else{
                     Random random = new Random();
-                    if(preTile != null){
-                        Iterator<Point2D> iterator = values.iterator();
-                        while (iterator.hasNext()){
-                            if(iterator.next().equals(preTile)){
-                                iterator.remove();
-                            }
-                        }
-                    }
-
                     if(nextTile == null){
                         nextTile = values.get(random.nextInt(values.size()));
                     }
                     else{
+                        if(preTile != null){
+                            Iterator<Point2D> iterator = values.iterator();
+                            while (iterator.hasNext()){
+                                if(iterator.next().equals(preTile)){
+                                    iterator.remove();
+                                }
+                            }
+                        }
                         if(values.size() != 0){
-                            preTile = nextTile;
                             nextTile = values.get(random.nextInt(values.size()));
                         }
                     }
