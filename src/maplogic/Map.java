@@ -35,7 +35,7 @@ public class Map extends JPanel implements ActionListener {
     private Timer timer1;
     private Timer timer2;
     private DarknessControl darkness;
-    private float darknessValue = 0f;
+    private int darknessValue = 100;
     private int agendaFileLength;
     private int time = 0;
     private TimePanel timePanel;
@@ -51,7 +51,7 @@ public class Map extends JPanel implements ActionListener {
         visitors = new ArrayList<>();
         targets = tiledMap.getTargets();
         visitorLayer = new VisitorLayer();
-        darkness = new DarknessControl(darknessValue);
+        darkness = new DarknessControl();
         for (TiledTarget target : targets) {
             pathFinds.add(new PathFind(target, collisionTiles));
         }
@@ -112,9 +112,9 @@ public class Map extends JPanel implements ActionListener {
             target.debugDraw(g2d, camera.getTransform());
         }*/
         tiledMap.drawHouse(g2d, camera.getTransform());
-
+        darknessController(g2d);
         visitorLayer.drawVisitorInformation(g2d, visitors, camera);
-        darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
+
 
         pathFinds.get(0).debugDraw(g2d, camera.getTransform());
     }
@@ -188,6 +188,27 @@ public class Map extends JPanel implements ActionListener {
             if(time >= startTime && time <= endTime ){
                 currentActs.add(act);
             }
+        }
+    }
+
+    private void darknessController(Graphics2D g2d)
+    {
+        int currentTime = timePanel.getIntTime();
+        if(currentTime < 399)
+        {
+            darknessValue = 1000;
+            darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
+        }
+        if(currentTime >= 400 && currentTime < 900 && darknessValue > 1.0)
+        {
+            System.out.println(darknessValue);
+            darknessValue -= 1;
+            darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
+        }
+        if(currentTime > 1800 && currentTime < 2400)
+        {
+            darknessValue += 1;
+            darkness.setAlphaValue(darknessValue, g2d, getWidth(), getHeight());
         }
     }
 }
