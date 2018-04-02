@@ -11,6 +11,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * The class Visitor represents one visitor which is going to visit the festival.
@@ -197,7 +198,13 @@ public class Visitor {
             }
         }
         else{
-            int distance = currentVisited.get(tilePosition);
+            int distance;
+            try{
+                distance = currentVisited.get(tilePosition);
+            }
+            catch (Exception e){
+                distance = 1;
+            }
             ArrayList<Point2D> values = new ArrayList<>();
             for (Integer[] offset: PathFind.offsets)
             {
@@ -247,6 +254,7 @@ public class Visitor {
             tilePosition = new Point2D.Double(Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
             calculateSpawnTile();
             spawnIsActivited = true;
+            setTargetPosition();
         }
 
         this.currentActs = currentActs;
