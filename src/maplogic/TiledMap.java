@@ -177,7 +177,5 @@ public class TiledMap extends JPanel {
         return spawnPoint;
     }
 
-    public TiledTarget getSpawnTarget() {
-        return spawnTarget;
-    }
+
 }
