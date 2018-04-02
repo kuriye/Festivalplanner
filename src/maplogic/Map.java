@@ -159,7 +159,11 @@ public class Map extends JPanel implements ActionListener {
     }
 
     public void update(){
+        if(currentActs.size() > 0){
+            System.out.println();
+        }
         if(!currentActs.containsAll(preActs)){
+            preActs = currentActs;
             for(Visitor visitor : visitors){
                 visitor.setTargetPosition();
             }
@@ -168,7 +172,6 @@ public class Map extends JPanel implements ActionListener {
 
 
     private void findCurrentActs(){
-        preActs = currentActs;
         currentActs.clear();
         for(Act act : allActs){
             int startTime = act.getStartTime();

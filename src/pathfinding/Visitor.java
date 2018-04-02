@@ -125,6 +125,7 @@ public class Visitor {
                     path = rightPath;
                     targetPosition = path.getStartingTile();
                     calculateSpawnTile();
+                    System.out.println(true);
                 }
                 catch (Exception e){
                     path = pathFinds.get(0);
@@ -135,7 +136,7 @@ public class Visitor {
 
     private void calculateSpawnTile()
     {
-        Point2D tileVisitor = new Point2D.Double( Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
+        Point2D tileVisitor = new Point2D.Double(Math.ceil(position.getX() / 32), Math.ceil(position.getY()/32));
         if(path.getVisited().containsKey(tileVisitor))
         {
             tilePosition = tileVisitor;
