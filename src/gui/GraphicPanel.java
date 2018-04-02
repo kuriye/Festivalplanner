@@ -1,4 +1,4 @@
-package Gui;
+package gui;
 import agenda.Act;
 import agenda.Artist;
 import agenda.Program;
@@ -103,6 +103,7 @@ public class GraphicPanel extends JPanel implements MouseWheelListener, ActionLi
             Stage stage = new Stage(program.getActs(i).getStage().getName(), program.getActs(i).getStage().getCapacity(), program.getActs(i).getStage().getLength(), program.getActs(i).getStage().getWidth());
             allActs.add(new Act(artist, stage, program.getActs(i).getStartTime(), program.getActs(i).getEndTime(), program.getActs(i).getPopularity()));
         }
+
         for (Act act : allActs){
             allStages.add(act.getStage());
         }
